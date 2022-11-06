@@ -1,0 +1,19 @@
+
+    .augmentSlot-imageContainer {
+        --crop-size: 50%;
+        --crop-h: 50%;
+        --crop-v: 50%;
+        max-width: 40px;
+        clip-path: circle(var(--crop-size) at var(--crop-h) var(--crop-v));
+        -webkit-clip-path: circle(var(--crop-size) at var(--crop-h) var(--crop-v));
+    }
+
+    .augmentSlot-image {
+        --crop-size: 46%;
+        --crop-h: 50%;
+        --crop-v: 50%;
+        height: auto;
+        max-width: 100%;
+        clip-path: circle(var(--crop-size) at var(--crop-h) var(--crop-v));
+        -webkit-clip-path: circle(var(--crop-size) at var(--crop-h) var(--crop-v));
+    }
