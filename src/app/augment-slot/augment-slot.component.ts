@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Augment } from '../Models/Augment';
+import { Augment, AugmentCategory } from '../Models/Augment';
 
 @Component({
   selector: 'app-augment-slot',
@@ -8,8 +8,9 @@ import { Augment } from '../Models/Augment';
 })
 export class AugmentSlotComponent implements OnInit {
 
-  @Input() item? : Augment;
-  colorClass : string = "bg-stone-500";
+  @Input() item?: Augment;
+  @Input() isSelected: boolean = false;
+  colorClass: string = "bg-stone-500";
 
   constructor() { }
 

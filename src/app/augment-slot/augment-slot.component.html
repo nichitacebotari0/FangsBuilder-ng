@@ -1,5 +1,9 @@
-<div class="bg-sky-800">
-    <div [ngClass]="colorClass + ' augmentSlot-imageContainer  active:bg-sky-100 inline-block'">
-        <img [src]="item ? 'item.imgPath' : 'assets/Empty.png'" class="augmentSlot-image bg-black" />
+<div class="from-transparent via-white" [class.bg-gradient-radial]="isSelected"
+    style="--tw-gradient-stops: var(--tw-gradient-from), #ffffff,var(--tw-gradient-to), var(--tw-gradient-to);">
+    <div [ngClass]="colorClass + ' augmentSlot-imageBorder'">
+        <div class="augmentSlot-imageContainer">
+            <img [src]="item?.imgPath ? item!.imgPath : 'assets/Empty.png'" class="augmentSlot-image bg-black" />
+        </div>
     </div>
+    <!-- <button (click)="item!.imgPath = 'assets/POSITIONAL/1.captainKiller/2_icon.png';">changeImg</button> -->
 </div>

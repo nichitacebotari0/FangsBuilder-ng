@@ -2,7 +2,9 @@ export enum AugmentCategory {
     POSITIONAL = 0,
     RED = 1,
     YELLOW = 2,
-    ULT = 3
+    ULT = 3,
+    FLEX = 4,
+    ACTIVE = 5
 }
 
 export class Augment {

@@ -12,10 +12,10 @@ export class Utils {
                 return "bg-yellow-600";
             case AugmentCategory.ULT:
                 return "bg-violet-800";
-            //         case AugmentCategory.:
-            //             return "bg-stone-500";
-            // case "ACTIVE":
-            //     return "bg-yellow-800";
+            case AugmentCategory.FLEX:
+                return "bg-stone-500";
+            case AugmentCategory.ACTIVE:
+                return "bg-yellow-800";
         }
     }
 }

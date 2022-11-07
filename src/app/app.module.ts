@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AugmentSlotComponent } from './augment-slot/augment-slot.component';
+import { BuildEditorComponent } from './build-editor/build-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AugmentSlotComponent
+    AugmentSlotComponent,
+    BuildEditorComponent,
   ],
   imports: [
     BrowserModule,
