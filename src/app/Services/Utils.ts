@@ -6,11 +6,11 @@ export class Utils {
         switch (augmentCategory) {
             case AugmentCategory.POSITIONAL:
                 return "bg-sky-700";
-            case AugmentCategory.RED:
+            case AugmentCategory.COMBAT:
                 return "bg-red-800";
-            case AugmentCategory.YELLOW:
+            case AugmentCategory.UTILITY:
                 return "bg-yellow-600";
-            case AugmentCategory.ULT:
+            case AugmentCategory.ULTIMATE:
                 return "bg-violet-800";
             case AugmentCategory.FLEX:
                 return "bg-stone-500";

@@ -1,8 +1,8 @@
 export enum AugmentCategory {
     POSITIONAL = 0,
-    RED = 1,
-    YELLOW = 2,
-    ULT = 3,
+    COMBAT = 1,
+    UTILITY = 2,
+    ULTIMATE = 3,
     FLEX = 4,
     ACTIVE = 5
 }

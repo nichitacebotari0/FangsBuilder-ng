@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Augment, AugmentCategory } from '../Models/Augment';
+import { AugmentService } from '../Services/augment.service';
 
 @Component({
   selector: 'app-build-editor',
@@ -8,27 +9,29 @@ import { Augment, AugmentCategory } from '../Models/Augment';
 })
 export class BuildEditorComponent implements OnInit {
 
-  augmentList: Augment[] = [
+  augmentSlots: Augment[] = [
     new Augment(-1, "", "", "", AugmentCategory.POSITIONAL),
-    new Augment(-1, "", "", "", AugmentCategory.RED),
-    new Augment(-1, "", "", "", AugmentCategory.YELLOW),
+    new Augment(-1, "", "", "", AugmentCategory.COMBAT),
+    new Augment(-1, "", "", "", AugmentCategory.UTILITY),
     new Augment(-1, "", "", "", AugmentCategory.FLEX),
-    new Augment(-1, "", "", "", AugmentCategory.ULT),
+    new Augment(-1, "", "", "", AugmentCategory.ULTIMATE),
     new Augment(-1, "", "", "", AugmentCategory.ACTIVE),
     new Augment(-1, "", "", "", AugmentCategory.FLEX),
     new Augment(-1, "", "", "", AugmentCategory.FLEX),
   ];
 
-  selectedSlot: number = -1;
+  selectedSlot: number = 0;
+  availableAugments: Augment[] = [];
 
-  constructor() { }
+  constructor(private augmentService: AugmentService) { }
 
   ngOnInit(): void {
   }
 
-  setSelected(event :Event, id :number) {
+  setSelected(event: Event, id: number) {
     event.stopPropagation();
     this.selectedSlot = id;
+    this.availableAugments = this.augmentService.generateMockAugments(id);
   }
 
 }
