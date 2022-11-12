@@ -1,57 +1,91 @@
-<div class="flex flex-col xl:flex-row xl:justify-start bg-sky-900 m-2">
-    <div class="flex flex-row flex-wrap flex-shrink justify-center p-2" (pointerup)="setSelected($event, -1)">
-        <app-augment-slot [item]="augmentSlots[0]" [isSelected]="selectedSlot == 0" (pointerup)="setSelected($event, 0)"
-            class="w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
-        </app-augment-slot>
-        <app-augment-slot [item]="augmentSlots[1]" [isSelected]="selectedSlot == 1" (pointerup)="setSelected($event, 1)"
-            class="w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-        </app-augment-slot>
-        <app-augment-slot [item]="augmentSlots[2]" [isSelected]="selectedSlot == 2" (pointerup)="setSelected($event, 2)"
-            class="w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
-        </app-augment-slot>
-        <app-augment-slot [item]="augmentSlots[3]" [isSelected]="selectedSlot == 3" (pointerup)="setSelected($event, 3)"
-            class="w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-        </app-augment-slot>
-        <app-augment-slot [item]="augmentSlots[4]" [isSelected]="selectedSlot == 4" (pointerup)="setSelected($event, 4)"
-            class="w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
-        </app-augment-slot>
-        <app-augment-slot [item]="augmentSlots[5]" [isSelected]="selectedSlot == 5" (pointerup)="setSelected($event, 5)"
-            class="w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-        </app-augment-slot>
+<div class="flex flex-col xl:flex-row xl:justify-start bg-sky-900 p-2 min-h-screen">
+    <div class="flex flex-row xl:items-center">
+        <div class="flex flex-row flex-wrap justify-center p-2 flex-shrink-0 min-w-min"
+            (pointerup)="setSelected($event, -1)">
+            <app-augment-slot [item]="augmentSlots[0]" [isSelected]="selectedSlot == 0"
+                (pointerup)="setSelected($event, 0)"
+                class="h-fit w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
+            </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[1]" [isSelected]="selectedSlot == 1"
+                (pointerup)="setSelected($event, 1)"
+                class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+            </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[2]" [isSelected]="selectedSlot == 2"
+                (pointerup)="setSelected($event, 2)"
+                class="h-fit w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
+            </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[3]" [isSelected]="selectedSlot == 3"
+                (pointerup)="setSelected($event, 3)"
+                class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+            </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[4]" [isSelected]="selectedSlot == 4"
+                (pointerup)="setSelected($event, 4)"
+                class="h-fit w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
+            </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[5]" [isSelected]="selectedSlot == 5"
+                (pointerup)="setSelected($event, 5)"
+                class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+            </app-augment-slot>
 
-        <app-augment-slot [item]="augmentSlots[6]" [isSelected]="selectedSlot == 6" (pointerup)="setSelected($event, 6)"
-            class="w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
-        </app-augment-slot>
-        <app-augment-slot [item]="augmentSlots[7]" [isSelected]="selectedSlot == 7" (pointerup)="setSelected($event, 7)"
-            class="w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-        </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[6]" [isSelected]="selectedSlot == 6"
+                (pointerup)="setSelected($event, 6)"
+                class="h-fit w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
+            </app-augment-slot>
+            <app-augment-slot [item]="augmentSlots[7]" [isSelected]="selectedSlot == 7"
+                (pointerup)="setSelected($event, 7)"
+                class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+            </app-augment-slot>
+        </div>
     </div>
-    <div class="flex-col flex-grow m-2" [class.hidden]="selectedSlot < 0">
-        <div [class.hidden]="augmentSlots[selectedSlot].augmentCategory != 4">FLEX AUGMENTS
+    <div class="flex-col flex-grow justify-start m-2" *ngIf="selectedSlot >= 0">
+        <div [class.hidden]="getSelectedSlot().augmentCategory != AugmentSlotCategoryEnum.FLEX">FLEX AUGMENTS
             <div class="flex flex-row flex-nowrap justify-center text-gray-900">
-                <button
-                    class="flex-grow h-8 text-center bg-red-800 border-x-2 -ml-2 enabled:hover:bg-red-600 disabled:bg-slate-800">
+                <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.COMBAT)"
+                    class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-red-600 active:bg-slate-800"
+                    [class.bg-red-600]="selectedCategory == AugmentSlotCategoryEnum.COMBAT">
                     COMBAT </button>
-                <button
-                    class="flex-grow h-8 text-center bg-yellow-700 border-x-2 -ml-2 enabled:hover:bg-yellow-500 disabled:bg-slate-800">
+                <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.UTILITY)"
+                    class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-yellow-500 active:bg-slate-800"
+                    [class.bg-yellow-500]="selectedCategory == AugmentSlotCategoryEnum.UTILITY">
                     UTILITY </button>
-                <button
-                    class="flex-grow h-8 text-center bg-sky-800 border-x-2 -ml-2 enabled:hover:bg-sky-600 disabled:bg-slate-800">
+                <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.POSITIONAL)"
+                    class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-sky-600 active:bg-slate-800"
+                    [class.bg-sky-600]="selectedCategory == AugmentSlotCategoryEnum.POSITIONAL">
                     ARTIFACT </button>
             </div>
         </div>
-        <div class="mb-2" [class.hidden]="augmentSlots[selectedSlot].augmentCategory != 0">ARTIFACT
+        <div class="mb-2" [class.hidden]="getSelectedSlot().augmentCategory != AugmentSlotCategoryEnum.POSITIONAL">
+            ARTIFACT
         </div>
-        <div class="mb-2" [class.hidden]="augmentSlots[selectedSlot].augmentCategory != 1">COMBAT
+        <div class="mb-2" [class.hidden]="getSelectedSlot().augmentCategory != AugmentSlotCategoryEnum.COMBAT">COMBAT
         </div>
-        <div class="mb-2" [class.hidden]="augmentSlots[selectedSlot].augmentCategory != 2">UTILITY
+        <div class="mb-2" [class.hidden]="getSelectedSlot().augmentCategory != AugmentSlotCategoryEnum.UTILITY">UTILITY
         </div>
-        <div class="mb-2" [class.hidden]="augmentSlots[selectedSlot].augmentCategory != 3">ULTIMATE
+        <div class="mb-2" [class.hidden]="getSelectedSlot().augmentCategory != AugmentSlotCategoryEnum.ULTIMATE">
+            ULTIMATE
         </div>
-        <div class="mb-2" [class.hidden]="augmentSlots[selectedSlot].augmentCategory != 5">ACTIVE
+        <div class="mb-2" [class.hidden]="getSelectedSlot().augmentCategory != AugmentSlotCategoryEnum.ACTIVE">ACTIVE
         </div>
-        <div class="flex flex-row flex-nowrap justify-center">
 
+        <div class="flex flex-col items-center">
+            <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
+                *ngFor="let group of groupedAugments | keyvalue">
+                <div class="basis-1/4 flex flex-col">
+                    <div>{{getAbilityTypeName(group.key)?.name ?? "Unknown augment: "+group.key}}</div>
+                    <div class="mr-2 flex flex-row items-center">
+                        <div class="flex-grow" style="border-bottom: 2px solid gray;"></div>
+                        <div class="w-3 md:w-4 lg:w-6 bg-stone-500 rhombus-border ">
+                            <div class="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 rhombus-inside bg-sky-900"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row basis-3/4">
+                    <div class="basis-1/4" *ngFor="let element of group.value">
+                        <img [src]="element?.imgPath ? element!.imgPath : 'assets/Empty.png'"
+                            class="m-auto augmentSlot-image w-4/5 border-2 border-blue-500" />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

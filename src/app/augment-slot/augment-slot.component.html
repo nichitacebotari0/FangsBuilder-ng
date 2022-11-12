@@ -1,9 +1,8 @@
 <div class="from-transparent via-white" [class.bg-gradient-radial]="isSelected"
     style="--tw-gradient-stops: var(--tw-gradient-from), #ffffff,var(--tw-gradient-to), var(--tw-gradient-to);">
     <div [ngClass]="colorClass + ' augmentSlot-imageBorder'">
-        <div class="augmentSlot-imageContainer">
-            <img [src]="item?.imgPath ? item!.imgPath : 'assets/Empty.png'" class="augmentSlot-image bg-black" />
+        <div ngClass="augmentSlot-imageContainer bg-black">
+            <img [src]="item?.augment?.imgPath ? item!.augment!.imgPath : 'assets/Empty.png'" class="augmentSlot-image" />
         </div>
     </div>
-    <!-- <button (click)="item!.imgPath = 'assets/POSITIONAL/1.captainKiller/2_icon.png';">changeImg</button> -->
 </div>
