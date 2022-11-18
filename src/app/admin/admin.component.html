@@ -1,0 +1,49 @@
+<div>
+    <div>Admin Dashboard</div>
+    <a routerLink="abilityTypes/" class="text-blue-600 underline hover:text-blue-500 active:text-blue-700">Ability Types</a>
+    <form [formGroup]="augmentForm" class="flex flex-col items-center my-2">
+        Augment
+        <div class="flex flex-col">
+            <label for="id">Id</label>
+            <input id="id" type="number" formControlName="id" class="w-fit" />
+        </div>
+        <div class="flex flex-col">
+            <label for="name">Name</label>
+            <input id="name" type="text" formControlName="name" class="w-fit" />
+        </div>
+        <div class="flex flex-col">
+            <label for="description">Description</label>
+            <input id="description" type="text" formControlName="description" class="w-fit" />
+        </div>
+        <div class="flex flex-col">
+            <label for="imgPath">Image Path</label>
+            <input id="imgPath" type="text" formControlName="imgPath" class="w-fit" />
+        </div>
+        <div class="flex flex-col">
+            <label for="abilityType">Ability Type</label>
+            <input id="abilityType" type="number" formControlName="abilityType" class="w-fit" />
+        </div>
+        <div class="flex flex-col">
+            <label for="augmentCategory">Augment Category</label>
+            <input id="augmentCategory" type="number" formControlName="augmentCategory" class="w-fit" />
+        </div>
+
+        <button type="submit" [disabled]="!augmentForm.valid"
+            class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-2 mx-auto my-2">Submit</button>
+    </form>
+
+    <form [formGroup]="augmentCategoryForm" class="flex flex-col items-center my-2">
+        Augment Category
+        <div class="flex flex-col">
+            <label for="id">Id</label>
+            <input id="id" type="number" formControlName="id" class="w-fit" />
+        </div>
+        <div class="flex flex-col">
+            <label for="name">Name</label>
+            <input id="name" type="text" formControlName="name" class="w-fit" />
+        </div>
+
+        <button type="submit" [disabled]="!augmentCategoryForm.valid"
+            class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-2 mx-auto my-2">Submit</button>
+    </form>
+</div>

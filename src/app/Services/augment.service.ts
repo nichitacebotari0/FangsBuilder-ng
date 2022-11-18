@@ -19,22 +19,5 @@ export class AugmentService {
     }
     return mockAugments;
   }
-
-  getMockAbilityTypes(): Category[] {
-    let mockAbilityTypes: Category[] = [
-      { id: 1, name: "Passive" },
-      { id: 2, name: "LMB" },
-      { id: 3, name: "E" },
-      { id: 4, name: "Shift" },
-      { id: 5, name: "Space" },
-      { id: 6, name: "RMB" },
-      { id: 101, name: "Captain Hunter" },
-      { id: 102, name: "Shard Runner" },
-      { id: 103, name: "Aspect Warrior" },
-      { id: 104, name: "Captain Guardian" },
-      { id: 105, name: "Aspect Guide" },
-      { id: 106, name: "Shard Enchanter" }
-    ];
-    return mockAbilityTypes;
-  }
+  
 }

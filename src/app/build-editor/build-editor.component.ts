@@ -3,6 +3,7 @@ import { Augment } from '../Models/Augment';
 import { AugmentSlot } from '../Models/AugmentSlot';
 import { Category } from '../Models/Category';
 import { AugmentSlotCategory } from '../Models/Enum/AugmentSlotCategory';
+import { AbilityTypeService } from '../Services/ability-type.service';
 import { AugmentService } from '../Services/augment.service';
 
 @Component({
@@ -29,7 +30,7 @@ export class BuildEditorComponent implements OnInit {
   availableAugments: Augment[] = [];
   groupedAugments: Map<number, Augment[]> = new Map<number, Augment[]>();
 
-  constructor(private augmentService: AugmentService) { }
+  constructor(private augmentService: AugmentService, private abilityTypeService: AbilityTypeService) { }
 
   ngOnInit(): void {
   }
@@ -76,6 +77,6 @@ export class BuildEditorComponent implements OnInit {
   }
 
   getAbilityTypeName(id: number): Category | undefined {
-    return this.augmentService.getMockAbilityTypes().find(x => x.id == id);
+    return this.abilityTypeService.getMockAbilityTypes().find(x => x.id == id);
   }
 }
