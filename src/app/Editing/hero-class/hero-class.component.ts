@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, RequiredValidator, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
-import { AbilityTypeService } from 'src/app/Services/ability-type.service';
+import { HeroTypeService } from 'src/app/Services/hero-type.service';
 
 @Component({
-  selector: 'app-ability-type',
-  templateUrl: './ability-type.component.html',
-  styleUrls: ['./ability-type.component.less']
+  selector: 'app-hero-class',
+  templateUrl: './hero-class.component.html',
+  styleUrls: ['./hero-class.component.less']
 })
-export class AbilityTypeComponent implements OnInit {
+export class HeroClassComponent implements OnInit {
 
-  constructor(private abilityTypeService: AbilityTypeService) { }
+  constructor(private abilityTypeService: HeroTypeService) { }
 
   ngOnInit(): void {
-    this.abilityTypes$ = this.abilityTypeService.get();
+    this.heroClasses$ = this.abilityTypeService.get();
   }
-  abilityTypes$: Observable<Category[]> | undefined;
+  heroClasses$: Observable<Category[]> | undefined;
   editId: number = -1;
 
-
-  abilityTypeForm = new FormGroup({
+  heroClassForm = new FormGroup({
     id: new FormControl<number | null>(null, [
       Validators.required,
       Validators.min(1)
@@ -30,13 +29,12 @@ export class AbilityTypeComponent implements OnInit {
     ])
   });
 
-  deleteAbilityType(abilityType: Category) {
+  delete(abilityType: Category) {
     this.abilityTypeService.delete(abilityType.id)
       .subscribe(_ => this.abilityTypeService.refetch()); // this http request can be avoided
-
   }
 
-  submitAbilityType() {
+  submit() {
     let model = this.getModelFromForm();
     if (this.editId > -1) {
       this.abilityTypeService.update(this.editId, model)
@@ -50,14 +48,14 @@ export class AbilityTypeComponent implements OnInit {
 
   getModelFromForm(): Category {
     return {
-      id: this.abilityTypeForm.value.id!,
-      name: this.abilityTypeForm.value.name!
+      id: this.heroClassForm.value.id!,
+      name: this.heroClassForm.value.name!
     };
   }
 
-  editAbility(input: Category) {
+  edit(input: Category) {
     this.editId = input.id;
-    this.abilityTypeForm.setValue({
+    this.heroClassForm.setValue({
       id: input.id,
       name: input.name
     });
@@ -65,6 +63,6 @@ export class AbilityTypeComponent implements OnInit {
 
   stopEditing() {
     this.editId = -1;
-    this.abilityTypeForm.reset();
+    this.heroClassForm.reset();
   }
 }

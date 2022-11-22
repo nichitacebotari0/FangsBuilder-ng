@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, shareReplay, Subject, switchMap, tap } from 'rxjs';
-import { Category } from '../Models/Category';
+import { catchError, Observable, of, shareReplay, Subject, switchMap } from 'rxjs';
+import { Hero } from '../Models/Hero';
 import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AbilityTypeService {
+export class HeroService {
   constructor(private config: ConfigService, private http: HttpClient) {
-    this.apiPath = config.apiBaseUrl + "AbilityTypes";
+    this.apiPath = config.apiBaseUrl + "Heroes";
   }
 
   apiPath: string;
@@ -17,11 +17,11 @@ export class AbilityTypeService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private cache$: Observable<Category[]> | undefined;
+  private cache$: Observable<Hero[]> | undefined;
   private trigger = new Subject<void>();
 
-  private fetch(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiPath, {
+  private fetch(): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.apiPath, {
       observe: "body" as const,
       responseType: "json" as const
     });
@@ -31,7 +31,7 @@ export class AbilityTypeService {
     this.trigger.next();
   }
 
-  get(): Observable<Category[]> {
+  get(): Observable<Hero[]> {
     if (!this.cache$) {
       this.cache$ = this.trigger.pipe(
         switchMap(x => this.fetch()),
@@ -41,24 +41,24 @@ export class AbilityTypeService {
     return this.cache$;
   }
 
-  add(abilityType: Category): Observable<Category> {
-    return this.http.post<Category>(this.apiPath, abilityType, this.httpOptions).pipe(
-      catchError(this.handleError<Category>('addAbilityType'))
+  add(abilityType: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.apiPath, abilityType, this.httpOptions).pipe(
+      catchError(this.handleError<Hero>('addHero'))
     );
   }
 
-  update(id: number, abilityType: Category): Observable<Category> {
+  update(id: number, abilityType: Hero): Observable<Hero> {
     const url = `${this.apiPath}/${id}`;
-    return this.http.put<Category>(url, abilityType, this.httpOptions)
+    return this.http.put<Hero>(url, abilityType, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Category>('updateAbilityType'))
+        catchError(this.handleError<Hero>('updateHero'))
       );
   }
 
-  delete(id: number): Observable<Category> {
+  delete(id: number): Observable<Hero> {
     const url = `${this.apiPath}/${id}`;
-    return this.http.delete<Category>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Category>('deleteAbilityType'))
+    return this.http.delete<Hero>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Hero>('deleteHero'))
     );
   }
 

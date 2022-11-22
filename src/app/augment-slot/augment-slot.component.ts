@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AugmentSlot } from '../Models/AugmentSlot';
-import { AugmentSlotCategory } from '../Models/Enum/AugmentSlotCategory';
 
 @Component({
   selector: 'app-augment-slot',

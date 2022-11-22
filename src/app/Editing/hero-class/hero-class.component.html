@@ -1,24 +1,24 @@
 <div class="flex flex-col items-center my-2">
     <div class="">
-        Ability Type
+        Hero Class
         <div class="flex flex-col">
             <div class="flex flex-row">
                 <div class="px-1 m-1 w-7">Id</div>
                 <div class="px-1 m-1">Name</div>
             </div>
-            <div *ngFor="let abilityType of abilityTypes$ | async" class="flex flex-row m-1 border-2"
-                [class.border-blue-400]="editId == abilityType.id">
-                <div class="px-1 mx-1 w-7">{{abilityType.id}}</div>
-                <div class="px-1 mx-1">{{abilityType.name}}</div>
-                <button (pointerup)="editAbility(abilityType)"
+            <div *ngFor="let heroClass of heroClasses$ | async" class="flex flex-row m-1 border-2"
+                [class.border-blue-400]="editId == heroClass.id">
+                <div class="px-1 mx-1 w-7">{{heroClass.id}}</div>
+                <div class="px-1 mx-1">{{heroClass.name}}</div>
+                <button (pointerup)="edit(heroClass)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>
-                <button (pointerup)="deleteAbilityType(abilityType)"
+                <button (pointerup)="delete(heroClass)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-1">Delete</button>
             </div>
         </div>
     </div>
 
-    <form [formGroup]="abilityTypeForm" (ngSubmit)="submitAbilityType()" class="flex flex-col items-center my-2">
+    <form [formGroup]="heroClassForm" (ngSubmit)="submit()" class="flex flex-col items-center my-2">
         <div *ngIf="editId > -1 " class="flex flex-row items-center">
             <button type="button" (pointerup)="stopEditing()"
                 class="backArrow enabled:hover:border-stone-900 enabled:active:border-stone-800 w-2">
@@ -28,20 +28,20 @@
         <div class="flex flex-col ">
             <label for="id">Id</label>
             <input id="id" type="number" formControlName="id" class="w-fit border-2" />
-            <div [class.hidden]="!abilityTypeForm.controls['id'].errors?.['required']" class="text-red-600">Id is
+            <div [class.hidden]="!heroClassForm.controls['id'].errors?.['required']" class="text-red-600">Id is
                 required</div>
-            <div [class.hidden]="!abilityTypeForm.controls['id'].errors?.['min']" class="text-red-600">Minimum id is 1
+            <div [class.hidden]="!heroClassForm.controls['id'].errors?.['min']" class="text-red-600">Minimum id is 1
             </div>
         </div>
         <div class="flex flex-col">
             <label for="name">Name</label>
             <input id="name" type="text" formControlName="name" class="w-fit border-2" />
-            <div [class.hidden]="!abilityTypeForm.controls['name'].errors?.['required']" class="text-red-600">Name is
+            <div [class.hidden]="!heroClassForm.controls['name'].errors?.['required']" class="text-red-600">Name is
                 required
             </div>
         </div>
 
-        <button type="submit" [disabled]="!abilityTypeForm.valid"
+        <button type="submit" [disabled]="!heroClassForm.valid"
             class="bg-black enabled:hover:bg-stone-900 enabled:active:bg-stone-800 w-fit p-2 mx-auto my-2">
             {{editId > -1 ? 'Edit' : 'Create'}}</button>
     </form>

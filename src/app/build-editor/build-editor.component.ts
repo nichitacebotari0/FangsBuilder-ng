@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { filter, mergeAll, Observable, of, reduce, toArray } from 'rxjs';
 import { Augment } from '../Models/Augment';
 import { AugmentSlot } from '../Models/AugmentSlot';
 import { Category } from '../Models/Category';
@@ -15,20 +16,20 @@ export class BuildEditorComponent implements OnInit {
   readonly AugmentSlotCategoryEnum = AugmentSlotCategory;
 
   augmentSlots: AugmentSlot[] = [
-    new AugmentSlot(AugmentSlotCategory.POSITIONAL),
-    new AugmentSlot(AugmentSlotCategory.COMBAT),
-    new AugmentSlot(AugmentSlotCategory.UTILITY),
-    new AugmentSlot(AugmentSlotCategory.FLEX),
-    new AugmentSlot(AugmentSlotCategory.ULTIMATE),
-    new AugmentSlot(AugmentSlotCategory.ACTIVE),
-    new AugmentSlot(AugmentSlotCategory.FLEX),
-    new AugmentSlot(AugmentSlotCategory.FLEX),
+    { augmentCategory: AugmentSlotCategory.POSITIONAL },
+    { augmentCategory: AugmentSlotCategory.COMBAT },
+    { augmentCategory: AugmentSlotCategory.UTILITY },
+    { augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentCategory: AugmentSlotCategory.ULTIMATE },
+    { augmentCategory: AugmentSlotCategory.ACTIVE },
+    { augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentCategory: AugmentSlotCategory.FLEX },
   ];
 
   selectedSlot: number = -1;
   selectedCategory: AugmentSlotCategory = AugmentSlotCategory.FLEX;
-  availableAugments: Augment[] = [];
-  groupedAugments: Map<number, Augment[]> = new Map<number, Augment[]>();
+  availableAugments: Observable<Augment[]> | undefined;
+  groupedAugments: Observable<Map<number, Augment[]>> | undefined;
 
   constructor(private augmentService: AugmentService, private abilityTypeService: AbilityTypeService) { }
 
@@ -51,32 +52,42 @@ export class BuildEditorComponent implements OnInit {
     this.selectedSlot = id;
     this.selectedCategory = this.augmentSlots[this.selectedSlot].augmentCategory;
     if (id < 0) {
-      this.groupedAugments = new Map<number, Augment[]>();
+      this.groupedAugments = undefined;
       return;
     }
 
-    this.availableAugments = this.augmentService.getMockAugments(20);
+    this.availableAugments = this.augmentService.get();
     this.populateAugmentList();
   }
 
   private populateAugmentList() {
     let filteredAugments = this.getAugmentsForCategory(this.availableAugments);
-    this.groupedAugments = filteredAugments.reduce((aggregate: Map<number, Augment[]>, augment: Augment) => {
-      aggregate = aggregate || new Map<number, Augment[]>();
-      aggregate.set(augment.abilityType, aggregate.get(augment.abilityType) || []);
-      aggregate.get(augment.abilityType)!.push(augment);
-      return aggregate;
-    }, new Map<number, Augment[]>()); // group by ability type
+    this.groupedAugments = filteredAugments.pipe(
+      mergeAll(),
+      reduce((aggregate: Map<number, Augment[]>, augment: Augment) => {
+        aggregate = aggregate || new Map<number, Augment[]>();
+        aggregate.set(augment.abilityType, aggregate.get(augment.abilityType) || []);
+        aggregate.get(augment.abilityType)!.push(augment);
+        return aggregate;
+      }, new Map<number, Augment[]>()),
+    ); // group by ability type
   }
 
-  getAugmentsForCategory(augments: Augment[]): Augment[] {
-    if (this.selectedCategory == AugmentSlotCategory.FLEX) {
-      return [];
+  getAugmentsForCategory(augments: Observable<Augment[]> | undefined): Observable<Augment[]> {
+    if (!augments || this.selectedCategory == AugmentSlotCategory.FLEX) {
+      return of([]);
     }
-    return augments.filter(x => x.augmentCategory == this.selectedCategory);
+    return augments.pipe(
+      mergeAll(),
+      filter(x => x.augmentCategory == this.selectedCategory),
+      toArray()
+    );
   }
 
   getAbilityTypeName(id: number): Category | undefined {
-    return this.abilityTypeService.getMockAbilityTypes().find(x => x.id == id);
+    let abilityType: Category | undefined;
+    this.abilityTypeService.get()
+      .subscribe(x => abilityType = x.find(z => z.id == id));
+    return abilityType;
   }
 }

@@ -1,6 +1,16 @@
 <div>
-    <div>Admin Dashboard</div>
-    <a routerLink="abilityTypes/" class="text-blue-600 underline hover:text-blue-500 active:text-blue-700">Ability Types</a>
+    <div class="@flex flex-col">Admin Dashboard
+        <a routerLink="abilityTypes/"
+            class="flex text-blue-600 underline hover:text-blue-500 active:text-blue-700">Ability
+            Types</a>
+        <a routerLink="heroClasses/" class="flex text-blue-600 underline hover:text-blue-500 active:text-blue-700">Hero
+            Class</a>
+        <a routerLink="heroes/" class="flex text-blue-600 underline hover:text-blue-500 active:text-blue-700">Hero
+        </a>
+        <a routerLink="augmentCategory/"
+            class="flex text-blue-600 underline hover:text-blue-500 active:text-blue-700">Augment Category
+        </a>
+    </div>
     <form [formGroup]="augmentForm" class="flex flex-col items-center my-2">
         Augment
         <div class="flex flex-col">

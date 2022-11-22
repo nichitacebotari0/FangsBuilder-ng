@@ -69,7 +69,7 @@
 
         <div class="flex flex-col items-center">
             <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
-                *ngFor="let group of groupedAugments | keyvalue">
+                *ngFor="let group of groupedAugments | async | keyvalue">
                 <div class="basis-1/4 flex flex-col">
                     <div>{{getAbilityTypeName(group.key)?.name ?? "Unknown augment: "+group.key}}</div>
                     <div class="mr-2 flex flex-row items-center">

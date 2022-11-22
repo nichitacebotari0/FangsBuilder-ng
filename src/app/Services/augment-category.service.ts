@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, shareReplay, Subject, switchMap, tap } from 'rxjs';
+import { catchError, Observable, of, shareReplay, Subject, switchMap } from 'rxjs';
 import { Category } from '../Models/Category';
 import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AbilityTypeService {
+export class AugmentCategoryService {
   constructor(private config: ConfigService, private http: HttpClient) {
-    this.apiPath = config.apiBaseUrl + "AbilityTypes";
+    this.apiPath = config.apiBaseUrl + "AugmentCategories";
   }
 
   apiPath: string;
@@ -43,7 +43,7 @@ export class AbilityTypeService {
 
   add(abilityType: Category): Observable<Category> {
     return this.http.post<Category>(this.apiPath, abilityType, this.httpOptions).pipe(
-      catchError(this.handleError<Category>('addAbilityType'))
+      catchError(this.handleError<Category>('addAugmentCategory'))
     );
   }
 
@@ -51,14 +51,14 @@ export class AbilityTypeService {
     const url = `${this.apiPath}/${id}`;
     return this.http.put<Category>(url, abilityType, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Category>('updateAbilityType'))
+        catchError(this.handleError<Category>('updateAugmentCategory'))
       );
   }
 
   delete(id: number): Observable<Category> {
     const url = `${this.apiPath}/${id}`;
     return this.http.delete<Category>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Category>('deleteAbilityType'))
+      catchError(this.handleError<Category>('deleteAugmentCategory'))
     );
   }
 
