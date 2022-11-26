@@ -66,8 +66,8 @@ export class BuildEditorComponent implements OnInit {
       mergeAll(),
       reduce((aggregate: Map<number, Augment[]>, augment: Augment) => {
         aggregate = aggregate || new Map<number, Augment[]>();
-        aggregate.set(augment.abilityType, aggregate.get(augment.abilityType) || []);
-        aggregate.get(augment.abilityType)!.push(augment);
+        aggregate.set(augment.abilityTypeId, aggregate.get(augment.abilityTypeId) || []);
+        aggregate.get(augment.abilityTypeId)!.push(augment);
         return aggregate;
       }, new Map<number, Augment[]>()),
     ); // group by ability type
@@ -79,7 +79,7 @@ export class BuildEditorComponent implements OnInit {
     }
     return augments.pipe(
       mergeAll(),
-      filter(x => x.augmentCategory == this.selectedCategory),
+      filter(x => x.augmentCategoryId == this.selectedCategory),
       toArray()
     );
   }

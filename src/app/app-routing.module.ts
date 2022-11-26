@@ -6,6 +6,7 @@ import { BuildEditorComponent } from './build-editor/build-editor.component';
 import { HeroClassComponent } from './Editing/hero-class/hero-class.component';
 import { HeroComponent } from './Editing/hero/hero.component';
 import { AugmentCategoryComponent } from './Editing/augment-category/augment-category.component';
+import { AugmentComponent } from './Editing/augment/augment.component';
 
 const routes: Routes = [
   { path: 'build/editor', component: BuildEditorComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'admin/heroClasses', component: HeroClassComponent },
   { path: 'admin/heroes', component: HeroComponent },
   { path: 'admin/augmentCategory', component: AugmentCategoryComponent },
+  { path: 'admin/augment', component: AugmentComponent },
 ];
 
 @NgModule({

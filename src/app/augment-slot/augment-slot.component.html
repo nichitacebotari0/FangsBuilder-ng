@@ -2,7 +2,8 @@
     style="--tw-gradient-stops: var(--tw-gradient-from), #ffffff,var(--tw-gradient-to), var(--tw-gradient-to);">
     <div [ngClass]="colorClass + ' augmentSlot-imageBorder'">
         <div ngClass="augmentSlot-imageContainer bg-black">
-            <img [src]="item?.augment?.imgPath ? item!.augment!.imgPath : 'assets/Empty.png'" class="augmentSlot-image" />
+            <img [src]="item?.augment?.imagePath ? item!.augment!.imagePath : 'assets/Empty.png'"
+                class="augmentSlot-image" />
         </div>
     </div>
 </div>
