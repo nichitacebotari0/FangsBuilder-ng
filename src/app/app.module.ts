@@ -13,6 +13,7 @@ import { HeroClassComponent } from './Editing/hero-class/hero-class.component';
 import { HeroComponent } from './Editing/hero/hero.component';
 import { AugmentCategoryComponent } from './Editing/augment-category/augment-category.component';
 import { AugmentComponent } from './Editing/augment/augment.component';
+import { HeroesComponent } from './heroes/heroes.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AugmentComponent } from './Editing/augment/augment.component';
     HeroComponent,
     AugmentCategoryComponent,
     AugmentComponent,
+    HeroesComponent,
   ],
   imports: [
     BrowserModule,

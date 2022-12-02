@@ -7,8 +7,10 @@ import { HeroClassComponent } from './Editing/hero-class/hero-class.component';
 import { HeroComponent } from './Editing/hero/hero.component';
 import { AugmentCategoryComponent } from './Editing/augment-category/augment-category.component';
 import { AugmentComponent } from './Editing/augment/augment.component';
+import { HeroesComponent } from './heroes/heroes.component';
 
 const routes: Routes = [
+  { path: 'heroes', component: HeroesComponent },
   { path: 'build/editor', component: BuildEditorComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/abilityTypes', component: AbilityTypeComponent },

@@ -1,0 +1,89 @@
+name: CD
+on:
+  push:
+    branches:
+      - "master"
+  workflow_dispatch:
+
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIBTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+  tf_actions_working_dir: ./terraform
+  NODE_VERSION: "16.16.x"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@master
+
+      # Make sure it builds
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: npm run build
+        run: |
+          {
+          npm ci
+          ng build --prod
+          }
+
+      #  Infrastructure setup
+      - name: "Set up terraform"
+        id: terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        working-directory: ${{ env.tf_actions_working_dir }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: ${{ env.tf_actions_working_dir }}
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: ${{ env.tf_actions_working_dir }}
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+        working-directory: ${{ env.tf_actions_working_dir }}
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        working-directory: ${{ env.tf_actions_working_dir }}
+        run: exit 1
+
+      # Deploy
+      - name: "Login via Azure CLI"
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_AD_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_AD_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIBTION_ID }}","tenantId":"${{ secrets.AZURE_AD_TENANT_ID }}"}'
+
+      - name: Azure CLI Action - Publish dist to azure storage account container
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: Azure/cli@v1
+        with:
+          azcliversion: 2.39.0
+          # az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern assets/*
+          inlineScript: |
+            az storage blob upload-batch --destination '$web' --source './dist' --auth-mode login --account-name 'prodstafangsbuilder2' --overwrite true

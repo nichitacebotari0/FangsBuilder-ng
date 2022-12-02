@@ -1,0 +1,6 @@
+<div class="flex flex-row">
+    <div *ngFor="let hero of heroes$ | async" class="m-2">
+        <img src="{{hero.imagePath}}" />
+        {{ hero.name}}
+    </div>
+</div>
