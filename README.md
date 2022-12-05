@@ -1,3 +1,9 @@
+Rewrite of: https://github.com/nichitacebotari0/FangsBuilder
+
+
+Manual:
+1. Create service principal: az ad sp create-for-rbac -n Name --role Contributor --scopes /subscriptions/ff395dc...
+
 # FangsBuilderNg
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
