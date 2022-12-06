@@ -66,8 +66,8 @@ resource "azurerm_cdn_endpoint_custom_domain" "cdn_endpoint_custom_domain" {
   host_name       = "www.fangsbuilder.com"
 
   cdn_managed_https {
-    certificate_type = "Dedicated"# Shared | Dedicated
-    protocol_type = "ServerNameIndication" # ServerNameIndication  | IPBased
-    tls_version = "TLS12" # (Optional) TLS10(1.0/1.1) | TLS12(1.2)  | None
+    certificate_type = "Dedicated"            # Shared | Dedicated
+    protocol_type    = "ServerNameIndication" # ServerNameIndication  | IPBased
+    tls_version      = "TLS12"                # (Optional) TLS10(1.0/1.1) | TLS12(1.2)  | None
   }
 }
