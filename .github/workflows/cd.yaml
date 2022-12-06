@@ -90,6 +90,6 @@ jobs:
         uses: Azure/cli@v1
         with:
           azcliversion: 2.39.0
-          # az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern assets/*
           inlineScript: |
-            az storage blob upload-batch --destination '$web' --source './dist' --auth-mode login --account-name 'prodstafangsbuilder2' --overwrite true
+            az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern !assets;
+            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --overwrite true

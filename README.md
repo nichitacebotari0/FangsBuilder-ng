@@ -2,7 +2,7 @@ Rewrite of: https://github.com/nichitacebotari0/FangsBuilder
 
 
 Manual:
-1. Create service principal: az ad sp create-for-rbac -n Name --role Contributor --scopes /subscriptions/ff395dc...
+1. Create service principal: az ad sp create-for-rbac -n Name --role Contributor, "Storage Blob Data Contributor" --scopes /subscriptions/ff395dc...
 
 # FangsBuilderNg
 
