@@ -36,7 +36,7 @@ jobs:
           {
           npm i -g @angular/cli
           npm ci
-          ng build --prod
+          ng build --configuration production
           }
 
       #  Infrastructure setup
