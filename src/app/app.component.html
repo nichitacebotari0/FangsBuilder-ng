@@ -1,6 +1,6 @@
-<div class="text-slate-300 bg-gradient-to-b from-gray-900 via-gray-900">
-    <nav class="bg-gradient-to-b from-slate-800 via-slate-800 pb-4">
-        <a routerLink="/admin"
+<div class="text-slate-300 bg-gradient-to-b from-gray-900">
+    <nav class="bg-gradient-to-b pb-1 flex">
+        <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin"
             class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-2 rounded-md m-1">
             Admin
         </a>
@@ -10,6 +10,12 @@
         <a routerLink="/heroes"
             class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-2 rounded-md m-1">
             Heroes</a>
+        <a class="flex ml-auto my-1 items-center px-1">
+            <img (click)="login()" src="assets/discord_icon_blurple_RGB.png"
+                [ngClass]="(isLoggedIn ? 'hover:bg-stone-900' : '') + 'hover:text-white active:bg-black p-1 rounded-md mr-1 w-12'"
+                [class.cursor-pointer]="!isLoggedIn" />
+            <div *ngIf="isLoggedIn" class="">{{username}}</div>
+        </a>
     </nav>
     <router-outlet></router-outlet>
 </div>

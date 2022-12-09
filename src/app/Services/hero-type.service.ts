@@ -9,12 +9,13 @@ import { ConfigService } from './config.service';
 })
 export class HeroTypeService {
   constructor(private config: ConfigService, private http: HttpClient) {
-    this.apiPath = config.apiBaseUrl + "HeroClasses";
+    this.apiPath = config.apiBaseUrl + "HeroClasses";    
   }
 
   apiPath: string;
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true
   };
 
   private cache$: Observable<Category[]> | undefined;

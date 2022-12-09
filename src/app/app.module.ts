@@ -14,6 +14,8 @@ import { HeroComponent } from './Editing/hero/hero.component';
 import { AugmentCategoryComponent } from './Editing/augment-category/augment-category.component';
 import { AugmentComponent } from './Editing/augment/augment.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { DiscordRedirectComponent } from './discord-redirect/discord-redirect.component';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
   declarations: [
@@ -27,13 +29,15 @@ import { HeroesComponent } from './heroes/heroes.component';
     AugmentCategoryComponent,
     AugmentComponent,
     HeroesComponent,
+    DiscordRedirectComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     // FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CookieModule.withOptions()
   ],
   providers: [],
   bootstrap: [AppComponent]

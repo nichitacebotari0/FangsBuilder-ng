@@ -4,6 +4,7 @@ import { AugmentCategoryService } from './Services/augment-category.service';
 import { AugmentService } from './Services/augment.service';
 import { HeroTypeService } from './Services/hero-type.service';
 import { HeroService } from './Services/hero.service';
+import { OauthService } from './Services/oauth.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,9 @@ export class AppComponent {
     private heroService: HeroService,
     private abilityTypeService: AbilityTypeService,
     private augmentCategoryService: AugmentCategoryService,
-    private augmentService: AugmentService,) { }
+    private augmentService: AugmentService,
+    private oauthService: OauthService) {
+  }
 
   ngOnInit(): void {
     let heroeTypes$ = this.heroTypeService.get();
@@ -40,5 +43,24 @@ export class AppComponent {
     let augments$ = this.augmentService.get();
     augments$.subscribe(); // hack
     this.augmentService.refetch(); // hack
+  }
+
+  AuthUrl: string = "https://discord.com/api/oauth2/authorize?client_id=1049648726664282183&redirect_uri=https%3A%2F%2Flocalhost%3A4200%2Fdiscord-redirect&response_type=code&scope=identify%20guilds.members.read";
+  login() {
+    if (this.oauthService.isLoggedIn())
+      return;
+    window.location.href = this.AuthUrl;
+  }
+
+  get isLoggedIn(): boolean {
+    return this.oauthService.isLoggedIn();
+  }
+
+  get isAdmin(): boolean {
+    return this.oauthService.isadmin();
+  }
+
+  get username(): string | undefined {
+    return this.oauthService.getusername();
   }
 }
