@@ -25,6 +25,32 @@
             </button>
             {{ 'Currently editing:'+editId }}
         </div>
+        <div class="flex flex-col">
+            <label for="class">Hero</label>
+            <div class="flex flex-row">
+                <img src="{{currentHeroImage}}" class="w-24" />
+                <select id="class" formControlName="heroId" class="w-full border-2 text-gray-900">
+                    <option *ngFor="let hero of heroes$ | async" [value]="hero.id">{{ hero.name }}</option>
+                </select>
+            </div>
+            <div [class.hidden]="!form.controls['heroId'].errors?.['required']" class="text-red-600">
+                Choose a hero
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <label for="imagePath">Image Path</label>
+            <div class="flex flex-row">
+                <img src="{{form.value.imagePath}}" class="w-24" />
+                <select id="imagePath" formControlName="imagePath" class="w-full border-2 text-gray-900">
+                    <option *ngFor="let heroImage of heroImages$ | async" value="{{heroImage}}" class="dropdownImage">
+                        {{ heroImage }}
+                    </option>
+                </select>
+            </div>
+            <div [class.hidden]="!form.controls['imagePath'].errors?.['required']" class="text-red-600">
+                Image Path is required
+            </div>
+        </div>
         <div class="flex flex-col ">
             <label for="id">Id</label>
             <input id="id" type="number" formControlName="id" class="w-fit border-2 text-gray-900" />
@@ -49,22 +75,7 @@
                 Description is required
             </div>
         </div>
-        <div class="flex flex-col">
-            <label for="imagePath">Image Path</label>
-            <input id="imagePath" type="text" formControlName="imagePath" class="w-fit border-2 text-gray-900" />
-            <div [class.hidden]="!form.controls['imagePath'].errors?.['required']" class="text-red-600">
-                Image Path is required
-            </div>
-        </div>
-        <div class="flex flex-col">
-            <label for="class">Hero</label>
-            <select id="class" formControlName="heroId" class="w-full border-2 text-gray-900">
-                <option *ngFor="let hero of heroes$ | async" [value]="hero.id">{{ hero.name }}</option>
-            </select>
-            <div [class.hidden]="!form.controls['heroId'].errors?.['required']" class="text-red-600">
-                Choose a hero
-            </div>
-        </div>
+
         <div class="flex flex-col">
             <label for="class">Augment Category</label>
             <select id="class" formControlName="augmentCategoryId" class="w-full border-2 text-gray-900">

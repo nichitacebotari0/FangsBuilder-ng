@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { Augment } from 'src/app/Models/Augment';
 import { Category } from 'src/app/Models/Category';
 import { Hero } from 'src/app/Models/Hero';
@@ -8,6 +8,7 @@ import { AbilityTypeService } from 'src/app/Services/ability-type.service';
 import { AugmentCategoryService } from 'src/app/Services/augment-category.service';
 import { AugmentService } from 'src/app/Services/augment.service';
 import { HeroService } from 'src/app/Services/hero.service';
+import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 
 @Component({
   selector: 'app-augment',
@@ -19,19 +20,44 @@ export class AugmentComponent implements OnInit {
   constructor(private augmentService: AugmentService,
     private heroService: HeroService,
     private augmentCategoryService: AugmentCategoryService,
-    private abilityTypeService: AbilityTypeService) { }
+    private abilityTypeService: AbilityTypeService,
+    private staticAssetService: StaticAssetsService) { }
 
   ngOnInit(): void {
     this.augments$ = this.augmentService.get();
     this.heroes$ = this.heroService.get();
     this.augmentCategories$ = this.augmentCategoryService.get();
     this.abilityTypes$ = this.abilityTypeService.get();
-    
+
+    this.heroImages$ = combineLatest([
+      this.form.get("heroId")!.valueChanges,
+      this.heroes$,
+      this.staticAssetService.getHeroes()
+    ]).pipe(
+      map(([heroId, heroList, heroImages]) => {
+        let hero = heroList.find(x => x.id == heroId);
+        this.currentHeroImage = hero?.imagePath;
+        let name = hero?.name;
+        return heroImages?.find(x => x.Name == name)?.Augments;
+      })
+    );
+
+    this.form.get("imagePath")?.valueChanges.subscribe(data => {
+      let str: string[] | undefined = data?.split("\\");
+      if (!str)
+        return;
+      let fullname: string[] = str[str.length - 1].split(".")[0].split(" ");
+      let id = Number(fullname[0]);
+      let name = fullname.slice(1, fullname.length).join(" ");
+      this.form.patchValue({ id: id, name: name });
+    });
   }
+  heroImages$: Observable<string[] | undefined> | undefined;
   augments$: Observable<Augment[]> | undefined;
   heroes$: Observable<Hero[]> | undefined;
   augmentCategories$: Observable<Category[]> | undefined;
   abilityTypes$: Observable<Category[]> | undefined;
+  currentHeroImage: string | undefined;
   editId: number = -1;
 
   form = new FormGroup({

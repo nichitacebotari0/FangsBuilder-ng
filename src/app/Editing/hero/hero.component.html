@@ -28,33 +28,42 @@
         <div class="flex flex-col ">
             <label for="id">Id</label>
             <input id="id" type="number" formControlName="id" class="w-fit border-2 text-gray-900" />
-            <div [class.hidden]="!heroForm.controls['id'].errors?.['required']" class="text-red-600">Id is
-                required</div>
+            <div [class.hidden]="!heroForm.controls['id'].errors?.['required']" class="text-red-600">
+                Id is required
+            </div>
             <div [class.hidden]="!heroForm.controls['id'].errors?.['min']" class="text-red-600">Minimum id is 1
             </div>
         </div>
         <div class="flex flex-col">
             <label for="name">Name</label>
             <input id="name" type="text" formControlName="name" class="w-fit border-2 text-gray-900" />
-            <div [class.hidden]="!heroForm.controls['name'].errors?.['required']" class="text-red-600">Name is
-                required
+            <div [class.hidden]="!heroForm.controls['name'].errors?.['required']" class="text-red-600">
+                Name is required
             </div>
         </div>
         <div class="flex flex-col">
             <label for="imagePath">Image Path</label>
-            <input id="imagePath" type="text" formControlName="imagePath" class="w-fit border-2 text-gray-900" />
-            <div [class.hidden]="!heroForm.controls['imagePath'].errors?.['required']" class="text-red-600">Image Path
-                is
-                required
+            <div class="flex flex-row">
+                <img src="{{heroForm.value.imagePath}}" class="w-24" />
+                <select id="imagePath" formControlName="imagePath" class="w-full border-2 text-gray-900">
+                    <option *ngFor="let heroAsset of heroAssets$ | async" value="{{heroAsset.Icon}}"
+                        class="dropdownImage">
+                        {{ heroAsset.Icon }}
+                    </option>
+                </select>
+            </div>
+            <div [class.hidden]="!heroForm.controls['imagePath'].errors?.['required']" class="text-red-600">
+                Image Path is required
             </div>
         </div>
         <div class="flex flex-col">
             <label for="class">Type</label>
             <select id="class" formControlName="heroClass" class="w-full border-2 text-gray-900">
-                <option *ngFor="let heroType of heroTypes$ | async" [value]="heroType.id">{{ heroType.name }}</option>
+                <option *ngFor="let heroType of heroTypes$ | async" [value]="heroType.id">{{ heroType.name }}
+                </option>
             </select>
-            <div [class.hidden]="!heroForm.controls['heroClass'].errors?.['required']" class="text-red-600">Choose
-                a type
+            <div [class.hidden]="!heroForm.controls['heroClass'].errors?.['required']" class="text-red-600">
+                Choose a type
             </div>
         </div>
 

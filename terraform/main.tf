@@ -50,6 +50,7 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
   location            = "Global" # can also use resource group location and test
   resource_group_name = azurerm_resource_group.resource_group.name
 
+  origin_host_header = azurerm_storage_account.storage_account.primary_web_host
   origin {
     name      = "prodstafangsbuilder2"
     host_name = azurerm_storage_account.storage_account.primary_web_host

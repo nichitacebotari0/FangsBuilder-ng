@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
 import { Hero } from 'src/app/Models/Hero';
+import { HeroImages } from 'src/app/Models/Static';
 import { HeroTypeService } from 'src/app/Services/hero-type.service';
 import { HeroService } from 'src/app/Services/hero.service';
+import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 
 @Component({
   selector: 'app-hero',
@@ -12,13 +14,24 @@ import { HeroService } from 'src/app/Services/hero.service';
   styleUrls: ['./hero.component.less']
 })
 export class HeroComponent implements OnInit {
-
-  constructor(private heroService: HeroService, private heroTypeService: HeroTypeService) { }
+  constructor(private heroService: HeroService,
+    private heroTypeService: HeroTypeService,
+    private staticAssetService: StaticAssetsService) {
+  }
 
   ngOnInit(): void {
     this.heroes$ = this.heroService.get();
     this.heroTypes$ = this.heroTypeService.get();
+    this.heroAssets$ = this.staticAssetService.getHeroes();
+    this.heroForm.get("imagePath")?.valueChanges.subscribe(data => {
+      let str: string[] | undefined = data?.split("\\");
+      if (!str)
+        return;
+      let name: string = str[str.length - 1].split(".")[0];
+      this.heroForm.patchValue({ name: name });
+    });
   }
+  heroAssets$: Observable<HeroImages[]> | undefined;
   heroes$: Observable<Hero[]> | undefined;
   heroTypes$: Observable<Category[]> | undefined;
   editId: number = -1;
