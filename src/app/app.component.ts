@@ -4,6 +4,7 @@ import { ArtifactTypeService } from './Services/artifact-type.service';
 import { ArtifactService } from './Services/artifact.service';
 import { AugmentCategoryService } from './Services/augment-category.service';
 import { AugmentService } from './Services/augment.service';
+import { ConfigService } from './Services/config.service';
 import { HeroTypeService } from './Services/hero-type.service';
 import { HeroService } from './Services/hero.service';
 import { OauthService } from './Services/oauth.service';
@@ -16,7 +17,7 @@ import { OauthService } from './Services/oauth.service';
 export class AppComponent {
   title = 'FangsBuilder-ng';
 
-  constructor(
+  constructor(private configService: ConfigService,
     private heroTypeService: HeroTypeService,
     private heroService: HeroService,
     private abilityTypeService: AbilityTypeService,
@@ -25,6 +26,7 @@ export class AppComponent {
     private artifactTypeService: ArtifactTypeService,
     private artifactService: ArtifactService,
     private oauthService: OauthService) {
+    this.AuthUrl = configService.AuthUrl;
   }
 
   ngOnInit(): void {
@@ -57,7 +59,7 @@ export class AppComponent {
     this.artifactService.refetch();
   }
 
-  AuthUrl: string = "https://discord.com/api/oauth2/authorize?client_id=1049648726664282183&redirect_uri=https%3A%2F%2Flocalhost%3A4200%2Fdiscord-redirect&response_type=code&scope=identify%20guilds.members.read";
+  AuthUrl: string;
   login() {
     if (this.oauthService.isLoggedIn())
       return;

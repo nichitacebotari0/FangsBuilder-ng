@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://localhost:4200/api/"
+  apiBaseUrl: "https://localhost:4200/api/",
+  authUrl: "https://discord.com/api/oauth2/authorize?client_id=1049648726664282183&redirect_uri=https%3A%2F%2Flocalhost%3A4200%2Fdiscord-redirect&response_type=code&scope=identify%20guilds.members.read"
 };
 
 /*

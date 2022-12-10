@@ -10,6 +10,9 @@ export class ConfigService {
     return environment.apiBaseUrl;
   }
 
+  public get AuthUrl(): string {
+    return environment.authUrl;
+  }
 
   constructor() {
 
