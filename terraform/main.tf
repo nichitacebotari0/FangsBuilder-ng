@@ -56,6 +56,24 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
     host_name = azurerm_storage_account.storage_account.primary_web_host
   }
 
+  delivery_rule {
+    name  = "httpsRedirect"
+    order = 1
+
+    request_scheme_condition {
+      match_values = [
+        "HTTP",
+      ]
+      negate_condition = false
+      operator         = "Equal"
+    }
+
+    url_redirect_action {
+      protocol      = "Https"
+      redirect_type = "Moved"
+    }
+  }
+
   depends_on = [
     azurerm_storage_account.storage_account
   ]
