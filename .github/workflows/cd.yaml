@@ -71,7 +71,7 @@ jobs:
         if: steps.plan.outcome == 'failure'
         working-directory: ${{ env.tf_actions_working_dir }}
         run: exit 1
-  
+
       - name: Terraform Apply
         id: apply
         if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -91,5 +91,5 @@ jobs:
         with:
           azcliversion: 2.39.0
           inlineScript: |
-            az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern !assets;
-            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --overwrite true
+            az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern !assets/;
+            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern !assets/ --overwrite true

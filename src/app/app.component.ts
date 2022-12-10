@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AbilityTypeService } from './Services/ability-type.service';
 import { ArtifactTypeService } from './Services/artifact-type.service';
 import { ArtifactService } from './Services/artifact.service';
@@ -63,6 +64,9 @@ export class AppComponent {
   login() {
     if (this.oauthService.isLoggedIn())
       return;
+    console.log("isprod:" + environment.production)
+    console.log("authUrl:" + this.configService.AuthUrl)
+    console.log("config authUrl:" + this.AuthUrl)
     window.location.href = this.AuthUrl;
   }
 
