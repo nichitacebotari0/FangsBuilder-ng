@@ -16,6 +16,9 @@ import { AugmentComponent } from './Editing/augment/augment.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { DiscordRedirectComponent } from './discord-redirect/discord-redirect.component';
 import { CookieModule } from 'ngx-cookie';
+import { ArtifactTypeComponent } from './Editing/artifact-type/artifact-type.component';
+import { ArtifactComponent } from './Editing/artifact/artifact.component';
+import { ActiveComponent } from './Editing/active/active.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { CookieModule } from 'ngx-cookie';
     AugmentComponent,
     HeroesComponent,
     DiscordRedirectComponent,
+    ArtifactTypeComponent,
+    ArtifactComponent,
+    ActiveComponent,
   ],
   imports: [
     BrowserModule,

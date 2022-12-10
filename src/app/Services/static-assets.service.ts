@@ -8,6 +8,7 @@ import { HeroImages } from '../Models/Static';
 })
 export class StaticAssetsService {
   private artifactsPath = "assets\\Artifacts.json";
+  private boonsPath = "assets\\Boons.json";
   private heroesPath = "assets\\Heroes.json";
 
   constructor(private http: HttpClient) {
@@ -15,6 +16,10 @@ export class StaticAssetsService {
 
   getArtifacts(): Observable<string[]> {
     return this.http.get<string[]>(this.artifactsPath);
+  }
+
+  getBoons(): Observable<string[]> {
+    return this.http.get<string[]>(this.boonsPath);
   }
 
   getHeroes(): Observable<HeroImages[]> {

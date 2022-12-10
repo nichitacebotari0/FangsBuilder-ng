@@ -24,6 +24,7 @@ function Get-Heroes() {
 
 $artifacts = Get-PathNames -Directory "assets\Artifacts";
 $heroes = Get-Heroes
-
+$boons = Get-PathNames -Directory "assets\Boons"
 ConvertTo-Json $artifacts -Depth 3 | Out-File .\assets\Artifacts.json;
+ConvertTo-Json $boons -Depth 3 | Out-File .\assets\Boons.json;
 ConvertTo-Json $heroes -Depth 3 | Out-File .\assets\Heroes.json;
