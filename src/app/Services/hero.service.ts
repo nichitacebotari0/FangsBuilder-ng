@@ -14,7 +14,8 @@ export class HeroService {
 
   apiPath: string;
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true
   };
 
   private cache$: Observable<Hero[]> | undefined;
@@ -23,7 +24,8 @@ export class HeroService {
   private fetch(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.apiPath, {
       observe: "body" as const,
-      responseType: "json" as const
+      responseType: "json" as const,
+      withCredentials: true
     });
   }
 

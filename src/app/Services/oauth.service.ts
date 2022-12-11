@@ -18,7 +18,7 @@ export class OauthService {
     var queryParams = {
       code: auth_code
     }
-    return this.http.get(this.config.apiBaseUrl + 'Login/GetToken', { params: queryParams, responseType: "text" });
+    return this.http.get(this.config.apiBaseUrl + 'Login/GetToken', { params: queryParams, responseType: "text", withCredentials: true });
   }
 
   isLoggedIn(): boolean {
