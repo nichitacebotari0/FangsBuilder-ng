@@ -92,4 +92,4 @@ jobs:
           azcliversion: 2.39.0
           inlineScript: |
             az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern !assets/;
-            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern !assets/ --overwrite true
+            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --overwrite true
