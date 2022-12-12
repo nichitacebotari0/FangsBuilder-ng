@@ -14,12 +14,12 @@ import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
 
 const routes: Routes = [
-  { path: 'heroes', component: HeroesComponent },
-  { path: 'build/editor', component: BuildEditorComponent },
+  { path: '', component: HeroesComponent },
+  { path: 'hero/:id', component:  HeroComponent},
   { path: 'admin', component: AdminComponent },
   { path: 'admin/abilityType', component: AbilityTypeComponent },
   { path: 'admin/heroClass', component: HeroClassComponent },
-  { path: 'admin/heroe', component: HeroComponent },
+  { path: 'admin/hero', component: HeroComponent },
   { path: 'admin/augmentCategory', component: AugmentCategoryComponent },
   { path: 'admin/augment', component: AugmentComponent },
   { path: 'admin/artifactType', component: ArtifactTypeComponent },
