@@ -4,5 +4,6 @@ export enum AugmentSlotCategory {
     UTILITY = 3,
     ULTIMATE = 4,
     FLEX = 5,
-    ACTIVE = 6
+    ACTIVE = 6,
+    NONE = -1
 }

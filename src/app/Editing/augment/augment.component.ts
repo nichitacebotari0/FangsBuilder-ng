@@ -47,7 +47,7 @@ export class AugmentComponent implements OnInit {
       if (!str)
         return;
       let fullname: string[] = str[str.length - 1].split(".")[0].split(" ");
-      let id = Number(fullname[0]);
+      let id = this.editId > -1 ? this.editId : Number(fullname[0]);
       let name = fullname.slice(1, fullname.length).join(" ");
       this.form.patchValue({ id: id, name: name });
     });
