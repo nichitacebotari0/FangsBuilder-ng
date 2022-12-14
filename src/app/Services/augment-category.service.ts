@@ -14,7 +14,8 @@ export class AugmentCategoryService {
 
   apiPath: string;
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true
   };
 
   private cache$: Observable<Category[]> | undefined;
