@@ -1,0 +1,10 @@
+<div class="augment">
+    <img [src]="element?.imagePath ? element!.imagePath : 'assets/Empty.png'"
+        class="m-auto w-4/5 border-2 border-blue-500" />
+    <div class="augment-tooltip-container">
+        <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
+            <div class="text-center border-b-2 px-1">{{element?.name}}</div>
+            <div>{{element?.description}}</div>
+        </div>
+    </div>
+</div>

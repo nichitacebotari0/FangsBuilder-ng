@@ -20,6 +20,7 @@ import { ArtifactTypeComponent } from './Editing/artifact-type/artifact-type.com
 import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
 import { HeroBuildComponent } from './hero-build/hero-build.component';
+import { AugmentClickableComponent } from './augment-clickable/augment-clickable.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { HeroBuildComponent } from './hero-build/hero-build.component';
     ArtifactComponent,
     ActiveComponent,
     HeroBuildComponent,
+    AugmentClickableComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,12 +3,13 @@ import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay, tap, 
 import { Active } from '../Models/Active';
 import { Artifact } from '../Models/Artifact';
 import { Augment } from '../Models/Augment';
-import { AugmentSlot } from '../Models/AugmentSlot';
+import { AugmentSlot, GenericAugmentData } from '../Models/AugmentSlot';
 import { Category } from '../Models/Category';
 import { AugmentSlotCategory } from '../Models/Enum/AugmentSlotCategory';
 import { Hero } from '../Models/Hero';
 import { AbilityTypeService } from '../Services/ability-type.service';
 import { ActiveService } from '../Services/active.service';
+import { ArtifactTypeService } from '../Services/artifact-type.service';
 import { ArtifactService } from '../Services/artifact.service';
 import { AugmentService } from '../Services/augment.service';
 
@@ -20,14 +21,14 @@ import { AugmentService } from '../Services/augment.service';
 export class BuildEditorComponent implements OnInit {
   readonly AugmentSlotCategoryEnum = AugmentSlotCategory;
   augmentSlots: AugmentSlot[] = [
-    { augmentCategory: AugmentSlotCategory.POSITIONAL },
-    { augmentCategory: AugmentSlotCategory.COMBAT },
-    { augmentCategory: AugmentSlotCategory.UTILITY },
-    { augmentCategory: AugmentSlotCategory.FLEX },
-    { augmentCategory: AugmentSlotCategory.ULTIMATE },
-    { augmentCategory: AugmentSlotCategory.ACTIVE },
-    { augmentCategory: AugmentSlotCategory.FLEX },
-    { augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.POSITIONAL },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.COMBAT },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.UTILITY },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.ULTIMATE },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.ACTIVE },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, augmentCategory: AugmentSlotCategory.FLEX },
   ];
   @Input() hero$: Observable<Hero | undefined> = of(undefined);
   selectedSlot = new BehaviorSubject<number>(-1);
@@ -42,6 +43,7 @@ export class BuildEditorComponent implements OnInit {
   constructor(private augmentService: AugmentService,
     private abilityTypeService: AbilityTypeService,
     private artifactService: ArtifactService,
+    private artifactTypeService: ArtifactTypeService,
     boonService: ActiveService) {
     this.boons$ = boonService.get();
     this.groupedArtifacts$ = this.artifactService.get().pipe(
@@ -67,12 +69,11 @@ export class BuildEditorComponent implements OnInit {
         shareReplay(1));
 
     this.selectedSlot.subscribe(slot => {
-      this.selectedCategory.next(slot > 0 ? this.augmentSlots[slot]?.augmentCategory : AugmentSlotCategory.NONE);
-      this.slotCategory$?.next(slot > 0 ? this.augmentSlots[slot]?.augmentCategory : AugmentSlotCategory.NONE)
+      this.selectedCategory.next(slot > -1 ? this.augmentSlots[slot]?.augmentCategory : AugmentSlotCategory.NONE);
+      this.slotCategory$?.next(slot > -1 ? this.augmentSlots[slot]?.augmentCategory : AugmentSlotCategory.NONE)
     });
 
     this.skillAugments$ = this.selectedCategory.pipe(
-      tap(() => console.log("skill augs refreshed")),
       withLatestFrom(this.heroAugments$),
       map(([categoryId, heroAugments]) => {
         if (!heroAugments || !categoryId ||
@@ -103,10 +104,30 @@ export class BuildEditorComponent implements OnInit {
     this.selectedSlot.next(id);
   }
 
+  getArtifactType(id: number): Observable<Category | undefined> {
+    return this.artifactTypeService.get()
+      .pipe(
+        map(types => types.find(x => x.id == id))
+      )
+  }
+
   getAbilityType(id: number): Observable<Category | undefined> {
     return this.abilityTypeService.get()
       .pipe(
         map(types => types.find(x => x.id == id))
       )
+  }
+
+  selectAugment(event: Event, augmentData: GenericAugmentData) {
+    let alreadySelected = this.augmentSlots.findIndex(x => x.augmentData?.id == augmentData.id);
+    if (alreadySelected > -1) {
+      this.setSelected(event, alreadySelected);
+    }
+
+    event.stopPropagation();
+    let slot = this.augmentSlots[this.selectedSlot.value];
+    console.log(slot);
+    if (slot)
+      slot.augmentData = augmentData;
   }
 }

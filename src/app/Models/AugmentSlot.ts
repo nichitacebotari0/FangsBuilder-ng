@@ -1,7 +1,13 @@
-import { Augment } from "./Augment";
 import { AugmentSlotCategory } from "./Enum/AugmentSlotCategory";
 
 export interface AugmentSlot {
-    augment?: Augment;
+    augmentData?: GenericAugmentData;
     augmentCategory: AugmentSlotCategory;
+}
+
+export interface GenericAugmentData {
+    id: number;
+    name: string;
+    description: string;
+    imagePath: string;
 }

@@ -1,3 +1,9 @@
+.augment {
+    position: relative;
+    display: inline-block;
+    /* touch-action: none; */
+}
+
 .augmentSlot-imageBorder {
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
     -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
@@ -10,4 +16,21 @@
 
 .augmentSlot-image {
     transform: scale(.7);
+}
+
+.augment .augment-tooltip-container {
+    visibility: hidden;
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    z-index: 1;
+}
+
+.augment-tooltip-container .augment-tooltip {
+    position: relative;
+    left: -50%;
+}
+
+.augment:hover .augment-tooltip {
+    visibility: visible;
 }

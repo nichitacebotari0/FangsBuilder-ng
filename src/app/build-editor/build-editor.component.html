@@ -1,8 +1,8 @@
-<div class="flex flex-col xl:flex-row xl:justify-start p-2 min-h-screen">
-    <div class="flex flex-col md:flex-row xl:flex-col items-center ">
-        <img [src]="(hero$ | async)?.imagePath" class="h-auto w-24 sm:w-28 md:w-36  mx-auto" />
+<div class="flex flex-col xl:flex-row xl:justify-start p-2 min-h-screen ">
+    <div class="flex flex-col md:flex-row xl:flex-col items-center flex-grow-0 flex-shrink-0">
+        <img [src]="(hero$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
         <div class="flex flex-row xl:items-center">
-            <div class="flex flex-row flex-wrap justify-center p-2 flex-shrink-0 min-w-min"
+            <div class="flex flex-row flex-wrap justify-center p-2 flex-shrink-0 min-w-min "
                 (pointerup)="setSelected($event, -1)">
                 <app-augment-slot [item]="augmentSlots[0]" [isSelected]="selectedSlot.value == 0"
                     (pointerup)="setSelected($event, 0)"
@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div class="flex-col flex-grow justify-start m-2" *ngIf="selectedSlot.value != -1">
+    <div class="flex flex-col basis-full m-2" *ngIf="selectedSlot.value != -1">
         <div [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.FLEX">FLEX AUGMENTS
             <div class="flex flex-row flex-nowrap justify-center text-gray-900">
                 <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.COMBAT)"
@@ -57,25 +57,57 @@
                     ARTIFACT </button>
             </div>
         </div>
-        <div class="mb-2" [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.POSITIONAL">
+        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-sky-600 mb-2"
+            [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.POSITIONAL">
             ARTIFACT
         </div>
-        <div class="mb-2" [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.COMBAT">
+        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-red-600 mb-2"
+            [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.COMBAT">
             COMBAT
         </div>
-        <div class="mb-2" [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.UTILITY">
+        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-yellow-500 mb-2"
+            [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.UTILITY">
             UTILITY
         </div>
-        <div class="mb-2" [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.ULTIMATE">
+        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-purple-600 mb-2"
+            [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.ULTIMATE">
             ULTIMATE
         </div>
-        <div class="mb-2" [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.ACTIVE">
-            ACTIVE
+        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-yellow-800 mb-2"
+            [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.ACTIVE">
+            BOONS
         </div>
+
+
+        <!-- artifact(positionals) -->
+        <div *ngIf="selectedCategory.value ==  AugmentSlotCategoryEnum.POSITIONAL">
+            <div class=" flex flex-col items-center">
+                <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
+                    *ngFor="let group of groupedArtifacts$ | async | keyvalue">
+                    <div class="basis-1/4 flex flex-col">
+                        <div>{{(getArtifactType(group.key) | async)?.name ?? group.key}}</div>
+                        <div class="mr-2 flex flex-row items-center">
+                            <div class="flex-grow" style="border-bottom: 2px solid gray;"></div>
+                            <div class="w-3 md:w-4 lg:w-6 bg-stone-500 rhombus-border ">
+                                <div class="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 rhombus-inside bg-sky-900"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row basis-3/4">
+                        <div class="basis-1/4" *ngFor="let element of group.value">
+                            <app-augment-clickable [element]="element"
+                                (pointerup)="selectAugment($event, element)"></app-augment-clickable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <!-- combat/utility -->
         <div
-            *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.UTILITY || selectedCategory.value == AugmentSlotCategoryEnum.COMBAT">
+            *ngIf="(selectedCategory.value == AugmentSlotCategoryEnum.UTILITY) || (selectedCategory.value == AugmentSlotCategoryEnum.COMBAT)">
             <div class="flex flex-col items-center">
                 <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
                     *ngFor="let group of groupedAugments$ | async | keyvalue">
@@ -90,23 +122,33 @@
                     </div>
                     <div class="flex flex-row basis-3/4">
                         <div class="basis-1/4" *ngFor="let element of group.value">
-                            <img [src]="element?.imagePath ? element!.imagePath : 'assets/Empty.png'"
-                                class="m-auto augmentSlot-image w-4/5 border-2 border-blue-500" />
+                            <app-augment-clickable [element]="element"
+                                (pointerup)="selectAugment($event, element)"></app-augment-clickable>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <!-- ultimate -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ULTIMATE">
             <div class="flex flex-row basis-3/4">
-                <div class="basis-1/3 text-center" *ngFor="let element of skillAugments$ | async">
+                <div class="basis-1/3 text-center" *ngFor="let element of skillAugments$ | async"
+                    (pointerup)="selectAugment($event, element)">
                     <img [src]="element?.imagePath ? element!.imagePath : 'assets/Empty.png'"
-                        class="m-auto augmentSlot-image w-4/5 border-2 border-blue-500" />
+                        class="m-auto w-3/5 border-2 border-blue-500" />
                     <div>{{element?.name}}</div>
                     <div>{{element?.description}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- active -->
+        <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ACTIVE">
+            <div class="flex flex-row flex-wrap basis-3/4">
+                <div class="basis-1/5" *ngFor="let element of boons$ | async">
+                    <app-augment-clickable [element]="element"
+                        (pointerup)="selectAugment($event, element)"></app-augment-clickable>
                 </div>
             </div>
         </div>

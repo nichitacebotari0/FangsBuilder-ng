@@ -1,9 +1,14 @@
-<div class="from-transparent via-white" [class.bg-gradient-radial]="isSelected"
+<div class="augment from-transparent via-white" [class.bg-gradient-radial]="isSelected"
     style="--tw-gradient-stops: var(--tw-gradient-from), #ffffff,var(--tw-gradient-to), var(--tw-gradient-to);">
     <div [ngClass]="colorClass + ' augmentSlot-imageBorder'">
         <div ngClass="augmentSlot-imageContainer bg-black">
-            <img [src]="item?.augment?.imagePath ? item!.augment!.imagePath : 'assets/Empty.png'"
-                class="augmentSlot-image" />
+            <img [src]="item?.augmentData?.imagePath ?? 'assets/Empty.png'" class="augmentSlot-image" />
+        </div>
+    </div>
+    <div class="augment-tooltip-container" *ngIf="item?.augmentData">
+        <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
+            <div class="text-center border-b-2 px-1">{{item?.augmentData?.name}}</div>
+            <div>{{item?.augmentData?.description}}</div>
         </div>
     </div>
 </div>

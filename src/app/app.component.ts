@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AbilityTypeService } from './Services/ability-type.service';
+import { ActiveService } from './Services/active.service';
 import { ArtifactTypeService } from './Services/artifact-type.service';
 import { ArtifactService } from './Services/artifact.service';
 import { AugmentCategoryService } from './Services/augment-category.service';
@@ -26,7 +27,8 @@ export class AppComponent {
     private augmentService: AugmentService,
     private artifactTypeService: ArtifactTypeService,
     private artifactService: ArtifactService,
-    private oauthService: OauthService) {
+    private oauthService: OauthService,
+    private activeService: ActiveService) {
     this.AuthUrl = configService.AuthUrl;
   }
 
@@ -58,6 +60,10 @@ export class AppComponent {
     let artifacts$ = this.artifactService.get();
     artifacts$.subscribe(); // hack
     this.artifactService.refetch();
+
+    let actives$ = this.activeService.get();
+    actives$.subscribe(); // hack
+    this.activeService.refetch();
   }
 
   AuthUrl: string;

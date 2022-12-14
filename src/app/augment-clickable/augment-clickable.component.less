@@ -1,0 +1,20 @@
+.augment {
+    position: relative;
+}
+
+.augment .augment-tooltip-container {
+    visibility: hidden;
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    z-index: 1;
+}
+
+.augment-tooltip-container .augment-tooltip {
+    position: relative;
+    left: -50%;
+}
+
+.augment:hover .augment-tooltip {
+    visibility: visible;
+}
