@@ -24,8 +24,7 @@ export class HeroService {
   private fetch(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.apiPath, {
       observe: "body" as const,
-      responseType: "json" as const,
-      withCredentials: true
+      responseType: "json" as const
     });
   }
 
