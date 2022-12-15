@@ -58,7 +58,7 @@
         </div>
         <div class="flex flex-col">
             <label for="name">Description</label>
-            <input id="name" type="text" formControlName="description" class="w-fit border-2 text-gray-900" />
+            <textarea id="name" type="text" formControlName="description" class="w-fit border-2 text-gray-900" ></textarea>
             <div [class.hidden]="!form.controls['description'].errors?.['required']" class="text-red-600">
                 Description is required
             </div>

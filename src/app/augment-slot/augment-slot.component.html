@@ -1,11 +1,12 @@
 <div class="augment from-transparent via-white" [class.bg-gradient-radial]="isSelected"
+    (pointerenter)="position_tooltip($event, '.augment-tooltip-container')"
     style="--tw-gradient-stops: var(--tw-gradient-from), #ffffff,var(--tw-gradient-to), var(--tw-gradient-to);">
     <div [ngClass]="colorClass + ' augmentSlot-imageBorder'">
         <div ngClass="augmentSlot-imageContainer bg-black">
             <img [src]="item?.augmentData?.imagePath ?? 'assets/Empty.png'" class="augmentSlot-image" />
         </div>
     </div>
-    <div class="augment-tooltip-container" *ngIf="item?.augmentData">
+    <div class="augment-tooltip-container w-24 md:w-48 lg:w-64 xl:w-80" *ngIf="item?.augmentData">
         <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
             <div class="text-center border-b-2 px-1">{{item?.augmentData?.name}}</div>
             <div>{{item?.augmentData?.description}}</div>

@@ -1,8 +1,8 @@
-<div class="flex flex-col xl:flex-row xl:justify-start p-2 min-h-screen ">
+<div class="flex flex-col xl:flex-row xl:justify-start xs:p-2 min-h-screen ">
     <div class="flex flex-col md:flex-row xl:flex-col items-center flex-grow-0 flex-shrink-0">
         <img [src]="(hero$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
         <div class="flex flex-row xl:items-center">
-            <div class="flex flex-row flex-wrap justify-center p-2 flex-shrink-0 min-w-min "
+            <div class="flex flex-row flex-wrap justify-center xs:p-2 flex-shrink-0 min-w-min "
                 (pointerup)="setSelected($event, -1)">
                 <app-augment-slot [item]="augmentSlots[0]" [isSelected]="selectedSlot.value == 0"
                     (pointerup)="setSelected($event, 0)"
@@ -31,7 +31,7 @@
 
                 <app-augment-slot [item]="augmentSlots[6]" [isSelected]="selectedSlot.value == 6"
                     (pointerup)="setSelected($event, 6)"
-                    class="h-fit w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
+                    class="h-fit w-10 -ml-2 mt-6 xs:ml-auto xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
                 </app-augment-slot>
                 <app-augment-slot [item]="augmentSlots[7]" [isSelected]="selectedSlot.value == 7"
                     (pointerup)="setSelected($event, 7)"
@@ -111,7 +111,7 @@
             <div class="flex flex-col items-center">
                 <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
                     *ngFor="let group of groupedAugments$ | async | keyvalue">
-                    <div class="basis-1/4 flex flex-col">
+                    <div class="flex flex-col basis-1/4 flex-shrink-0 flex-grow-0">
                         <div>{{(getAbilityType(group.key) | async)?.name ?? group.key}}</div>
                         <div class="mr-2 flex flex-row items-center">
                             <div class="flex-grow" style="border-bottom: 2px solid gray;"></div>
@@ -146,7 +146,7 @@
         <!-- active -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ACTIVE">
             <div class="flex flex-row flex-wrap basis-3/4">
-                <div class="basis-1/5" *ngFor="let element of boons$ | async">
+                <div class="basis-1/4" *ngFor="let element of boons$ | async">
                     <app-augment-clickable [element]="element"
                         (pointerup)="selectAugment($event, element)"></app-augment-clickable>
                 </div>
