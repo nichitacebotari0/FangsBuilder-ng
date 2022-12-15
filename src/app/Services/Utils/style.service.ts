@@ -8,7 +8,6 @@ export class StyleService {
   constructor() { }
 
   position_tooltip(event: Event, name: string) {
-    console.log(event);
     if (!(event?.currentTarget instanceof Element))
       return;
     var tooltips = event.currentTarget?.querySelectorAll<HTMLElement>(name);

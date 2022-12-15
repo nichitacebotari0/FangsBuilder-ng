@@ -91,5 +91,5 @@ jobs:
         with:
           azcliversion: 2.39.0
           inlineScript: |
-            az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern '[!assets]*'
-            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern '[!assets]*' --content-cache "max-age=3600"  --overwrite true
+            az storage blob delete-batch --source '$web' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern '[!a]*'
+            az storage blob upload-batch --destination '$web' --source './dist/fangs-builder-ng' --auth-mode login --account-name 'prodstafangsbuilder2' --pattern '[!a]*' --content-cache "max-age=3600"  --overwrite true

@@ -20,8 +20,6 @@ export class DiscordRedirectComponent implements OnInit {
       )
       .subscribe(
         data => { 
-          console.log(data);
-          // console.log(" " + window.atob(data!)[1] );
           this.router.navigate(['/']); 
         },
       );

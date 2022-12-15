@@ -70,9 +70,6 @@ export class AppComponent {
   login() {
     if (this.oauthService.isLoggedIn())
       return;
-    console.log("isprod:" + environment.production)
-    console.log("authUrl:" + this.configService.AuthUrl)
-    console.log("config authUrl:" + this.AuthUrl)
     window.location.href = this.AuthUrl;
   }
 

@@ -126,7 +126,6 @@ export class BuildEditorComponent implements OnInit {
 
     event.stopPropagation();
     let slot = this.augmentSlots[this.selectedSlot.value];
-    console.log(slot);
     if (slot)
       slot.augmentData = augmentData;
   }
