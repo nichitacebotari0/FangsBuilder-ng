@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AugmentSlotCategory } from 'src/app/Models/Enum/AugmentSlotCategory';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,25 @@ import { Injectable } from '@angular/core';
 export class StyleService {
 
   constructor() { }
+
+
+  getColorForAugment(augmentType: AugmentSlotCategory | undefined | null) {
+    switch (augmentType) {
+      case AugmentSlotCategory.POSITIONAL:
+        return "sky-600";
+      case AugmentSlotCategory.COMBAT:
+        return "red-600";
+      case AugmentSlotCategory.UTILITY:
+        return "yellow-500";
+      case AugmentSlotCategory.ACTIVE:
+        return "yellow-800";
+      case AugmentSlotCategory.ULTIMATE:
+        return "purple-600";
+      default:
+        return "stone-500";
+    }
+  }
+
 
   position_tooltip(event: Event, name: string) {
     if (!(event?.currentTarget instanceof Element))

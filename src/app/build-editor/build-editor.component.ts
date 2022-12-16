@@ -21,14 +21,14 @@ import { AugmentService } from '../Services/augment.service';
 export class BuildEditorComponent implements OnInit {
   readonly AugmentSlotCategoryEnum = AugmentSlotCategory;
   augmentSlots: AugmentSlot[] = [
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.POSITIONAL },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.COMBAT },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.UTILITY },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.FLEX },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.ULTIMATE },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.ACTIVE },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.FLEX },
-    { augmentData: undefined, augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.POSITIONAL },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.COMBAT },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.UTILITY },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.ULTIMATE },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.ACTIVE },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.FLEX },
   ];
   @Input() hero$: Observable<Hero | undefined> = of(undefined);
   selectedSlot = new BehaviorSubject<number>(-1);
@@ -119,7 +119,7 @@ export class BuildEditorComponent implements OnInit {
   }
 
   selectAugment(event: Event, augmentData: GenericAugmentData, type: AugmentSlotCategory) {
-    let alreadySelected = this.augmentSlots.findIndex(x => x.augmentCategory == type &&  x.augmentData?.id == augmentData.id);
+    let alreadySelected = this.augmentSlots.findIndex(x => x.augmentCategory == type && x.augmentData?.id == augmentData.id);
     if (alreadySelected > -1) {
       this.setSelected(event, alreadySelected);
       return;
@@ -127,7 +127,9 @@ export class BuildEditorComponent implements OnInit {
 
     event.stopPropagation();
     let slot = this.augmentSlots[this.selectedSlot.value];
-    if (slot)
+    if (slot) {
       slot.augmentData = augmentData;
+      slot.currentlySlottedCategory = type;
+    }
   }
 }

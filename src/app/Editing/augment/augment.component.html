@@ -51,6 +51,27 @@
                 Image Path is required
             </div>
         </div>
+        <div class="flex flex-col">
+            <label for="class">Augment Category</label>
+            <select id="class" formControlName="augmentCategoryId" class="w-full border-2 text-gray-900">
+                <option *ngFor="let augmentCategory of augmentCategories$ | async" [value]="augmentCategory.id">
+                    {{ augmentCategory.name }}</option>
+            </select>
+            <div [class.hidden]="!form.controls['augmentCategoryId'].errors?.['required']" class="text-red-600">
+                Choose an Augment Category
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <label for="class">Ability Type</label>
+            <select id="class" formControlName="abilityTypeId" class="w-full border-2 text-gray-900">
+                <option *ngFor="let abilityType of abilityTypes$ | async" [value]="abilityType.id">
+                    {{ abilityType.name }}</option>
+            </select>
+            <div [class.hidden]="!form.controls['abilityTypeId'].errors?.['required']" class="text-red-600">
+                Choose an Ability Type
+            </div>
+        </div>
+        
         <div class="flex flex-col ">
             <label for="id">Id</label>
             <input id="id" type="number" formControlName="id" class="w-fit border-2 text-gray-900" />
@@ -73,27 +94,6 @@
             <textarea id="name" type="text" formControlName="description" class="w-fit border-2 text-gray-900" ></textarea>
             <div [class.hidden]="!form.controls['description'].errors?.['required']" class="text-red-600">
                 Description is required
-            </div>
-        </div>
-
-        <div class="flex flex-col">
-            <label for="class">Augment Category</label>
-            <select id="class" formControlName="augmentCategoryId" class="w-full border-2 text-gray-900">
-                <option *ngFor="let augmentCategory of augmentCategories$ | async" [value]="augmentCategory.id">
-                    {{ augmentCategory.name }}</option>
-            </select>
-            <div [class.hidden]="!form.controls['augmentCategoryId'].errors?.['required']" class="text-red-600">
-                Choose an Augment Category
-            </div>
-        </div>
-        <div class="flex flex-col">
-            <label for="class">Ability Type</label>
-            <select id="class" formControlName="abilityTypeId" class="w-full border-2 text-gray-900">
-                <option *ngFor="let abilityType of abilityTypes$ | async" [value]="abilityType.id">
-                    {{ abilityType.name }}</option>
-            </select>
-            <div [class.hidden]="!form.controls['abilityTypeId'].errors?.['required']" class="text-red-600">
-                Choose an Ability Type
             </div>
         </div>
 

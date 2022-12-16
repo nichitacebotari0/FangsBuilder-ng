@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AugmentSlot } from '../Models/AugmentSlot';
+import { AugmentSlotCategory } from '../Models/Enum/AugmentSlotCategory';
 import { StyleService } from '../Services/Utils/style.service';
 
 @Component({
@@ -11,11 +12,13 @@ export class AugmentSlotComponent implements OnInit {
 
   @Input() item?: AugmentSlot;
   @Input() isSelected: boolean = false;
-  colorClass: string = "bg-stone-500";
-
   constructor(private styleService: StyleService) { }
 
   ngOnInit(): void {
+  }
+
+  public get colorClass(): string {
+    return "bg-"+this.styleService.getColorForAugment(this?.item?.currentlySlottedCategory)
   }
 
   position_tooltip(event: Event, name: string) {
