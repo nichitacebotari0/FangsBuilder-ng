@@ -118,10 +118,11 @@ export class BuildEditorComponent implements OnInit {
       )
   }
 
-  selectAugment(event: Event, augmentData: GenericAugmentData) {
-    let alreadySelected = this.augmentSlots.findIndex(x => x.augmentData?.id == augmentData.id);
+  selectAugment(event: Event, augmentData: GenericAugmentData, type: AugmentSlotCategory) {
+    let alreadySelected = this.augmentSlots.findIndex(x => x.augmentCategory == type &&  x.augmentData?.id == augmentData.id);
     if (alreadySelected > -1) {
       this.setSelected(event, alreadySelected);
+      return;
     }
 
     event.stopPropagation();
