@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AbilityTypeService } from './Services/ability-type.service';
 import { ActiveService } from './Services/active.service';
@@ -34,35 +35,35 @@ export class AppComponent {
 
   ngOnInit(): void {
     let heroeTypes$ = this.heroTypeService.get();
-    heroeTypes$.subscribe(); // hack
+    heroeTypes$.pipe(take(1)).subscribe(); // hack
     this.heroTypeService.refetch();
 
     let heroes$ = this.heroService.get();
-    heroes$.subscribe(); // hack
+    heroes$.pipe(take(1)).subscribe(); // hack
     this.heroService.refetch();
 
     let abilityTypes$ = this.abilityTypeService.get();
-    abilityTypes$.subscribe(); // hack
+    abilityTypes$.pipe(take(1)).subscribe(); // hack
     this.abilityTypeService.refetch();
 
     let augmentCategories$ = this.augmentCategoryService.get();
-    augmentCategories$.subscribe(); // hack
+    augmentCategories$.pipe(take(1)).subscribe(); // hack
     this.augmentCategoryService.refetch();
 
     let augments$ = this.augmentService.get();
-    augments$.subscribe(); // hack
+    augments$.pipe(take(1)).subscribe(); // hack
     this.augmentService.refetch();
 
     let artifactTypes$ = this.artifactTypeService.get();
-    artifactTypes$.subscribe(); // hack
+    artifactTypes$.pipe(take(1)).subscribe(); // hack
     this.artifactTypeService.refetch();
 
     let artifacts$ = this.artifactService.get();
-    artifacts$.subscribe(); // hack
+    artifacts$.pipe(take(1)).subscribe(); // hack
     this.artifactService.refetch();
 
     let actives$ = this.activeService.get();
-    actives$.subscribe(); // hack
+    actives$.pipe(take(1)).subscribe(); // hack
     this.activeService.refetch();
   }
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay, tap, withLatestFrom, } from 'rxjs';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay, take, tap, timeout, withLatestFrom, } from 'rxjs';
 import { Active } from '../Models/Active';
 import { Artifact } from '../Models/Artifact';
 import { Augment } from '../Models/Augment';
@@ -12,6 +13,7 @@ import { ActiveService } from '../Services/active.service';
 import { ArtifactTypeService } from '../Services/artifact-type.service';
 import { ArtifactService } from '../Services/artifact.service';
 import { AugmentService } from '../Services/augment.service';
+import { BuildSerializerService } from '../Services/Utils/build-serializer.service';
 
 @Component({
   selector: 'app-build-editor',
@@ -21,14 +23,14 @@ import { AugmentService } from '../Services/augment.service';
 export class BuildEditorComponent implements OnInit {
   readonly AugmentSlotCategoryEnum = AugmentSlotCategory;
   augmentSlots: AugmentSlot[] = [
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.POSITIONAL },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.COMBAT },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.UTILITY },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.FLEX },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.ULTIMATE },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.ACTIVE },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.FLEX },
-    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, augmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.POSITIONAL },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.COMBAT },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.UTILITY },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.ULTIMATE },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.ACTIVE },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.FLEX },
+    { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.FLEX },
   ];
   @Input() hero$: Observable<Hero | undefined> = of(undefined);
   selectedSlot = new BehaviorSubject<number>(-1);
@@ -44,7 +46,10 @@ export class BuildEditorComponent implements OnInit {
     private abilityTypeService: AbilityTypeService,
     private artifactService: ArtifactService,
     private artifactTypeService: ArtifactTypeService,
-    boonService: ActiveService) {
+    boonService: ActiveService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private buildSerializerService: BuildSerializerService) {
     this.boons$ = boonService.get();
     this.groupedArtifacts$ = this.artifactService.get().pipe(
       map(artifacts =>
@@ -58,6 +63,8 @@ export class BuildEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.decodeBuild();
+
     this.heroAugments$ =
       combineLatest([
         this.augmentService.get(),
@@ -69,8 +76,8 @@ export class BuildEditorComponent implements OnInit {
         shareReplay(1));
 
     this.selectedSlot.subscribe(slot => {
-      this.selectedCategory.next(slot > -1 ? this.augmentSlots[slot]?.augmentCategory : AugmentSlotCategory.NONE);
-      this.slotCategory$?.next(slot > -1 ? this.augmentSlots[slot]?.augmentCategory : AugmentSlotCategory.NONE)
+      this.selectedCategory.next(slot > -1 ? this.augmentSlots[slot]?.slotAugmentCategory : AugmentSlotCategory.NONE);
+      this.slotCategory$?.next(slot > -1 ? this.augmentSlots[slot]?.slotAugmentCategory : AugmentSlotCategory.NONE)
     });
 
     this.skillAugments$ = this.selectedCategory.pipe(
@@ -119,17 +126,54 @@ export class BuildEditorComponent implements OnInit {
   }
 
   selectAugment(event: Event, augmentData: GenericAugmentData, type: AugmentSlotCategory) {
-    let alreadySelected = this.augmentSlots.findIndex(x => x.augmentCategory == type && x.augmentData?.id == augmentData.id);
+    const alreadySelected = this.augmentSlots.findIndex(x => x.currentlySlottedCategory == type && x.augmentData?.id == augmentData.id);
     if (alreadySelected > -1) {
       this.setSelected(event, alreadySelected);
       return;
     }
 
     event.stopPropagation();
-    let slot = this.augmentSlots[this.selectedSlot.value];
+    const slot = this.augmentSlots[this.selectedSlot.value];
     if (slot) {
       slot.augmentData = augmentData;
       slot.currentlySlottedCategory = type;
+      this.encodeBuild();
     }
+  }
+
+  encodeBuild() {
+    const encoded: string = this.buildSerializerService.Serialize(this.augmentSlots);
+    const queryParams: Params = { build: encoded }
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: queryParams,
+        queryParamsHandling: 'merge'
+      }
+    )
+  }
+
+  decodeBuild() {
+    const url: URL = new URL(window.location.href);
+    const params: URLSearchParams = url.searchParams;
+    const build = params.get('build');
+    if (build) {
+      const decoded = this.buildSerializerService.Deserialize(build);
+      decoded.forEach((x, i) =>
+        x.pipe(
+          timeout(5000),
+          take(1)
+        ).subscribe(aug => {
+          if (!aug)
+            return;
+          this.augmentSlots[i].augmentData = aug.augment
+          this.augmentSlots[i].currentlySlottedCategory = aug.category
+        }))
+    }
+  }
+
+  ngOnDestroy() {
+    this.selectedSlot.unsubscribe();
   }
 }

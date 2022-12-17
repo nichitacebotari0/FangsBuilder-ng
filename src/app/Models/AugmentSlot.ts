@@ -2,7 +2,7 @@ import { AugmentSlotCategory } from "./Enum/AugmentSlotCategory";
 
 export interface AugmentSlot {
     augmentData?: GenericAugmentData;
-    augmentCategory: AugmentSlotCategory;
+    slotAugmentCategory: AugmentSlotCategory;
     currentlySlottedCategory: AugmentSlotCategory;
 }
 

@@ -1,5 +1,6 @@
 
 # Fangs Builder angular  
+domain: www.fangsbuilder.com
 Connected to backend: https://github.com/nichitacebotari0/api  
 Previous iteration(front end only, built using Solidjs): https://github.com/nichitacebotari0/FangsBuilder  
 The board: https://trello.com/b/olcRpYYN/fangs-builder  
@@ -12,8 +13,8 @@ Need a place to share builds through(why previous iteration existed). And having
 2) Automatically provision infrastructure(terraform) and deploy code(az cli) :heavy_check_mark:  
 3) Serve through Azure CDN, and point domain to it through CNAME(www.fangsbuilder.com)  :heavy_check_mark:  
 4) Make angular forms that connect to api for CRUD on things like augments,heroes,abilityType,etc.  :heavy_check_mark:  
-5) Implement OAuth2 flow for discord, and store claims in cookies(JWT is invisible to frontend ofcourse). Most of the work is done on api side for this. :heavy_check_mark:  
-6) Populate data for some heroes and augments, allow sharing a frontend only link(feature parity with previous iteration)  
+5) Implement OAuth2 flow for discord, and store claims in cookies(JWT is stored as httponly cookie). Most of the work is done on api side for this. :heavy_check_mark:  
+6) Populate data for some heroes and augments, allow sharing a frontend only link(feature parity with previous iteration)  :heavy_check_mark:  
 7) Allow actual persistence for builds, add voting and a way to surface builds(list, with most voted at the top)  
 8) Work on the UI to make it look decent: navbar, text, admin forms arrangement and scrolling, discord icon and nickname once authed.  
 9) Add guides.  
