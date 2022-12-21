@@ -6,7 +6,7 @@
             <img [src]="item?.augmentData?.imagePath ?? 'assets/Empty.png'" class="augmentSlot-image w-24" />
         </div>
     </div>
-    <div class="augment-tooltip-container w-24 md:w-48 lg:w-64 xl:w-80" *ngIf="item?.augmentData">
+    <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80" *ngIf="item?.augmentData">
         <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
             <div class="text-center border-b-2 px-1">{{item?.augmentData?.name}}</div>
             <div>{{item?.augmentData?.description}}</div>

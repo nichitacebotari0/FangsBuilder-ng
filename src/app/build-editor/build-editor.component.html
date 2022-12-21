@@ -1,5 +1,5 @@
 <div class="flex flex-col xl:flex-row xl:justify-start xs:p-2 min-h-screen ">
-    <div class="flex flex-col md:flex-row xl:flex-col items-center flex-grow-0 flex-shrink-0">
+    <div class="flex flex-col md:flex-row xl:flex-col items-center xl:justify-center flex-grow-0 flex-shrink-0">
         <img [src]="(hero$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
         <div class="flex flex-row xl:items-center">
             <div class="flex flex-row flex-wrap justify-center xs:p-2 flex-shrink-0 min-w-min "
@@ -153,5 +153,11 @@
             </div>
         </div>
 
+    </div>
+</div>
+<div class="xs:p-2">
+    <div class="hover:cursor-pointer  " (click)="showForm = !showForm">Want to save the build?</div>
+    <div *ngIf="showForm">
+        <app-build-form [hero$]="hero$" [augments]="augmentSlots"></app-build-form>
     </div>
 </div>

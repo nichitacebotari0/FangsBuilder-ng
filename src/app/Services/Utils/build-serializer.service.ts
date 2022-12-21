@@ -24,7 +24,7 @@ export class BuildSerializerService {
 
   Serialize(augmentSlots: AugmentSlot[]): string {
     return augmentSlots
-      .map(x => x.currentlySlottedCategory + ':' + x.augmentData?.id)
+      .map(x => x.currentlySlottedCategory + ':' + (x.augmentData?.id ?? -1))
       .join(',');
   }
 

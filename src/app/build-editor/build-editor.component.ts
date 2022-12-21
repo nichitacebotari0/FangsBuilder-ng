@@ -41,7 +41,8 @@ export class BuildEditorComponent implements OnInit {
   groupedAugments$: Observable<Map<number, Augment[]>> | undefined;
   boons$: Observable<Active[]>;
   groupedArtifacts$: Observable<Map<number, Artifact[]>>;
-
+  showForm:Boolean = false;
+  
   constructor(private augmentService: AugmentService,
     private abilityTypeService: AbilityTypeService,
     private artifactService: ArtifactService,

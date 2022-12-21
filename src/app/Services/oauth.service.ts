@@ -27,6 +27,10 @@ export class OauthService {
     return false;
   }
 
+  getId(): string | undefined {
+    return this.cookieService.get("discordId");
+  }
+
   getusername(): string | undefined {
     return this.cookieService.get("discordNick");
   }

@@ -21,6 +21,7 @@ import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
 import { HeroBuildComponent } from './hero-build/hero-build.component';
 import { AugmentClickableComponent } from './augment-clickable/augment-clickable.component';
+import { BuildFormComponent } from './build-form/build-form.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AugmentClickableComponent } from './augment-clickable/augment-clickable
     ActiveComponent,
     HeroBuildComponent,
     AugmentClickableComponent,
+    BuildFormComponent,
   ],
   imports: [
     BrowserModule,
