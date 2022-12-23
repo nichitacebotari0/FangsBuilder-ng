@@ -1,9 +1,9 @@
 <div class="flex flex-row flex-wrap">
     <div *ngFor="let hero of heroes$ | async" class="w-24 xs:w-1/3 sm:w-1/4 lg:w-1/6">
         <div class="m-2">
-            <a href="{{'/hero/' + hero.id}}">
+            <button (click)="goToHero(hero.id)">
                 <img src="{{hero.imagePath}}" alt="{{hero.name}}" />
-            </a>
+            </button>
         </div>
     </div>
 

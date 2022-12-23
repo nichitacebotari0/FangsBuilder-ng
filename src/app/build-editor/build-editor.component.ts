@@ -94,7 +94,6 @@ export class BuildEditorComponent implements OnInit {
     this.groupedAugments$ = this.skillAugments$.pipe(
       map(augments =>
         augments.reduce((aggregate: Map<number, Augment[]>, augment: Augment) => {
-          aggregate = aggregate || new Map<number, Augment[]>();
           aggregate.set(augment.abilityTypeId, aggregate.get(augment.abilityTypeId) || []);
           aggregate.get(augment.abilityTypeId)!.push(augment);
           return aggregate;

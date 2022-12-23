@@ -5,6 +5,10 @@
             Home</a>
 
         <div class="flex flex-nowrap ml-auto items-center">
+            <a routerLink="/mybuilds" *ngIf="isLoggedIn"
+                class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-2 rounded-md m-1">
+                My Builds
+            </a>
             <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin"
                 class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-2 rounded-md m-1">
                 Admin

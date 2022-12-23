@@ -22,6 +22,7 @@ import { ActiveComponent } from './Editing/active/active.component';
 import { HeroBuildComponent } from './hero-build/hero-build.component';
 import { AugmentClickableComponent } from './augment-clickable/augment-clickable.component';
 import { BuildFormComponent } from './build-form/build-form.component';
+import { MyBuildsComponent } from './my-builds/my-builds.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { BuildFormComponent } from './build-form/build-form.component';
     HeroBuildComponent,
     AugmentClickableComponent,
     BuildFormComponent,
+    MyBuildsComponent,
   ],
   imports: [
     BrowserModule,
