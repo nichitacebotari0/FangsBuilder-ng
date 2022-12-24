@@ -23,6 +23,7 @@ import { HeroBuildComponent } from './hero-build/hero-build.component';
 import { AugmentClickableComponent } from './augment-clickable/augment-clickable.component';
 import { BuildFormComponent } from './build-form/build-form.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
+import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MyBuildsComponent } from './my-builds/my-builds.component';
     AugmentClickableComponent,
     BuildFormComponent,
     MyBuildsComponent,
+    HeroBuildsComponent,
   ],
   imports: [
     BrowserModule,

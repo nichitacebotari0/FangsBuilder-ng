@@ -20,7 +20,7 @@ import { OauthService } from './Services/oauth.service';
 export class AppComponent {
   title = 'FangsBuilder-ng';
 
-  constructor(private configService: ConfigService,
+  constructor(configService: ConfigService,
     private heroTypeService: HeroTypeService,
     private heroService: HeroService,
     private abilityTypeService: AbilityTypeService,
@@ -69,8 +69,8 @@ export class AppComponent {
 
   AuthUrl: string;
   login() {
-    if (this.oauthService.isLoggedIn())
-      return;
+    // if (this.oauthService.isLoggedIn())
+    //   return;
     window.location.href = this.AuthUrl;
   }
 

@@ -13,11 +13,15 @@ import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
 import { HeroBuildComponent } from './hero-build/hero-build.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
+import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "/heroes", pathMatch: 'full' },
   { path: 'heroes', component: HeroesComponent },
-  { path: 'hero/:id', component: HeroBuildComponent },
+  { path: 'hero/:id', component: HeroBuildsComponent },
+  { path: 'hero/:id/build', component: HeroBuildComponent },
+  { path: 'mybuilds', component: MyBuildsComponent },
+  { path: 'discord-redirect', component: DiscordRedirectComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/abilityType', component: AbilityTypeComponent },
   { path: 'admin/heroClass', component: HeroClassComponent },
@@ -27,8 +31,6 @@ const routes: Routes = [
   { path: 'admin/artifactType', component: ArtifactTypeComponent },
   { path: 'admin/artifact', component: ArtifactComponent },
   { path: 'admin/boon', component: ActiveComponent },
-  { path: 'mybuilds', component: MyBuildsComponent },
-  { path: 'discord-redirect', component: DiscordRedirectComponent },
   { path: '**', redirectTo: "/heroes", pathMatch: 'full' },
 ];
 

@@ -11,9 +11,8 @@ import { HeroService } from '../Services/hero.service';
 })
 export class HeroBuildComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private heroesService: HeroService) {
+  constructor(activatedRoute: ActivatedRoute,
+    heroesService: HeroService) {
     this.heroDetails$ =
       combineLatest([
         activatedRoute.paramMap,

@@ -53,14 +53,13 @@ export class MyBuildsComponent implements OnInit {
     const encoded: string = build.augments;
     const queryParams: Params = { build: encoded, editId: build.id }
     this.router.navigate(
-      ["/hero", build.heroId],
+      ["/hero", build.heroId, "build"],
       {
         queryParams: queryParams,
         queryParamsHandling: 'merge'
       }
     )
   }
-
 
   colorClass(aug: CategorisedGenericAugmentData | null | undefined): string {
     return "bg-" + this.styleService.getColorForAugment(aug?.category)

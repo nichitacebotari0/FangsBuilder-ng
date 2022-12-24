@@ -69,7 +69,7 @@ export class BuildFormComponent implements OnInit, OnDestroy {
     }
 
     var build: Build = {
-      id: this.editId,
+      id: 0,
       heroId: this.heroId,
       title: this.form.value.title!,
       description: this.form.value.description,
@@ -87,6 +87,7 @@ export class BuildFormComponent implements OnInit, OnDestroy {
       error: err => { this.errorMsg = "Something went wrong:" + err.errors.join(' ; ') ?? err }
     }
     if (this.editId > -1) {
+      build.id = this.editId;
       this.buildService.update(this.editId, build)
         .subscribe(resultObserver)
       return;

@@ -12,8 +12,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class HeroesComponent implements OnInit {
 
   constructor(private heroService: HeroService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.heroes$ = this.heroService.get();
@@ -24,5 +23,4 @@ export class HeroesComponent implements OnInit {
   goToHero(id: number) {
     this.router.navigate(["/hero", id])
   }
-
 }

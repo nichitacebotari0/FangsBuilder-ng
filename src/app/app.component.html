@@ -13,7 +13,8 @@
                 class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-2 rounded-md m-1">
                 Admin
             </a>
-            <div *ngIf="isLoggedIn" class="">Hello, {{username}}</div>
+            <div *ngIf="isLoggedIn; else loggedOut" class="">Hello, {{username}}</div>
+            <ng-template #loggedOut >Login WithDiscord </ng-template>
             <img (click)="login()" src="assets/discord_icon_blurple_RGB.png"
                 [ngClass]="(!isLoggedIn ? 'hover:bg-stone-900 active:bg-black' : '') + 'hover:text-white p-1 rounded-md mr-1 w-8 sm:w-12'"
                 [class.cursor-pointer]="!isLoggedIn" />
