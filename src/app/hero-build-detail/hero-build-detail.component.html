@@ -1,0 +1,33 @@
+<div class="m-2 p-1 border-b-gray-400 w-full border-b-2 flex items-center">
+    <div class="inline-block ">
+        {{ details?.build?.title }}
+    </div>
+</div>
+<div class="flex flex-row flex-nowrap">
+    <div *ngFor="let aug of details?.augments">
+        <div class="augment" (pointerenter)="position_tooltip($event, '.augment-tooltip-container')">
+            <div [ngClass]="colorClass(aug | async) + ' augmentSlot-imageBorder'">
+                <div ngClass="augmentSlot-imageContainer bg-black">
+                    <img [src]="(aug | async)?.augment?.imagePath ?? 'assets/Empty.png'"
+                        class="augmentSlot-image w-24" />
+                </div>
+            </div>
+            <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80" *ngIf="(aug | async)?.augment">
+                <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
+                    <div class="text-center border-b-2 px-1">{{(aug | async)?.augment?.name}}</div>
+                    <div>{{(aug | async)?.augment?.description}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-2 p-1 border-b-gray-400 w-full border-b-2 items-center">
+    <button *ngIf="details?.build?.description"
+        class="inline-block hover:cursor-pointer underline bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-1 rounded-md m-1"
+        (click)="showDescription = !showDescription">
+        Show Description
+    </button>
+    <div class="p-2" [class.hidden]="!showDescription">
+        {{ details?.build?.description }}
+    </div>
+</div>

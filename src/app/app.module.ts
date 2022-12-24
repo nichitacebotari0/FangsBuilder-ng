@@ -24,6 +24,7 @@ import { AugmentClickableComponent } from './augment-clickable/augment-clickable
 import { BuildFormComponent } from './build-form/build-form.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
+import { HeroBuildDetailComponent } from './hero-build-detail/hero-build-detail.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
     BuildFormComponent,
     MyBuildsComponent,
     HeroBuildsComponent,
+    HeroBuildDetailComponent,
   ],
   imports: [
     BrowserModule,

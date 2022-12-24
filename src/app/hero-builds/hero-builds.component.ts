@@ -8,7 +8,7 @@ import { HeroService } from '../Services/hero.service';
 import { BuildSerializerService, CategorisedGenericAugmentData } from '../Services/Utils/build-serializer.service';
 import { StyleService } from '../Services/Utils/style.service';
 
-interface BuildWithAugments {
+export interface BuildWithAugments {
   build: Build,
   augments: Observable<CategorisedGenericAugmentData | undefined>[],
 }
@@ -21,8 +21,7 @@ export class HeroBuildsComponent implements OnInit {
   constructor(activatedRoute: ActivatedRoute,
     heroesService: HeroService,
     buildService: BuildService,
-    buildSerializer: BuildSerializerService,
-    private styleService: StyleService) {
+    buildSerializer: BuildSerializerService) {
     this.heroDetails$ =
       combineLatest([
         activatedRoute.paramMap,
@@ -57,12 +56,4 @@ export class HeroBuildsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  colorClass(aug: CategorisedGenericAugmentData | null | undefined): string {
-    return "bg-" + this.styleService.getColorForAugment(aug?.category)
-  }
-
-  position_tooltip(event: Event, name: string) {
-    this.styleService.position_tooltip(event, name);
-    event.stopPropagation();
-  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { combineLatest, filter, flatMap, map, mergeMap, Observable } from 'rxjs';
+import { BuildWithAugments } from '../hero-builds/hero-builds.component';
 import { Build } from '../Models/Build';
 import { Hero } from '../Models/Hero';
 import { BuildService } from '../Services/build.service';
@@ -8,10 +9,6 @@ import { HeroService } from '../Services/hero.service';
 import { BuildSerializerService, CategorisedGenericAugmentData } from '../Services/Utils/build-serializer.service';
 import { StyleService } from '../Services/Utils/style.service';
 
-interface BuildWithAugments {
-  build: Build,
-  augments: Observable<CategorisedGenericAugmentData | undefined>[],
-}
 @Component({
   selector: 'app-my-builds',
   templateUrl: './my-builds.component.html',
