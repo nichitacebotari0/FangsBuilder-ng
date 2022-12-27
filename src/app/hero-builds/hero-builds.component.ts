@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, mergeMap, Observable, of } from 'rxjs';
 import { Build } from '../Models/Build';
+import { BuildVote } from '../Models/BuildVote';
 import { Hero } from '../Models/Hero';
 import { BuildService } from '../Services/build.service';
 import { HeroService } from '../Services/hero.service';
 import { BuildSerializerService, CategorisedGenericAugmentData } from '../Services/Utils/build-serializer.service';
-import { StyleService } from '../Services/Utils/style.service';
 
 export interface BuildWithAugments {
   build: Build,
@@ -19,20 +19,21 @@ export interface BuildWithAugments {
 })
 export class HeroBuildsComponent implements OnInit {
   constructor(activatedRoute: ActivatedRoute,
-    heroesService: HeroService,
+    private router: Router,
     buildService: BuildService,
+    heroesService: HeroService,
     buildSerializer: BuildSerializerService) {
-    this.heroDetails$ =
-      combineLatest([
-        activatedRoute.paramMap,
-        heroesService.get()])
-        .pipe(
-          map(([paramMap, heroes]) => {
-            let id = paramMap.get("id");
-            if (!id)
-              return undefined;
-            return heroes?.find(hero => hero.id == Number(id));
-          }));
+    this.heroDetails$ = combineLatest([
+      activatedRoute.paramMap,
+      heroesService.get()])
+      .pipe(
+        map(([paramMap, heroes]) => {
+          let id = paramMap.get("id");
+          if (!id)
+            return undefined;
+          this.heroId = Number(id);
+          return heroes?.find(hero => hero.id == Number(id));
+        }));
     this.topHeroBuilds$ = this.heroDetails$.pipe(
       mergeMap(x => {
         if (!x?.id)
@@ -40,20 +41,34 @@ export class HeroBuildsComponent implements OnInit {
         return buildService.getHeroBuilds(x?.id);
       }),
       map(builds => {
-        console.log("builds", builds);
+        let myVotes = buildService.getMyVotes(builds.map(build => build.id));
         return builds.map(
           build => ({
             build: build,
             augments: buildSerializer.Deserialize(build.augments),
-          } as BuildWithAugments)
+            myVote: myVotes.pipe(map(x => x.find(vote => vote.buildId == build.id)))
+          } as BuildWithAugments & { myVote: Observable<BuildVote | undefined> })
         )
       })
     );
   }
-  heroDetails$: Observable<Hero | undefined>;
-  topHeroBuilds$: Observable<BuildWithAugments[]>;
 
   ngOnInit(): void {
+  }
+  heroDetails$: Observable<Hero | undefined>;
+  topHeroBuilds$: Observable<(BuildWithAugments & { myVote: Observable<BuildVote | undefined> })[]>;
+  heroId: number | undefined;
+
+  create() {
+    if (!this.heroId)
+      return;
+
+    console.log("asd");
+    this.router.navigate([
+      'hero',
+      this.heroId,
+      'build'
+    ])
   }
 
 }

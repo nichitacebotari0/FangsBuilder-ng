@@ -11,7 +11,7 @@ import { OauthService } from './oauth.service';
 })
 export class BuildService {
 
-  constructor(private config: ConfigService,
+  constructor(config: ConfigService,
     private http: HttpClient,
     private oauthService: OauthService) {
     this.userBuildPath = config.apiBaseUrl + "UserBuild";
@@ -30,14 +30,6 @@ export class BuildService {
     return this.http.get<Build[]>(url, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
-  getMyBuildVotes(buildIds: number[]): Observable<BuildVote[]> {
-    const url = `${this.buildPath}/votes`;
-    const queryParams = {
-      builds: buildIds.join(',')
-    }
-    return this.http.get<BuildVote[]>(url, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), withCredentials: true, params: queryParams });
-  }
-
   getMyBuilds(): Observable<Build[]> {
     const id = this.oauthService.getId()
     const queryParams = {
@@ -53,5 +45,33 @@ export class BuildService {
   update(id: number, build: Build): Observable<Build> {
     const url = `${this.userBuildPath}/${id}`;
     return this.http.put<Build>(url, build, this.httpOptions);
+  }
+
+  remove(id: number): Observable<object> {
+    const url = `${this.userBuildPath}/${id}`;
+    return this.http.delete(url, this.httpOptions);
+  }
+
+  getMyVotes(buildIds: number[]): Observable<BuildVote[]> {
+    const url = `${this.buildPath}/myvotes`;
+    const queryParams = {
+      builds: buildIds.join(',')
+    }
+    return this.http.get<BuildVote[]>(url, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), withCredentials: true, params: queryParams });
+  }
+
+  addVote(vote: BuildVote): Observable<BuildVote> {
+    const url = `${this.buildPath}/vote`;
+    return this.http.post<BuildVote>(url, vote, this.httpOptions);
+  }
+
+  changeVote(id: number, vote: BuildVote): Observable<object> {
+    const url = `${this.buildPath}/vote/${id}`;
+    return this.http.put(url, vote, this.httpOptions);
+  }
+
+  removeVote(id: number): Observable<object> {
+    const url = `${this.buildPath}/vote/${id}`;
+    return this.http.delete(url, this.httpOptions);
   }
 }

@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BuildWithAugments } from '../hero-builds/hero-builds.component';
+import { BuildVote } from '../Models/BuildVote';
 import { CategorisedGenericAugmentData } from '../Services/Utils/build-serializer.service';
 import { StyleService } from '../Services/Utils/style.service';
 

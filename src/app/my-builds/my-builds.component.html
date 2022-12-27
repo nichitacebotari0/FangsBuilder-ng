@@ -9,6 +9,10 @@
                 class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black px-2 py-1 rounded-md ml-auto">
                 Edit
             </button>
+            <button (click)="remove(buildAug.build.id)"
+                class="inline-block bg-red-600 hover:bg-red-900 hover:text-white active:bg-red-500 px-2 py-1 rounded-md ml-1">
+                Delete
+            </button>
         </div>
         <div class="flex flex-row flex-nowrap">
             <div *ngFor="let aug of buildAug.augments">

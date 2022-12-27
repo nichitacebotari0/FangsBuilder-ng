@@ -1,0 +1,6 @@
+<div class="flex flex-col flex-nowrap mt-4 ml-4">
+    <button (click)="vote(true)" class="upArrow w-1 h-1" [class.upArrow-checked]="existingVote?.isUpvote"></button>
+    <div>{{ build ? build.upvotes - build.downvotes : 0}}</div>
+    <button (click)="vote(false)" class="downArrow w-1 h-1"
+        [class.downArrow-checked]="existingVote && !existingVote.isUpvote"></button>
+</div>

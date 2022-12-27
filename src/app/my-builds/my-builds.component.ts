@@ -58,6 +58,10 @@ export class MyBuildsComponent implements OnInit {
     )
   }
 
+  remove(id: number) {
+    this.buildService.remove(id).subscribe(x => location.reload());
+  }
+
   colorClass(aug: CategorisedGenericAugmentData | null | undefined): string {
     return "bg-" + this.styleService.getColorForAugment(aug?.category)
   }

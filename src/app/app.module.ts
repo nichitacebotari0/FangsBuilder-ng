@@ -25,6 +25,7 @@ import { BuildFormComponent } from './build-form/build-form.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 import { HeroBuildDetailComponent } from './hero-build-detail/hero-build-detail.component';
+import { BuildVoteComponent } from './build-vote/build-vote.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { HeroBuildDetailComponent } from './hero-build-detail/hero-build-detail.
     MyBuildsComponent,
     HeroBuildsComponent,
     HeroBuildDetailComponent,
+    BuildVoteComponent,
   ],
   imports: [
     BrowserModule,

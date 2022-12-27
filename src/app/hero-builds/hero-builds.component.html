@@ -1,9 +1,17 @@
 <div class="flex flex-col items-center">
     <img [src]="(heroDetails$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
     <h2>{{(heroDetails$ | async)?.name }}</h2>
+    <div class="border-b-2 border-gray-700 px-2 py-1 w-full flex">
+        <h4>Builds</h4>
+        <button (click)="create()"
+            class="inline-block bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black px-2 py-1 rounded-md ml-auto">
+            Build Editor
+        </button>
+    </div>
     <div class="flex flex-col">
-        <div *ngFor="let build of topHeroBuilds$ | async">
-           <app-hero-build-detail [details]="build"> </app-hero-build-detail>
+        <div *ngFor="let build of topHeroBuilds$ | async" class="flex flex-row">
+            <app-hero-build-detail [details]="build"> </app-hero-build-detail>
+            <app-build-vote [build]="build.build" [existingVote]="(build.myVote | async)"></app-build-vote>
         </div>
     </div>
 </div>
