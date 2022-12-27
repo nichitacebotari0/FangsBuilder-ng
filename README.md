@@ -15,9 +15,9 @@ Need a place to share builds through(why previous iteration existed). And having
 4) Make angular forms that connect to api for CRUD on things like augments,heroes,abilityType,etc.  :heavy_check_mark:  
 5) Implement OAuth2 flow for discord, and store claims in cookies(JWT is stored as httponly cookie). Most of the work is done on api side for this. :heavy_check_mark:  
 6) Populate data for some heroes and augments, allow sharing a frontend only link(feature parity with previous iteration)  :heavy_check_mark:  
-7) Allow actual persistence for builds, add voting and a way to surface builds(list, with most voted at the top)  
+7) Allow actual persistence for builds, add voting and a way to surface builds(list, with most voted at the top)  :heavy_check_mark:  
 8) Work on the UI to make it look decent: navbar, text, admin forms arrangement and scrolling, discord icon and nickname once authed.  
-9) Add guides.  
+9) ~~Add guides.~~ Builds have description  :heavy_check_mark:  
 10) if perf allows it: when in build editor and making a build, dynamically search for, and surface builds/guides already made with those augments and show voting stats. Now youll know if someone already thought of the build, and whats the popularity.  
 11) Solve the patch problem. If augment is removed/changed in game.Do we mark builds as being for particular patch, do we never delete augments only mark them as obsolete. Do we allow editing augments already in builds?(Probably yes, too troublesome to manage)  
 
