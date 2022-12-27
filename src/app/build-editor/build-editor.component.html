@@ -155,7 +155,7 @@
 
     </div>
 </div>
-<div class="xs:p-2">
+<div class="xs:p-2" *ngIf="isLoggedIn">
     <div class="hover:cursor-pointer  " (click)="showForm = !showForm">Want to save the build?</div>
     <div *ngIf="showForm">
         <app-build-form [hero$]="hero$" [augments]="augmentSlots"></app-build-form>

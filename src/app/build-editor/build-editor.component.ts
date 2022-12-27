@@ -13,6 +13,7 @@ import { ActiveService } from '../Services/active.service';
 import { ArtifactTypeService } from '../Services/artifact-type.service';
 import { ArtifactService } from '../Services/artifact.service';
 import { AugmentService } from '../Services/augment.service';
+import { OauthService } from '../Services/oauth.service';
 import { BuildSerializerService } from '../Services/Utils/build-serializer.service';
 
 @Component({
@@ -50,7 +51,8 @@ export class BuildEditorComponent implements OnInit {
     boonService: ActiveService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private buildSerializerService: BuildSerializerService) {
+    private buildSerializerService: BuildSerializerService,
+    private oauthService: OauthService) {
     this.boons$ = boonService.get();
     this.groupedArtifacts$ = this.artifactService.get().pipe(
       map(artifacts =>
@@ -99,6 +101,10 @@ export class BuildEditorComponent implements OnInit {
           return aggregate;
         }, new Map<number, Augment[]>()))
     );
+  }
+
+  get isLoggedIn(): boolean {
+    return this.oauthService.isLoggedIn();
   }
 
   setCategory(event: Event, id: AugmentSlotCategory) {
