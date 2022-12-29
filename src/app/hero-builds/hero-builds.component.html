@@ -9,9 +9,15 @@
         </button>
     </div>
     <div class="flex flex-col">
-        <div *ngFor="let build of topHeroBuilds$ | async" class="flex flex-row">
-            <app-hero-build-detail [details]="build"> </app-hero-build-detail>
-            <app-build-vote [build]="build.build" [existingVote]="(build.myVote | async)"></app-build-vote>
+        <div *ngFor="let detailedBuild of detailedBuilds;" class="flex flex-row">
+            <app-hero-build-detail [details]="detailedBuild"> </app-hero-build-detail>
+            <app-build-vote [build]="detailedBuild.build" [existingVote]="detailedBuild.myVote"></app-build-vote>
+        </div>
+        <div>
+            <button *ngIf="lastBuildId && lastBuildId > 0" (click)="loadChunkDetailedBuilds()"
+            class="inline-block bg-stone-300 hover:bg-stone-700 hover:text-white text-black active:bg-black px-2 py-1 ml-auto">
+            Load More
+        </button>
         </div>
     </div>
 </div>

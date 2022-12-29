@@ -4,18 +4,18 @@
     </div>
 </div>
 <div class="flex flex-row flex-nowrap">
-    <div *ngFor="let aug of details?.augments">
+    <div *ngFor="let aug of details?.augmentsData">
         <div class="augment" (pointerenter)="position_tooltip($event, '.augment-tooltip-container')">
-            <div [ngClass]="colorClass(aug | async) + ' augmentSlot-imageBorder'">
+            <div [ngClass]="colorClass(aug) + ' augmentSlot-imageBorder'">
                 <div ngClass="augmentSlot-imageContainer bg-black">
-                    <img [src]="(aug | async)?.augment?.imagePath ?? 'assets/Empty.png'"
+                    <img [src]="(aug)?.augment?.imagePath ?? 'assets/Empty.png'"
                         class="augmentSlot-image w-24" />
                 </div>
             </div>
-            <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80" *ngIf="(aug | async)?.augment">
+            <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80" *ngIf="(aug)?.augment">
                 <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
-                    <div class="text-center border-b-2 px-1">{{(aug | async)?.augment?.name}}</div>
-                    <div>{{(aug | async)?.augment?.description}}</div>
+                    <div class="text-center border-b-2 px-1">{{(aug)?.augment?.name}}</div>
+                    <div>{{(aug)?.augment?.description}}</div>
                 </div>
             </div>
         </div>

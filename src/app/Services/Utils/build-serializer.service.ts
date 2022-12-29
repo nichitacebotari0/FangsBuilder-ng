@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { AugmentSlot, GenericAugmentData } from 'src/app/Models/AugmentSlot';
 import { AugmentSlotCategory } from 'src/app/Models/Enum/AugmentSlotCategory';
-import { AbilityTypeService } from '../ability-type.service';
 import { ActiveService } from '../active.service';
-import { ArtifactTypeService } from '../artifact-type.service';
 import { ArtifactService } from '../artifact.service';
 import { AugmentService } from '../augment.service';
 
@@ -28,9 +26,8 @@ export class BuildSerializerService {
       .join(',');
   }
 
-
   Deserialize(build: string): Observable<CategorisedGenericAugmentData | undefined>[] {
-    const categorisedAugments = build.split(',')
+    return build.split(',')
       .map(x => {
         const aug = x.split(':');
         return this.getAugment(aug[0], aug[1])
@@ -43,8 +40,6 @@ export class BuildSerializerService {
             })
           );
       });
-
-    return categorisedAugments;
   }
 
   private getAugment(category: string, idString: string): Observable<GenericAugmentData | undefined> {
@@ -74,6 +69,4 @@ export class BuildSerializerService {
         return of(undefined);
     }
   }
-
-
 }
