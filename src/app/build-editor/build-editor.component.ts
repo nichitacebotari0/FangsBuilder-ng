@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay, take, tap, timeout, withLatestFrom, } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, map, mergeAll, Observable, of, shareReplay, take, tap, timeout, withLatestFrom, } from 'rxjs';
 import { Active } from '../Models/Active';
 import { Artifact } from '../Models/Artifact';
 import { Augment } from '../Models/Augment';
@@ -42,8 +42,8 @@ export class BuildEditorComponent implements OnInit {
   groupedAugments$: Observable<Map<number, Augment[]>> | undefined;
   boons$: Observable<Active[]>;
   groupedArtifacts$: Observable<Map<number, Artifact[]>>;
-  showForm:Boolean = false;
-  
+  showForm: Boolean = false;
+
   constructor(private augmentService: AugmentService,
     private abilityTypeService: AbilityTypeService,
     private artifactService: ArtifactService,
@@ -68,15 +68,15 @@ export class BuildEditorComponent implements OnInit {
   ngOnInit(): void {
     this.decodeBuild();
 
-    this.heroAugments$ =
-      combineLatest([
-        this.augmentService.get(),
-        this.hero$
-      ]).pipe(
-        map(([augments, hero]) => {
-          return augments?.filter(augment => augment.heroId == hero?.id) ?? [];
-        }),
-        shareReplay(1));
+    this.heroAugments$ = this.hero$.pipe(
+      map(hero => {
+        if (hero?.id === null)
+          return [];
+        return this.augmentService.get(hero!.id);
+      }),
+      mergeAll(),
+      shareReplay(1),
+    );
 
     this.selectedSlot.subscribe(slot => {
       this.selectedCategory.next(slot > -1 ? this.augmentSlots[slot]?.slotAugmentCategory : AugmentSlotCategory.NONE);
@@ -165,17 +165,23 @@ export class BuildEditorComponent implements OnInit {
     const params: URLSearchParams = url.searchParams;
     const build = params.get('build');
     if (build) {
-      const decoded = this.buildSerializerService.Deserialize(build);
-      decoded.forEach((x, i) =>
-        x.pipe(
-          timeout(5000),
-          take(1)
-        ).subscribe(aug => {
+      const decoded =
+        this.hero$.pipe(
+          map(hero => {
+            if (hero?.id === null)
+              return [];
+            return forkJoin(this.buildSerializerService.Deserialize(hero!.id, build).map(x => x.pipe(take(1))))
+          }),
+          mergeAll(),
+        );
+      decoded.subscribe(
+        augments => augments.forEach((aug, i) => {
           if (!aug)
             return;
           this.augmentSlots[i].augmentData = aug.augment
           this.augmentSlots[i].currentlySlottedCategory = aug.category
-        }))
+        })
+      );
     }
   }
 

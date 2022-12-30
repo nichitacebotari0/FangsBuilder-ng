@@ -1,14 +1,11 @@
-<div class="flex flex-col items-center my-2">
-    <div class="">
+<div class="flex flex-row justify-between my-2">
+    <div class="mx-4">
         Augment
-        <div class="flex flex-col">
-            <div class="flex flex-row">
-                <div class="px-1 m-1 w-7">Id</div>
-                <div class="px-1 m-1 mr-0">Name</div>
-            </div>
+        <div class="flex flex-col max-h-screen overflow-scroll p-1">
             <div *ngFor="let augment of augments$ | async" class="flex flex-row m-1 border-2"
                 [class.border-blue-400]="editId == augment.id">
                 <div class="px-1 mx-1 w-7">{{augment.id}}</div>
+                <img src="{{augment.imagePath}}" class="w-12" />
                 <div class="px-1 mx-1">{{augment.name}}</div>
                 <button (pointerup)="edit(augment)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>

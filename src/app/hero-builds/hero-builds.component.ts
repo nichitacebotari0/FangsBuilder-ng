@@ -99,7 +99,7 @@ export class HeroBuildsComponent implements OnInit {
   }
 
   getAugmentsForBuild(build: Build, buildSerializer: BuildSerializerService): Observable<DetailedBuild> {
-    let augs = forkJoin(buildSerializer.Deserialize(build.augments).map(x => x.pipe(take(1))))
+    let augs = forkJoin(buildSerializer.Deserialize(build.heroId, build.augments).map(x => x.pipe(take(1))))
     return augs.pipe(
       map(augmentsData => ({ build, augmentsData } as DetailedBuild))
     );

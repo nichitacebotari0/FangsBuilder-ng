@@ -50,10 +50,6 @@ export class AppComponent {
     augmentCategories$.pipe(take(1)).subscribe(); // hack
     this.augmentCategoryService.refetch();
 
-    let augments$ = this.augmentService.get();
-    augments$.pipe(take(1)).subscribe(); // hack
-    this.augmentService.refetch();
-
     let artifactTypes$ = this.artifactTypeService.get();
     artifactTypes$.pipe(take(1)).subscribe(); // hack
     this.artifactTypeService.refetch();

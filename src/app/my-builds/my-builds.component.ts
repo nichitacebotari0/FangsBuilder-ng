@@ -32,7 +32,7 @@ export class MyBuildsComponent implements OnInit {
         return builds.map(build => {
           return {
             build: build,
-            augments: this.buildSerializer.Deserialize(build.augments),
+            augments: this.buildSerializer.Deserialize(build.heroId, build.augments),
           } as BuildWithAugments
         }).reduce((aggregate: Map<Hero | undefined, BuildWithAugments[]>, buildWithAug: BuildWithAugments) => {
           const hero = heroes.find(x => x.id == buildWithAug.build.heroId);

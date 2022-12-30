@@ -1,6 +1,6 @@
 
 # Fangs Builder angular  
-domain: www.fangsbuilder.com
+domain: www.fangsbuilder.com  
 Connected to backend: https://github.com/nichitacebotari0/api  
 Previous iteration(front end only, built using Solidjs): https://github.com/nichitacebotari0/FangsBuilder  
 The board: https://trello.com/b/olcRpYYN/fangs-builder  
@@ -25,6 +25,7 @@ Need a place to share builds through(why previous iteration existed). And having
 ## Features:
 Front end navigation done using angular router.  
 CRUD for heroes, hero augments, artifacts, actives and their parent entities(FK references in db like: AugmentCategory) through a number of angular reactive forms.  
+Data that doesn't change often is cached(using rxjs sharereplay to create an intermediary subject), and can be refetched when necessary.  
 Admin Dashboard for Create Update and Delete is only shown to people with the necessary claims in cookies(theres also an httponly jwt cookie used by the backend api to auth).  
 Authentication happens using OAuth2's authorization code grant flow: click discord icon > authorize on discord's website > get redirected to this app with auth code > send code to the api > api talks to discord using its client secret and the code, building claims using the info discord gives(in this case: what roles you have in the Fangs discord server) > api uses the claims and builds an httponly JWT(not visible to frontend) and some cookies with claims to check our rights(see admin dashboard).  
   

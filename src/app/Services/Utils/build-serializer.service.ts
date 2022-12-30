@@ -26,11 +26,11 @@ export class BuildSerializerService {
       .join(',');
   }
 
-  Deserialize(build: string): Observable<CategorisedGenericAugmentData | undefined>[] {
+  Deserialize(heroId: number, build: string): Observable<CategorisedGenericAugmentData | undefined>[] {
     return build.split(',')
       .map(x => {
         const aug = x.split(':');
-        return this.getAugment(aug[0], aug[1])
+        return this.getAugment(heroId, aug[0], aug[1])
           .pipe(
             map(x => {
               return ({
@@ -42,7 +42,7 @@ export class BuildSerializerService {
       });
   }
 
-  private getAugment(category: string, idString: string): Observable<GenericAugmentData | undefined> {
+  private getAugment(heroId: number, category: string, idString: string): Observable<GenericAugmentData | undefined> {
     const id = Number(idString);
     if (!id || id < 0)
       return of(undefined);
@@ -58,7 +58,7 @@ export class BuildSerializerService {
       case AugmentSlotCategory.COMBAT:
       case AugmentSlotCategory.UTILITY:
       case AugmentSlotCategory.ULTIMATE:
-        return this.augmentService.get()
+        return this.augmentService.get(heroId)
           .pipe(
             map(x => x.find(aug => aug.id == id && aug.augmentCategoryId == categoryId)))
       case AugmentSlotCategory.POSITIONAL:

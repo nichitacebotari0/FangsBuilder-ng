@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map, mergeAll, Observable, take } from 'rxjs';
 import { Augment } from 'src/app/Models/Augment';
 import { Category } from 'src/app/Models/Category';
 import { Hero } from 'src/app/Models/Hero';
@@ -24,7 +24,6 @@ export class AugmentComponent implements OnInit {
     private staticAssetService: StaticAssetsService) { }
 
   ngOnInit(): void {
-    this.augments$ = this.augmentService.get();
     this.heroes$ = this.heroService.get();
     this.augmentCategories$ = this.augmentCategoryService.get();
     this.abilityTypes$ = this.abilityTypeService.get();
@@ -40,6 +39,16 @@ export class AugmentComponent implements OnInit {
         let name = hero?.name;
         return heroImages?.find(x => x.Name == name)?.Augments;
       })
+    );
+
+    this.augments$ = this.form.get("heroId")!.valueChanges.pipe(
+      map(heroId => {
+        if (heroId === null)
+          return [];
+        return this.augmentService.get(heroId);
+      }),
+      // take(1),
+      mergeAll()
     );
 
     this.form.get("imagePath")?.valueChanges.subscribe(data => {
@@ -87,19 +96,19 @@ export class AugmentComponent implements OnInit {
 
   delete(input: Augment) {
     this.augmentService.delete(input.id)
-      .subscribe(_ => this.augmentService.refetch()); // this http request can be avoided
+      .subscribe(_ => this.augmentService.refetch(this.form.get("heroId")!.value!)); // this http request can be avoided
   }
 
   submit() {
     let model = this.getModelFromForm();
     if (this.editId > -1) {
       this.augmentService.update(this.editId, model)
-        .subscribe(_ => this.augmentService.refetch()); // this http request can be avoided
+        .subscribe(_ => this.augmentService.refetch(this.form.get("heroId")!.value!)); // this http request can be avoided
       this.editId = model.id;
       return;
     }
     this.augmentService.add(model)
-      .subscribe(_ => this.augmentService.refetch()); // this http request can be avoided
+      .subscribe(_ => this.augmentService.refetch(this.form.get("heroId")!.value!)); // this http request can be avoided
   }
 
   getModelFromForm(): Augment {

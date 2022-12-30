@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, shareReplay, Subject, switchMap } from 'rxjs';
+import { catchError, filter, Observable, of, shareReplay, Subject, switchMap, take } from 'rxjs';
 import { Augment } from '../Models/Augment';
 import { ConfigService } from './config.service';
 
@@ -8,7 +8,7 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class AugmentService {
-  constructor(private config: ConfigService, private http: HttpClient) {
+  constructor(config: ConfigService, private http: HttpClient) {
     this.apiPath = config.apiBaseUrl + "Augments";
   }
 
@@ -18,28 +18,34 @@ export class AugmentService {
     withCredentials: true
   };
 
-  private cache$: Observable<Augment[]> | undefined;
-  private trigger = new Subject<void>();
+  private cache: Map<number, Observable<Augment[]> | undefined> = new Map<number, Observable<Augment[]> | undefined>();
+  private trigger = new Subject<number>();
 
-  private fetch(): Observable<Augment[]> {
+  private fetch(heroId: number): Observable<Augment[]> {
     return this.http.get<Augment[]>(this.apiPath, {
       observe: "body" as const,
-      responseType: "json" as const
+      responseType: "json" as const,
+      params: { heroId: heroId }
     });
   }
 
-  refetch() {
-    this.trigger.next();
+  refetch(heroId: number) {
+    this.trigger.next(heroId);
   }
 
-  get(): Observable<Augment[]> {
-    if (!this.cache$) {
-      this.cache$ = this.trigger.pipe(
-        switchMap(x => this.fetch()),
+  get(heroId: number): Observable<Augment[]> {
+    let heroCache = this.cache.get(heroId)
+    if (!heroCache) {
+      heroCache = this.trigger.pipe(
+        filter(x => x == heroId),
+        switchMap(x => this.fetch(x)),
         shareReplay(1)
       );
+      heroCache.pipe(take(1)).subscribe(); // initial subscribtion to populate cache
+      this.refetch(heroId);
+      this.cache.set(heroId,heroCache);
     }
-    return this.cache$;
+    return heroCache;
   }
 
   add(abilityType: Augment): Observable<Augment> {
