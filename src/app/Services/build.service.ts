@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Build } from '../Models/Build';
 import { BuildVote } from '../Models/BuildVote';
 import { ConfigService } from './config.service';
@@ -38,6 +38,8 @@ export class BuildService {
   }
 
   getMyBuilds(): Observable<Build[]> {
+    if (!this.oauthService.isLoggedIn())
+      return of([]);
     const id = this.oauthService.getId()
     const queryParams = {
       userId: id as string
@@ -60,6 +62,8 @@ export class BuildService {
   }
 
   getMyVotes(buildIds: number[]): Observable<BuildVote[]> {
+    if (!this.oauthService.isLoggedIn())
+      return of([]);
     const url = `${this.buildPath}/myvotes`;
     const queryParams = {
       builds: buildIds.join(',')

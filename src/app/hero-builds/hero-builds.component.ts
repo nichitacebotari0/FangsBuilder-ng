@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, combineLatestWith, concatAll, flatMap, forkJoin, map, mergeAll, mergeMap, Observable, of, shareReplay, switchMap, take, tap, toArray, withLatestFrom } from 'rxjs';
+import { combineLatest, combineLatestWith, forkJoin, map, mergeMap, Observable, of, shareReplay, take } from 'rxjs';
 import { Build } from '../Models/Build';
 import { BuildVote } from '../Models/BuildVote';
 import { Hero } from '../Models/Hero';
@@ -35,7 +35,7 @@ export class HeroBuildsComponent implements OnInit {
       heroesService.get()])
       .pipe(
         map(([paramMap, heroes]) => {
-          let id = paramMap.get("id");
+          let id: string | null = paramMap.get("id");
           if (!id)
             return undefined;
           this.heroId = Number(id);
