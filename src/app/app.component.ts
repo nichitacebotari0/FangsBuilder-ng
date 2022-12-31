@@ -25,7 +25,6 @@ export class AppComponent {
     private heroService: HeroService,
     private abilityTypeService: AbilityTypeService,
     private augmentCategoryService: AugmentCategoryService,
-    private augmentService: AugmentService,
     private artifactTypeService: ArtifactTypeService,
     private artifactService: ArtifactService,
     private oauthService: OauthService,

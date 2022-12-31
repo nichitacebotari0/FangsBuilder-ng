@@ -9,7 +9,7 @@
     <div class="flex flex-col">
         <label for="description" (click)="showDescription =!showDescription">Want a description?</label>
         <textarea id="description" type="text" formControlName="description"
-            class="w-fit border-2 text-gray-900"
+            class="w-fit border-2 text-gray-900  resize"
             [class.hidden]="!showDescription"></textarea>
     </div>
     <div class="text-green-500">{{ successMsg }}</div>
