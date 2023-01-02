@@ -145,7 +145,7 @@
 
         <!-- active -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ACTIVE">
-            <div class="flex flex-row flex-wrap basis-3/4">
+            <div class="flex flex-row flex-wrap basis-3/4 m-1">
                 <div class="basis-1/4" *ngFor="let element of boons$ | async">
                     <app-augment-clickable [element]="element" [augmentCategory]="selectedCategory | async"
                         (pointerup)="selectAugment($event, element,  AugmentSlotCategoryEnum.ACTIVE)"></app-augment-clickable>
