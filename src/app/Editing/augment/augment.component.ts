@@ -56,7 +56,7 @@ export class AugmentComponent implements OnInit {
       if (!str)
         return;
       let fullname: string[] = str[str.length - 1].split(".")[0].split(" ");
-      let id = this.editId > -1 ? this.editId : Number(fullname[0]);
+      let id = this.editId > -1 ? this.editId : 0;
       let name = fullname.slice(1, fullname.length).join(" ");
       this.form.patchValue({ id: id, name: name });
     });
@@ -72,7 +72,7 @@ export class AugmentComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<number | null>(null, [
       Validators.required,
-      Validators.min(1)
+      Validators.min(0)
     ]),
     name: new FormControl('', [
       Validators.required
