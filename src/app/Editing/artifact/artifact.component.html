@@ -9,6 +9,7 @@
             <div *ngFor="let artifact of artifacts$ | async" class="flex flex-row m-1 border-2"
                 [class.border-blue-400]="editId == artifact.id">
                 <div class="px-1 mx-1 w-7">{{artifact.id}}</div>
+                <img src="{{artifact.imagePath}}" class="w-12" />
                 <div class="px-1 mx-1">{{artifact.name}}</div>
                 <button (pointerup)="edit(artifact)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>
@@ -40,6 +41,17 @@
                 Image Path is required
             </div>
         </div>
+        <div class="flex flex-col">
+            <label for="class">Type</label>
+            <select id="class" formControlName="artifactType" class="w-full border-2 text-gray-900">
+                <option *ngFor="let artifactType of artifactTypes$ | async" [value]="artifactType.id">{{
+                    artifactType.name }}
+                </option>
+            </select>
+            <div [class.hidden]="!form.controls['artifactType'].errors?.['required']" class="text-red-600">
+                Choose a type
+            </div>
+        </div>
         <div class="flex flex-col ">
             <label for="id">Id</label>
             <input id="id" type="number" formControlName="id" class="w-fit border-2 text-gray-900" />
@@ -58,20 +70,10 @@
         </div>
         <div class="flex flex-col">
             <label for="name">Description</label>
-            <textarea id="name" type="text" formControlName="description" class="w-fit border-2 text-gray-900  resize" ></textarea>
+            <textarea id="name" type="text" formControlName="description"
+                class="w-fit border-2 text-gray-900  resize"></textarea>
             <div [class.hidden]="!form.controls['description'].errors?.['required']" class="text-red-600">
                 Description is required
-            </div>
-        </div>
-        <div class="flex flex-col">
-            <label for="class">Type</label>
-            <select id="class" formControlName="artifactType" class="w-full border-2 text-gray-900">
-                <option *ngFor="let artifactType of artifactTypes$ | async" [value]="artifactType.id">{{
-                    artifactType.name }}
-                </option>
-            </select>
-            <div [class.hidden]="!form.controls['artifactType'].errors?.['required']" class="text-red-600">
-                Choose a type
             </div>
         </div>
 

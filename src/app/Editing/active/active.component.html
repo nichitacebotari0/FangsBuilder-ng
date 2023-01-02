@@ -9,6 +9,7 @@
             <div *ngFor="let boon of boons$ | async" class="flex flex-row m-1 border-2"
                 [class.border-blue-400]="editId == boon.id">
                 <div class="px-1 mx-1 w-7">{{boon.id}}</div>
+                <img src="{{boon.imagePath}}" class="w-12" />
                 <div class="px-1 mx-1">{{boon.name}}</div>
                 <button (pointerup)="edit(boon)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>
@@ -30,8 +31,7 @@
             <div class="flex flex-row">
                 <img src="{{form.value.imagePath}}" class="w-24" />
                 <select id="imagePath" formControlName="imagePath" class="w-full border-2 text-gray-900">
-                    <option *ngFor="let boonAsset of boonAssets$ | async" value="{{boonAsset}}"
-                        class="dropdownImage">
+                    <option *ngFor="let boonAsset of boonAssets$ | async" value="{{boonAsset}}" class="dropdownImage">
                         {{ boonAsset }}
                     </option>
                 </select>
@@ -58,7 +58,8 @@
         </div>
         <div class="flex flex-col">
             <label for="name">Description</label>
-            <textarea id="name" type="text" formControlName="description" class="w-fit border-2 text-gray-900  resize" ></textarea>
+            <textarea id="name" type="text" formControlName="description"
+                class="w-fit border-2 text-gray-900  resize"></textarea>
             <div [class.hidden]="!form.controls['description'].errors?.['required']" class="text-red-600">
                 Description is required
             </div>
