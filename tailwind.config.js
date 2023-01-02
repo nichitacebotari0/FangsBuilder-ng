@@ -7,7 +7,13 @@ module.exports = {
     'border-yellow-500',
     'border-yellow-800',
     'border-purple-600',
-    'border-stone-500'
+    'border-stone-500',
+    'text-sky-600',
+    'text-red-600',
+    'text-yellow-500',
+    'text-yellow-800',
+    'text-purple-600',
+    'text-stone-500'
   ],
   theme: {
     extend: {
