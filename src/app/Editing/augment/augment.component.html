@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col items-center my-2">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col items-center my-4">
         <div *ngIf="editId > -1 " class="flex flex-row items-center">
             <button type="button" (pointerup)="stopEditing()"
                 class="backArrow enabled:hover:border-stone-900 enabled:active:border-stone-800 w-2">

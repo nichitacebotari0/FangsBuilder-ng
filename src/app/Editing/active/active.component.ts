@@ -36,7 +36,7 @@ export class ActiveComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<number | null>(null, [
       Validators.required,
-      Validators.min(1)
+      Validators.min(0)
     ]),
     name: new FormControl('', [
       Validators.required
