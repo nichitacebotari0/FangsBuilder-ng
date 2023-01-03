@@ -1,45 +1,64 @@
+<div class="m-2 w-full text-center border-b-2 text-xl "
+    [ngClass]="{' text-sky-600 border-b-sky-600': editId > 0 , ' border-b-green-700 text-green-800  ':editId <= 0}">
+    <h4> {{ editId > 0 ? "Editing Build" : "Create Build" }} </h4>
+</div>
 <div class="flex flex-col xl:flex-row xl:justify-start xs:p-2 min-h-screen ">
-    <div class="flex flex-col md:flex-row xl:flex-col items-center xl:justify-center flex-grow-0 flex-shrink-0">
-        <img [src]="(hero$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
-        <div class="flex flex-row xl:items-center">
-            <div class="flex flex-row flex-wrap justify-center xs:p-2 flex-shrink-0 min-w-min "
-                (pointerup)="setSelected($event, -1)">
-                <app-augment-slot [item]="augmentSlots[0]" [isSelected]="selectedSlot.value == 0"
-                    (pointerup)="setSelected($event, 0)"
-                    class="h-fit w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
-                </app-augment-slot>
-                <app-augment-slot [item]="augmentSlots[1]" [isSelected]="selectedSlot.value == 1"
-                    (pointerup)="setSelected($event, 1)"
-                    class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-                </app-augment-slot>
-                <app-augment-slot [item]="augmentSlots[2]" [isSelected]="selectedSlot.value == 2"
-                    (pointerup)="setSelected($event, 2)"
-                    class="h-fit w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
-                </app-augment-slot>
-                <app-augment-slot [item]="augmentSlots[3]" [isSelected]="selectedSlot.value == 3"
-                    (pointerup)="setSelected($event, 3)"
-                    class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-                </app-augment-slot>
-                <app-augment-slot [item]="augmentSlots[4]" [isSelected]="selectedSlot.value == 4"
-                    (pointerup)="setSelected($event, 4)"
-                    class="h-fit w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
-                </app-augment-slot>
-                <app-augment-slot [item]="augmentSlots[5]" [isSelected]="selectedSlot.value == 5"
-                    (pointerup)="setSelected($event, 5)"
-                    class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-                </app-augment-slot>
+    <div class="flex flex-col items-center flex-grow-0 flex-shrink-0">
+        <div class="flex flex-col md:flex-row xl:flex-col items-center xl:justify-center flex-grow-0 flex-shrink-0">
+            <img [src]="(hero$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
+            <div class="flex flex-row xl:items-center">
+                <div class="flex flex-row flex-wrap justify-center xs:p-2 flex-shrink-0 min-w-min"
+                    (pointerup)="setSelected($event, -1)">
+                    <app-augment-slot [item]="augmentSlots[0]" [isSelected]="selectedSlot.value == 0"
+                        (pointerup)="setSelected($event, 0)"
+                        class="h-fit w-10 mt-6       xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
+                    </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[1]" [isSelected]="selectedSlot.value == 1"
+                        (pointerup)="setSelected($event, 1)"
+                        class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+                    </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[2]" [isSelected]="selectedSlot.value == 2"
+                        (pointerup)="setSelected($event, 2)"
+                        class="h-fit w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
+                    </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[3]" [isSelected]="selectedSlot.value == 3"
+                        (pointerup)="setSelected($event, 3)"
+                        class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+                    </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[4]" [isSelected]="selectedSlot.value == 4"
+                        (pointerup)="setSelected($event, 4)"
+                        class="h-fit w-10 -ml-4 mt-6 xs:-ml-7 xs:mt-9 xs:w-16  sm:-ml-9 sm:mt-11 sm:w-20  md:-ml-10 md:mt-14 md:w-24">
+                    </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[5]" [isSelected]="selectedSlot.value == 5"
+                        (pointerup)="setSelected($event, 5)"
+                        class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+                    </app-augment-slot>
 
-                <app-augment-slot [item]="augmentSlots[6]" [isSelected]="selectedSlot.value == 6"
-                    (pointerup)="setSelected($event, 6)"
-                    class="h-fit w-10 -ml-2 mt-6 xs:ml-auto xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
-                </app-augment-slot>
-                <app-augment-slot [item]="augmentSlots[7]" [isSelected]="selectedSlot.value == 7"
-                    (pointerup)="setSelected($event, 7)"
-                    class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
-                </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[6]" [isSelected]="selectedSlot.value == 6"
+                        (pointerup)="setSelected($event, 6)"
+                        class="h-fit w-10 -ml-2 mt-6 xs:ml-auto xs:mt-9 xs:w-16           sm:mt-11 sm:w-20           md:mt-14 md:w-24">
+                    </app-augment-slot>
+                    <app-augment-slot [item]="augmentSlots[7]" [isSelected]="selectedSlot.value == 7"
+                        (pointerup)="setSelected($event, 7)"
+                        class="h-fit w-10 -ml-4      xs:-ml-7 xs:w-16          sm:-ml-9 sm:w-20           md:-ml-10 md:w-24">
+                    </app-augment-slot>
+                </div>
             </div>
         </div>
+        <div class="relative">
+            <div class="block absolute bg-stone-700 p-1 mb-1 bottom-full" [class.hidden]="!hasCopied"> Copied! </div>
+            <button *ngIf="true" (click)="shareBuild()"
+                class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black  px-2 py-1 ">
+                Share
+            </button>
+            <button *ngIf="true && isLoggedIn" (click)="openForm()"
+                class="inline-block bg-stone-800 hover:bg-stone-600 hover:text-white active:bg-black px-2 py-1 ml-auto"
+                [ngClass]="{'text-sky-600 hover:text-sky-400': editId > 0 , 'text-green-800 hover:text-green-500 ':editId <= 0}">
+                {{ editId > 0 ? "Edit" : "Save" }}
+            </button>
+        </div>
     </div>
+
     <div class="flex flex-col basis-full m-2" *ngIf="selectedSlot.value != -1">
         <div [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.FLEX">FLEX AUGMENTS
             <div class="flex flex-row flex-nowrap justify-center text-gray-900">
@@ -78,11 +97,10 @@
             BOONS
         </div>
 
-
         <!-- artifact(positionals) -->
-        <div *ngIf="selectedCategory.value ==  AugmentSlotCategoryEnum.POSITIONAL">
-            <div class=" flex flex-col items-center">
-                <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
+        <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.POSITIONAL">
+            <div class="flex flex-col items-center">
+                <div class="flex flex-row flex-grow-0 items-center w-4/5 lg:w-8/12 my-1"
                     *ngFor="let group of groupedArtifacts$ | async | keyvalue">
                     <div class="basis-1/4 flex flex-col">
                         <div>{{(getArtifactType(group.key) | async)?.name ?? group.key}}</div>
@@ -103,13 +121,11 @@
             </div>
         </div>
 
-
-
         <!-- combat/utility -->
         <div
             *ngIf="(selectedCategory.value == AugmentSlotCategoryEnum.UTILITY) || (selectedCategory.value == AugmentSlotCategoryEnum.COMBAT)">
             <div class="flex flex-col items-center">
-                <div class="flex flex-row flex-grow-0 items-center w-4/5 my-2"
+                <div class="flex flex-row flex-grow-0 items-center w-4/5 lg:w-8/12 my-1"
                     *ngFor="let group of groupedAugments$ | async | keyvalue">
                     <div class="flex flex-col basis-1/4 flex-shrink-0 flex-grow-0">
                         <div>{{(getAbilityType(group.key) | async)?.name ?? group.key}}</div>
@@ -145,19 +161,18 @@
 
         <!-- active -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ACTIVE">
-            <div class="flex flex-row flex-wrap basis-3/4 m-1">
-                <div class="basis-1/4" *ngFor="let element of boons$ | async">
+            <div class="flex flex-row flex-wrap lg:basis-10/12 m-1">
+                <div class="basis-3/12 md:basis-1/5 lg:basis-2/12 my-1" *ngFor="let element of boons$ | async">
                     <app-augment-clickable [element]="element" [augmentCategory]="selectedCategory | async"
                         (pointerup)="selectAugment($event, element,  AugmentSlotCategoryEnum.ACTIVE)"></app-augment-clickable>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
 <div class="xs:p-2" *ngIf="isLoggedIn">
-    <div class="hover:cursor-pointer  " (click)="showForm = !showForm">Want to save the build?</div>
     <div *ngIf="showForm">
-        <app-build-form [hero$]="hero$" [augments]="augmentSlots"></app-build-form>
+        <app-build-form [hero$]="hero$" [augments]="augmentSlots" (editIdEvent)="setEditId($event)"></app-build-form>
     </div>
 </div>

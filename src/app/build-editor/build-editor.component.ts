@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, forkJoin, map, mergeAll, Observable, of, shareReplay, take, tap, timeout, withLatestFrom, } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, combineLatestWith, forkJoin, map, mergeAll, Observable, of, shareReplay, take, tap, } from 'rxjs';
 import { Active } from '../Models/Active';
 import { Artifact } from '../Models/Artifact';
 import { Augment } from '../Models/Augment';
@@ -13,6 +13,7 @@ import { ActiveService } from '../Services/active.service';
 import { ArtifactTypeService } from '../Services/artifact-type.service';
 import { ArtifactService } from '../Services/artifact.service';
 import { AugmentService } from '../Services/augment.service';
+import { HeroService } from '../Services/hero.service';
 import { OauthService } from '../Services/oauth.service';
 import { BuildSerializerService } from '../Services/Utils/build-serializer.service';
 
@@ -33,7 +34,7 @@ export class BuildEditorComponent implements OnInit {
     { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.FLEX },
     { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.FLEX },
   ];
-  @Input() hero$: Observable<Hero | undefined> = of(undefined);
+  hero$: Observable<Hero | undefined> = of(undefined);
   selectedSlot = new BehaviorSubject<number>(-1);
   selectedCategory = new BehaviorSubject<AugmentSlotCategory>(AugmentSlotCategory.NONE);
   slotCategory$ = new BehaviorSubject<AugmentSlotCategory>(AugmentSlotCategory.NONE);
@@ -43,17 +44,33 @@ export class BuildEditorComponent implements OnInit {
   boons$: Observable<Active[]>;
   groupedArtifacts$: Observable<Map<number, Artifact[]>>;
   showForm: Boolean = false;
+  hasCopied: Boolean = false;
+  editId: number = -1;
 
   constructor(private augmentService: AugmentService,
     private abilityTypeService: AbilityTypeService,
     private artifactService: ArtifactService,
     private artifactTypeService: ArtifactTypeService,
+    private heroesService: HeroService,
     boonService: ActiveService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private buildSerializerService: BuildSerializerService,
     private oauthService: OauthService) {
     this.boons$ = boonService.get();
+
+    this.hero$ =
+      combineLatest([
+        this.activatedRoute.paramMap,
+        this.heroesService.get()])
+        .pipe(
+          map(([paramMap, heroes]) => {
+            let id = paramMap.get("id");
+            if (!id)
+              return undefined;
+            return heroes?.find(hero => hero.id == Number(id));
+          }));
+
     this.groupedArtifacts$ = this.artifactService.get().pipe(
       map(artifacts =>
         artifacts.reduce<Map<number, Artifact[]>>((aggregate: Map<number, Artifact[]>, artifact: Artifact) => {
@@ -66,6 +83,12 @@ export class BuildEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const url: URL = new URL(window.location.href);
+    const params: URLSearchParams = url.searchParams;
+    const editParam = Number(params.get('editId') ?? -1);
+    if (editParam > 0)
+      this.setEditId(editParam);
+
     this.decodeBuild();
 
     this.heroAugments$ = this.hero$.pipe(
@@ -84,7 +107,7 @@ export class BuildEditorComponent implements OnInit {
     });
 
     this.skillAugments$ = this.selectedCategory.pipe(
-      withLatestFrom(this.heroAugments$),
+      combineLatestWith(this.heroAugments$),
       map(([categoryId, heroAugments]) => {
         if (!heroAugments || !categoryId ||
           ![AugmentSlotCategory.COMBAT, AugmentSlotCategory.UTILITY, , AugmentSlotCategory.ULTIMATE].includes(categoryId!))
@@ -167,6 +190,8 @@ export class BuildEditorComponent implements OnInit {
     if (build) {
       const decoded =
         this.hero$.pipe(
+          tap(() => {
+          }),
           map(hero => {
             if (hero?.id === null)
               return [];
@@ -182,6 +207,39 @@ export class BuildEditorComponent implements OnInit {
           this.augmentSlots[i].currentlySlottedCategory = aug.category
         })
       );
+    }
+  }
+
+  async shareBuild() {
+    const url: URL = new URL(window.location.href);
+    const params: URLSearchParams = url.searchParams;
+    const build = params.get('build');
+    const data = {
+      url: url.origin + url.pathname + "?build=" + build
+    }
+    if (navigator.canShare && navigator?.canShare(data)) {
+      await navigator.share(data);
+    }
+    else {
+      await navigator.clipboard.writeText(data.url);
+      this.hasCopied = true;
+      setTimeout(() => { this.hasCopied = false }, 1000)
+    }
+  }
+
+  openForm() {
+    this.showForm = true;
+    setTimeout(() =>
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      }), 200);
+  }
+
+  setEditId(id: number) {
+    this.editId = id;
+    if (this.editId > 0) {
+      this.openForm()
     }
   }
 

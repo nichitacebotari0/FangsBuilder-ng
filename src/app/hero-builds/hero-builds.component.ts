@@ -108,8 +108,6 @@ export class HeroBuildsComponent implements OnInit {
   create() {
     if (!this.heroId)
       return;
-
-    console.log("asd");
     this.router.navigate([
       'hero',
       this.heroId,

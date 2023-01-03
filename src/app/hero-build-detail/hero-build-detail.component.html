@@ -1,4 +1,4 @@
-<div class="m-2 p-1 border-b-gray-400 w-full border-b-2 flex items-center">
+<div class="m-2 p-1 w-full flex items-center">
     <div class="inline-block ">
         {{ details?.build?.title }}
     </div>
@@ -8,8 +8,7 @@
         <div class="augment" (pointerenter)="position_tooltip($event, '.augment-tooltip-container')">
             <div [ngClass]="colorClass(aug) + ' augmentSlot-imageBorder'">
                 <div ngClass="augmentSlot-imageContainer bg-black">
-                    <img [src]="(aug)?.augment?.imagePath ?? 'assets/Empty.png'"
-                        class="augmentSlot-image w-24" />
+                    <img [src]="(aug)?.augment?.imagePath ?? 'assets/Empty.png'" class="augmentSlot-image w-24" />
                 </div>
             </div>
             <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80" *ngIf="(aug)?.augment">
@@ -19,12 +18,15 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+<p class="md:space-x-1 space-y-1 md:space-y-0 mb-4">
 <div class="m-2 p-1 border-b-gray-400 w-full border-b-2 items-center">
     <button *ngIf="details?.build?.description"
-        class="inline-block hover:cursor-pointer underline bg-stone-500 hover:bg-stone-900 hover:text-white active:bg-black p-1 rounded-md m-1"
-        (click)="showDescription = !showDescription">
+        class="inline-block hover:cursor-pointer bg-stone-800 hover:bg-stone-900 p-3 w-full text-left text-white"
+        [class.bg-stone-900]="showDescription" [class.bg-stone-800]="!showDescription"
+        (click)="toggleDescription($event)">
         Show Description
     </button>
     <div class="p-2" [class.hidden]="!showDescription">

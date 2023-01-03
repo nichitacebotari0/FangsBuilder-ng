@@ -40,11 +40,11 @@ export class OauthService {
   }
 
   isadmin(): boolean {
-    if (this.cookieService.get("discordDev") || this.cookieService.get("discordMod"))
+    if (this.cookieService.get("discordDev")?.toLowerCase() == "true" || this.cookieService.get("discordMod")?.toLowerCase() == "true")
       return true;
     return false;
   }
-  
+
   // getUserDetails() {
   //   return this.http.get(environment.baseUrl + '/getUserDetails');
   // }

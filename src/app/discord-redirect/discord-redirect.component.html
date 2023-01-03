@@ -1,1 +1,13 @@
-<p>Authing...</p>
+<div [ngSwitch]="currentState">
+    <div *ngSwitchCase="AuthStateEnum.Fail">
+        Failed to Authorise. <br>
+        Please make sure you are part of the official <a class="text-sky-400" href="https://discord.gg/FANGS">Fangs discord Server</a> and have a region Role.
+    </div>
+    <div *ngSwitchCase="AuthStateEnum.Success">
+        Success
+    </div>
+    <div *ngSwitchDefault>
+        Authing...
+    </div>
+
+</div>

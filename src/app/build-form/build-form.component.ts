@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { NextObserver, Observable, Observer, of, Subscription } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NextObserver, Observable, of, Subscription } from 'rxjs';
 import { AugmentSlot } from '../Models/AugmentSlot';
 import { Build } from '../Models/Build';
 import { Hero } from '../Models/Hero';
@@ -17,8 +17,15 @@ export class BuildFormComponent implements OnInit, OnDestroy {
 
   @Input() hero$: Observable<Hero | undefined> = of(undefined);
   @Input() augments: AugmentSlot[] | undefined;
-  showDescription: Boolean = false;
+  heroSubscription: Subscription | undefined;
+  heroId: number = 0;
+  successMsg: string | undefined;
+  errorMsg: string | undefined;
+  editId: number = -1;
+  @Output() editIdEvent = new EventEmitter<number>();
   constructor(private buildService: BuildService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private buildSerializerService: BuildSerializerService) { }
 
   ngOnInit(): void {
@@ -29,7 +36,7 @@ export class BuildFormComponent implements OnInit, OnDestroy {
 
     const url: URL = new URL(window.location.href);
     const params: URLSearchParams = url.searchParams;
-    this.editId = Number(params.get('editId') ?? -1);
+    this.setEditId(Number(params.get('editId') ?? -1));
     if (this.editId > -1) {
       this.errorMsg = "Loading build details for editing..."
       this.form.disable();
@@ -45,11 +52,6 @@ export class BuildFormComponent implements OnInit, OnDestroy {
         })
     }
   }
-  heroSubscription: Subscription | undefined;
-  heroId: number = 0;
-  successMsg: string | undefined;
-  errorMsg: string | undefined;
-  editId: number = -1;
 
   form = new FormGroup({
     title: new FormControl('', [
@@ -57,6 +59,12 @@ export class BuildFormComponent implements OnInit, OnDestroy {
     ]),
     description: new FormControl('', [])
   })
+
+  setEditId(id: number) {
+    this.editId = id;
+    this.editIdEvent.emit(this.editId);
+  }
+
 
   submit() {
     this.successMsg = "";
@@ -83,7 +91,22 @@ export class BuildFormComponent implements OnInit, OnDestroy {
     }
 
     const resultObserver: NextObserver<Build> = {
-      next: x => { this.successMsg = "Success" },
+      next: x => {
+        this.successMsg = "Success";
+        if (this.editId > 0)
+          return;
+        // redirect to editing
+        const queryParams: Params = { ...this.activatedRoute.snapshot.queryParams, editId: x.id };
+        this.setEditId(x.id);
+        this.router.navigate(
+          [],
+          {
+            relativeTo: this.activatedRoute,
+            queryParams: queryParams,
+            queryParamsHandling: 'merge'
+          }
+        )
+      },
       error: err => { this.errorMsg = "Something went wrong:" + err.errors.join(' ; ') ?? err }
     }
     if (this.editId > -1) {

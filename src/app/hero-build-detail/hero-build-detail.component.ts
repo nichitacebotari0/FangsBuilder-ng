@@ -27,4 +27,8 @@ export class HeroBuildDetailComponent implements OnInit {
     this.styleService.position_tooltip(event, name);
     event.stopPropagation();
   }
+
+  toggleDescription(event: Event) {
+    this.showDescription = !this.showDescription;
+  }
 }

@@ -11,15 +11,15 @@ import { DiscordRedirectComponent } from './discord-redirect/discord-redirect.co
 import { ArtifactTypeComponent } from './Editing/artifact-type/artifact-type.component';
 import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
-import { HeroBuildComponent } from './hero-build/hero-build.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
+import { BuildEditorComponent } from './build-editor/build-editor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "/heroes", pathMatch: 'full' },
   { path: 'heroes', component: HeroesComponent },
   { path: 'hero/:id', component: HeroBuildsComponent },
-  { path: 'hero/:id/build', component: HeroBuildComponent },
+  { path: 'hero/:id/build', component: BuildEditorComponent },
   { path: 'mybuilds', component: MyBuildsComponent },
   { path: 'discord-redirect', component: DiscordRedirectComponent },
   { path: 'admin', component: AdminComponent },
