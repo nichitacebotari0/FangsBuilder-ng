@@ -24,7 +24,7 @@ import { BuildFormComponent } from './build-editor/build-form/build-form.compone
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 import { HeroBuildDetailComponent } from './hero-builds/hero-build-detail/hero-build-detail.component';
-import { BuildVoteComponent } from './build-vote/build-vote.component';
+import { BuildVoteComponent } from './hero-builds/build-vote/build-vote.component';
 
 @NgModule({
   declarations: [

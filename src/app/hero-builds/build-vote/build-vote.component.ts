@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Build } from '../Models/Build';
-import { BuildVote } from '../Models/BuildVote';
-import { BuildService } from '../Services/build.service';
+import { Build } from '../../Models/Build';
+import { BuildVote } from '../../Models/BuildVote';
+import { BuildService } from '../../Services/build.service';
 
 @Component({
   selector: 'app-build-vote',

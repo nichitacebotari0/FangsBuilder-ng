@@ -2,17 +2,18 @@
     <img [src]="(heroDetails$ | async)?.imagePath" title="{{(heroDetails$ | async)?.name}}"
         class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
     <h2>{{(heroDetails$ | async)?.name }}</h2>
-    <div class="border-b-2 border-gray-700 px-2 py-1 w-full flex">
-        <h4>Top voted Builds</h4>
+    <div class="flex items-center border-b-2 border-gray-700 px-2 py-1 w-full">
+        <h4>Top Rated Builds</h4>
         <button (click)="create()"
             class="inline-block bg-black hover:bg-stone-800 hover:text-white active:bg-stone-600 px-2 py-1 rounded-md ml-auto">
             Create your own Build
         </button>
     </div>
     <div class="flex flex-col">
-        <div *ngFor="let detailedBuild of detailedBuilds;" class="flex flex-row">
-            <app-hero-build-detail [details]="detailedBuild"> </app-hero-build-detail>
+        <div *ngFor="let detailedBuild of detailedBuilds;"
+            class="flex flex-row bg-gray-800 border-gray-700 border my-2 p-1">
             <app-build-vote [build]="detailedBuild.build" [existingVote]="detailedBuild.myVote"></app-build-vote>
+            <app-hero-build-detail [details]="detailedBuild"> </app-hero-build-detail>
         </div>
         <div>
             <button *ngIf="lastBuildId && lastBuildId > 0" (click)="loadChunkDetailedBuilds()"

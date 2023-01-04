@@ -28,11 +28,11 @@
                 {{username}}
             </div>
 
-            <div
-                [ngClass]=" (burgerToggled ? 'top-0 translate-y-0 h-full w-full ' : 'top-full ') + ' bg-gray-800 fixed xs:hidden transition-all ease-in-out mt-11 ' ">
+            <div [ngClass]="(burgerToggled ? 'top-0 h-full w-full' : 'top-full') +
+                    ' bg-gray-800 fixed xs:hidden transition-all ease-in-out duration-300 mt-11'">
                 <div class="flex-col">
                     <a routerLink="/" (click)="burgerToggled = false"
-                        class="flex items-center p-2 hover:bg-gray-700 m-0">
+                        class="flex items-center p-2 hover:bg-gray-700">
                         Home</a>
                     <a routerLink="/mybuilds" *ngIf="isLoggedIn" (click)="burgerToggled = false"
                         class="flex items-center p-2 hover:bg-gray-700">

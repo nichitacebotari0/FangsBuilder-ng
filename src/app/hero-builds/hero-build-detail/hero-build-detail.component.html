@@ -22,14 +22,15 @@
     </div>
 </div>
 <p class="md:space-x-1 space-y-1 md:space-y-0 mb-4">
-<div class="m-2 p-1 border-b-gray-400 w-full border-b-2 items-center">
+<div class=" m-2 p-1 w-full ">
     <button *ngIf="details?.build?.description"
         class="inline-block hover:cursor-pointer bg-stone-800 hover:bg-stone-900 p-3 w-full text-left text-white"
         [class.bg-stone-900]="showDescription" [class.bg-stone-800]="!showDescription"
         (click)="toggleDescription($event)">
-        Show Description
+        Description
     </button>
-    <div class="p-2" [class.hidden]="!showDescription">
+    <div
+        [ngClass]="(showDescription ?  'max-h-screen opacity-100' : ' max-h-0 opacity-0') + ' transition-all duration-300 p-2'">
         {{ details?.build?.description }}
     </div>
 </div>
