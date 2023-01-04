@@ -5,8 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AugmentSlotComponent } from './augment-slot/augment-slot.component';
 import { BuildEditorComponent } from './build-editor/build-editor.component';
+import { AugmentSlotComponent } from './build-editor/augment-slot/augment-slot.component';
 import { AdminComponent } from './admin/admin.component';
 import { AbilityTypeComponent } from './Editing/ability-type/ability-type.component';
 import { HeroClassComponent } from './Editing/hero-class/hero-class.component';
@@ -20,7 +20,7 @@ import { ArtifactTypeComponent } from './Editing/artifact-type/artifact-type.com
 import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
 import { AugmentClickableComponent } from './augment-clickable/augment-clickable.component';
-import { BuildFormComponent } from './build-form/build-form.component';
+import { BuildFormComponent } from './build-editor/build-form/build-form.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 import { HeroBuildDetailComponent } from './hero-build-detail/hero-build-detail.component';

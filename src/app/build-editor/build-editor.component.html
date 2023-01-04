@@ -49,7 +49,7 @@
             <div class="block absolute bg-stone-700 p-1 mb-1 bottom-full" [class.hidden]="!hasCopied"> Copied! </div>
             <button *ngIf="true" (click)="shareBuild()"
                 class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2">
-                Share
+                Quick Share
             </button>
             <button *ngIf="true && isLoggedIn" (click)="openForm()"
                 class="inline-block bg-black hover:bg-stone-800 hover:text-white active:bg-stone-600 p-2 ml-auto"
@@ -100,7 +100,7 @@
         <!-- artifact(positionals) -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.POSITIONAL">
             <div class="flex flex-col items-center">
-                <div class="flex flex-row flex-grow-0 items-center w-4/5 lg:w-8/12 my-1"
+                <div class="flex flex-row flex-grow-0 items-center w-full my-1"
                     *ngFor="let group of groupedArtifacts$ | async | keyvalue">
                     <div class="basis-1/4 flex flex-col">
                         <div>{{(getArtifactType(group.key) | async)?.name ?? group.key}}</div>
@@ -125,7 +125,7 @@
         <div
             *ngIf="(selectedCategory.value == AugmentSlotCategoryEnum.UTILITY) || (selectedCategory.value == AugmentSlotCategoryEnum.COMBAT)">
             <div class="flex flex-col items-center">
-                <div class="flex flex-row flex-grow-0 items-center w-4/5 lg:w-8/12 my-1"
+                <div class="flex flex-row flex-grow-0 items-center w-full my-1"
                     *ngFor="let group of groupedAugments$ | async | keyvalue">
                     <div class="flex flex-col basis-1/4 flex-shrink-0 flex-grow-0">
                         <div>{{(getAbilityType(group.key) | async)?.name ?? group.key}}</div>
@@ -148,7 +148,7 @@
 
         <!-- ultimate -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ULTIMATE">
-            <div class="flex flex-row basis-3/4">
+            <div class="flex flex-row w-full ">
                 <div class="basis-1/3 text-center" *ngFor="let element of skillAugments$ | async"
                     (pointerup)="selectAugment($event, element,  AugmentSlotCategoryEnum.ULTIMATE)">
                     <img [src]="element?.imagePath ? element!.imagePath : 'assets/Empty.png'"
@@ -161,7 +161,7 @@
 
         <!-- active -->
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ACTIVE">
-            <div class="flex flex-row flex-wrap lg:basis-10/12 m-1">
+            <div class="flex flex-row flex-wrap w-full  m-1">
                 <div class="basis-3/12 md:basis-1/5 lg:basis-2/12 my-1" *ngFor="let element of boons$ | async">
                     <app-augment-clickable [element]="element" [augmentCategory]="selectedCategory | async"
                         (pointerup)="selectAugment($event, element,  AugmentSlotCategoryEnum.ACTIVE)"></app-augment-clickable>

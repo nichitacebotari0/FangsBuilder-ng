@@ -1,22 +1,22 @@
-<div class="text-stone-100 bg-gray-800 bg-blend-normal min-h-screen">
-    <nav class="text-slate-400 bg-gradient-to-b from-black via-black py-1  pb-2 flex ">
-        <a routerLink="/" class="inline-block hover:text-slate-300 active:text-white p-2 mr-1 border-r">
+<div class="text-white min-h-screen">
+    <nav class="flex w-full h-12 fixed top-0 py-1 pb-2 bg-gray-800 z-10 px-1">
+        <a routerLink="/" class="inline-block p-2 mr-1">
             Home </a>
         <div class="flex flex-nowrap ml-auto items-center">
-            <a routerLink="/mybuilds" *ngIf="isLoggedIn"
-                class="inline-block hover:text-slate-300 active:text-white p-2 mr-1 border-x">
+            <a routerLink="/mybuilds" *ngIf="isLoggedIn" class="inline-block p-2 mr-1">
                 My Builds
             </a>
-            <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin"
-                class="inline-block hover:text-slate-300 active:text-white p-2 mr-2 border-r">
+            <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin" class="inline-block p-2 mr-2">
                 Admin
             </a>
             <div *ngIf="isLoggedIn; else loggedOut" class="text-blue-400">Hello, {{username}}</div>
-            <ng-template class="hover:text-slate-300 active:text-white" #loggedOut>Login WithDiscord -></ng-template>
+            <ng-template #loggedOut>Login WithDiscord -></ng-template>
             <img (click)="login()" src="assets/discord_icon_clyde_white_RGB.png"
                 [ngClass]="(!isLoggedIn ? 'hover:bg-stone-900 active:bg-black' : '') + 'hover:text-white p-1 rounded-md mr-1 w-8 sm:w-12'"
                 [class.cursor-pointer]="!isLoggedIn" />
         </div>
     </nav>
-    <router-outlet></router-outlet>
+    <div class="mt-12 md:max-w-4xl xl:max-w-6xl min-h-screen mx-auto bg-gray-900 ">
+        <router-outlet></router-outlet>
+    </div>
 </div>

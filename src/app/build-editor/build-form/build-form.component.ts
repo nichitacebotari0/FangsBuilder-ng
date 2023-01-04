@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NextObserver, Observable, of, Subscription } from 'rxjs';
-import { AugmentSlot } from '../Models/AugmentSlot';
-import { Build } from '../Models/Build';
-import { Hero } from '../Models/Hero';
-import { BuildService } from '../Services/build.service';
-import { BuildSerializerService } from '../Services/Utils/build-serializer.service';
+import { AugmentSlot } from '../../Models/AugmentSlot';
+import { Build } from '../../Models/Build';
+import { Hero } from '../../Models/Hero';
+import { BuildService } from '../../Services/build.service';
+import { BuildSerializerService } from '../../Services/Utils/build-serializer.service';
 
 @Component({
   selector: 'app-build-form',
