@@ -43,6 +43,16 @@ export class BuildVoteComponent implements OnInit {
       .subscribe(x => this.changeVote(buildVote));
   }
 
+
+  public get isPositiveVote(): Boolean {
+    return this.build !== undefined && ((this.build!.upvotes - this.build!.downvotes) > 0);
+  }
+
+  public get isNegativeVote() {
+    return this.build !== undefined && ((this.build!.upvotes - this.build!.downvotes) < 0);
+  }
+
+
   addVote(vote: BuildVote) {
     if (!this.existingVote) {
       this.existingVote = vote;

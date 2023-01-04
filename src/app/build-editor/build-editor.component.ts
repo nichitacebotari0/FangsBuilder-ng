@@ -35,7 +35,7 @@ export class BuildEditorComponent implements OnInit {
     { augmentData: undefined, currentlySlottedCategory: AugmentSlotCategory.NONE, slotAugmentCategory: AugmentSlotCategory.FLEX },
   ];
   hero$: Observable<Hero | undefined> = of(undefined);
-  selectedSlot = new BehaviorSubject<number>(-1);
+  selectedSlot = new BehaviorSubject<number>(0);
   selectedCategory = new BehaviorSubject<AugmentSlotCategory>(AugmentSlotCategory.NONE);
   slotCategory$ = new BehaviorSubject<AugmentSlotCategory>(AugmentSlotCategory.NONE);
   heroAugments$: Observable<Augment[]> | undefined;

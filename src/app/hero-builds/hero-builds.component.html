@@ -2,9 +2,9 @@
     <img [src]="(heroDetails$ | async)?.imagePath" class="flex h-auto w-24 m-1 sm:w-28 md:w-36" />
     <h2>{{(heroDetails$ | async)?.name }}</h2>
     <div class="border-b-2 border-gray-700 px-2 py-1 w-full flex">
-        <h4>Browse Builds</h4>
+        <h4>Top voted Builds</h4>
         <button (click)="create()"
-            class="inline-block bg-stone-800 hover:bg-stone-900 hover:text-white active:bg-black px-2 py-1 rounded-md ml-auto">
+            class="inline-block bg-black hover:bg-stone-800 hover:text-white active:bg-stone-600 px-2 py-1 rounded-md ml-auto">
             Create your own Build
         </button>
     </div>
@@ -15,9 +15,9 @@
         </div>
         <div>
             <button *ngIf="lastBuildId && lastBuildId > 0" (click)="loadChunkDetailedBuilds()"
-            class="inline-block bg-stone-300 hover:bg-stone-700 hover:text-white text-black active:bg-black px-2 py-1 ml-auto">
-            Load More
-        </button>
+                class="inline-block bg-stone-300 hover:bg-stone-700 hover:text-white text-black active:bg-black px-2 py-1 ml-auto">
+                Load More
+            </button>
         </div>
     </div>
 </div>

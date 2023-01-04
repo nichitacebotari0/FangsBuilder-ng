@@ -48,11 +48,11 @@
         <div class="relative">
             <div class="block absolute bg-stone-700 p-1 mb-1 bottom-full" [class.hidden]="!hasCopied"> Copied! </div>
             <button *ngIf="true" (click)="shareBuild()"
-                class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black  px-2 py-1 ">
+                class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2">
                 Share
             </button>
             <button *ngIf="true && isLoggedIn" (click)="openForm()"
-                class="inline-block bg-stone-800 hover:bg-stone-600 hover:text-white active:bg-black px-2 py-1 ml-auto"
+                class="inline-block bg-black hover:bg-stone-800 hover:text-white active:bg-stone-600 p-2 ml-auto"
                 [ngClass]="{'text-sky-600 hover:text-sky-400': editId > 0 , 'text-green-800 hover:text-green-500 ':editId <= 0}">
                 {{ editId > 0 ? "Edit" : "Save" }}
             </button>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="flex flex-col basis-full m-2" *ngIf="selectedSlot.value != -1">
-        <div [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.FLEX">FLEX AUGMENTS
+        <div [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.FLEX">
             <div class="flex flex-row flex-nowrap justify-center text-gray-900">
                 <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.COMBAT)"
                     class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-red-600 active:bg-slate-800"
