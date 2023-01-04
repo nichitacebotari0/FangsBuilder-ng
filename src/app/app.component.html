@@ -1,22 +1,58 @@
 <div class="text-white min-h-screen">
-    <nav class="flex w-full h-12 fixed top-0 py-1 pb-2 bg-gray-800 z-10 px-1">
-        <a routerLink="/" class="inline-block p-2 mr-1">
-            Home </a>
-        <div class="flex flex-nowrap ml-auto items-center">
-            <a routerLink="/mybuilds" *ngIf="isLoggedIn" class="inline-block p-2 mr-1">
-                My Builds
-            </a>
-            <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin" class="inline-block p-2 mr-2">
-                Admin
-            </a>
-            <div *ngIf="isLoggedIn; else loggedOut" class="text-blue-400">Hello, {{username}}</div>
-            <ng-template #loggedOut>Login WithDiscord -></ng-template>
-            <img (click)="login()" src="assets/discord_icon_clyde_white_RGB.png"
-                [ngClass]="(!isLoggedIn ? 'hover:bg-stone-900 active:bg-black' : '') + 'hover:text-white p-1 rounded-md mr-1 w-8 sm:w-12'"
-                [class.cursor-pointer]="!isLoggedIn" />
+    <nav class="w-full h-11 fixed top-0 bg-gray-800 z-10 border-b border-gray-700">
+        <div class="hidden xs:flex h-full">
+            <a routerLink="/" class="flex items-center p-2 hover:bg-gray-700 m-0">
+                Home</a>
+            <div class="flex flex-nowrap ml-auto my-0 py-0">
+                <a routerLink="/mybuilds" *ngIf="isLoggedIn" class="flex items-center p-2 hover:bg-gray-700">
+                    My Builds
+                </a>
+                <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin"
+                    class="flex items-center p-2 hover:bg-gray-700 mr-2">
+                    Admin
+                </a>
+                <div *ngIf="isLoggedIn; else loggedOut" class="flex items-center p-2 text-blue-400"> Hello, {{username}}
+                </div>
+                <ng-template #loggedOut>
+                    <a [href]="AuthUrl" class="flex items-center p-2 hover:bg-gray-700 hover:cursor-pointer mr-0">
+                        Login With Discord </a>
+                </ng-template>
+            </div>
         </div>
+        <div class="flex xs:hidden h-full bg-gray-800 ">
+            <a (click)="burgerToggled = !burgerToggled"
+                class="flex items-center w-10 p-1 hover:cursor-pointer hover:bg-gray-700">
+                <img src="assets\hamburger_icon.png" />
+            </a>
+            <div *ngIf="isLoggedIn; else loggedOut" class="flex items-center ml-auto p-2 text-blue-400"> Hello,
+                {{username}}
+            </div>
+
+            <div
+                [ngClass]=" (burgerToggled ? 'top-0 translate-y-0 h-full w-full ' : 'top-full ') + ' bg-gray-800 fixed xs:hidden transition-all ease-in-out mt-11 ' ">
+                <div class="flex-col">
+                    <a routerLink="/" (click)="burgerToggled = false"
+                        class="flex items-center p-2 hover:bg-gray-700 m-0">
+                        Home</a>
+                    <a routerLink="/mybuilds" *ngIf="isLoggedIn" (click)="burgerToggled = false"
+                        class="flex items-center p-2 hover:bg-gray-700">
+                        My Builds
+                    </a>
+                    <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin" (click)="burgerToggled = false"
+                        class="flex items-center p-2 hover:bg-gray-700 mr-2">
+                        Admin
+                    </a>
+                    <ng-template #loggedOut>
+                        <a [href]="AuthUrl" class="flex items-center p-2 hover:bg-gray-700 hover:cursor-pointer mr-0">
+                            Login With Discord </a>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
     </nav>
-    <div class="mt-12 md:max-w-4xl xl:max-w-6xl min-h-screen mx-auto bg-gray-900 ">
+
+    <div class="mt-11 md:max-w-4xl xl:max-w-6xl min-h-screen mx-auto bg-gray-900 ">
         <router-outlet></router-outlet>
     </div>
 </div>

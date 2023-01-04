@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { take } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AbilityTypeService } from './Services/ability-type.service';
 import { ActiveService } from './Services/active.service';
 import { ArtifactTypeService } from './Services/artifact-type.service';
 import { ArtifactService } from './Services/artifact.service';
 import { AugmentCategoryService } from './Services/augment-category.service';
-import { AugmentService } from './Services/augment.service';
 import { ConfigService } from './Services/config.service';
 import { HeroTypeService } from './Services/hero-type.service';
 import { HeroService } from './Services/hero.service';
@@ -34,7 +32,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     let heroeTypes$ = this.heroTypeService.get();
-    heroeTypes$.pipe(take(1)).subscribe(); // hack
+    heroeTypes$.pipe(take(1)).subscribe(); // hack, should lazy load it same as augments cache atm
     this.heroTypeService.refetch();
 
     let heroes$ = this.heroService.get();
@@ -61,13 +59,8 @@ export class AppComponent {
     actives$.pipe(take(1)).subscribe(); // hack
     this.activeService.refetch();
   }
-
   AuthUrl: string;
-  login() {
-    // if (this.oauthService.isLoggedIn())
-    //   return;
-    window.location.href = this.AuthUrl;
-  }
+  burgerToggled: boolean = false;
 
   get isLoggedIn(): boolean {
     return this.oauthService.isLoggedIn();
