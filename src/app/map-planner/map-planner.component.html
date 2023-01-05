@@ -1,0 +1,28 @@
+<div class="flex justify-center pt-8">
+    <div class=" flex flex-col items-center w-16 bg-gray-800">
+        <button class="flex items-center justify-center bg-gray-700 hover:bg-gray-600 p-2 my-1 border border-gray-500"
+            [class.bg-gray-500]="isEraserToggled" title="Toggle Eraser" (click)="toggleEraser($event)">
+            [E]
+        </button>
+
+    </div>
+    <div class="flex flex-col">
+        <div class="relative h-auto w-full xs:w-96" (pointermove)="pointerMove($event)">
+            <img class="w-full absolute top-0 left-0 z-0" draggable="false"
+                src="\assets\maps\Embersong_screenshot.png" />
+            <canvas #canvas class="relative border border-gray-700 w-full z-10" [class.cursor-none]="isEraserToggled">
+                This is a canvas for drawing.
+            </canvas>
+            <div #eraserBrush class="absolute top-0 bg-white border border-black z-10 cursor-none"
+                [class.hidden]="!isEraserToggled"> _ </div>
+        </div>
+        <div class="w-full hidden">
+            canvasSpace(w,h): ({{width}} ; {{height}})
+            <br> coords(x ; y): ({{pointerX | number:'1.0-3' }} ; {{ pointerY | number:'1.0-3'}})
+            <br> normalised(x ; y) ({{this.pointerX * this.scaleX | number:'1.0-3' }} ;
+            {{ (this.pointerY * this.scaleY) | number:'1.0-3'}})
+
+        </div>
+
+    </div>
+</div>

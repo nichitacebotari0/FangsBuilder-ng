@@ -25,6 +25,7 @@ import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 import { HeroBuildDetailComponent } from './hero-builds/hero-build-detail/hero-build-detail.component';
 import { BuildVoteComponent } from './hero-builds/build-vote/build-vote.component';
+import { MapPlannerComponent } from './map-planner/map-planner.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { BuildVoteComponent } from './hero-builds/build-vote/build-vote.componen
     HeroBuildsComponent,
     HeroBuildDetailComponent,
     BuildVoteComponent,
+    MapPlannerComponent,
   ],
   imports: [
     BrowserModule,

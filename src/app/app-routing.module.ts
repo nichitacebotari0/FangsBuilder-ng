@@ -13,6 +13,7 @@ import { ArtifactComponent } from './Editing/artifact/artifact.component';
 import { ActiveComponent } from './Editing/active/active.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { BuildEditorComponent } from './build-editor/build-editor.component';
+import { MapPlannerComponent } from './map-planner/map-planner.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "/heroes", pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'hero/:id/build', component: BuildEditorComponent },
   { path: 'mybuilds', component: MyBuildsComponent },
   { path: 'discord-redirect', component: DiscordRedirectComponent },
+  { path: "mapplanner", component: MapPlannerComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/abilityType', component: AbilityTypeComponent },
   { path: 'admin/heroClass', component: HeroClassComponent },

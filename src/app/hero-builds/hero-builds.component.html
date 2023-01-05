@@ -4,7 +4,8 @@
     <h2>{{(heroDetails$ | async)?.name }}</h2>
     <div class="flex items-center border-b-2 border-gray-700 px-2 py-1 w-full">
         <h4>Top Rated Builds</h4>
-        <button (click)="create()" class="inline-block bg-gray-800 hover:bg-gray-700 px-2 py-1 rounded-md ml-auto">
+        <button (click)="create()"
+            class="inline-block bg-gray-800 hover:bg-gray-700 border border-gray-600 px-2 py-1 rounded-md ml-auto">
             Create your own Build
         </button>
     </div>
@@ -21,7 +22,8 @@
             </button>
         </div>
         <div *ngIf="detailedBuilds.length == 0"> None at the moment, perhaps youd like to <button (click)="create()"
-                class="inline-block bg-gray-800 hover:bg-gray-700 px-2 py-1 rounded-md ml-auto"> create </button>
+                class="inline-block bg-gray-800 hover:bg-gray-700  border border-gray-600  px-2 py-1 rounded-md ml-auto">
+                create </button>
         </div>
     </div>
 </div>
