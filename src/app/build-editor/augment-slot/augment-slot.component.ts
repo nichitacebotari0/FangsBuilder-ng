@@ -18,7 +18,10 @@ export class AugmentSlotComponent implements OnInit {
   }
 
   public get colorClass(): string {
-    return "bg-"+this.styleService.getColorForAugment(this?.item?.currentlySlottedCategory)
+    if (this?.item?.currentlySlottedCategory != AugmentSlotCategory.NONE)
+      return "bg-" + this.styleService.getColorForAugment(this?.item?.currentlySlottedCategory)
+
+    return "bg-" + this.styleService.getColorForAugment(this?.item?.slotAugmentCategory)
   }
 
   position_tooltip(event: Event, name: string) {

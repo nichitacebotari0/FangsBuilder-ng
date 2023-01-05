@@ -1,9 +1,10 @@
 <div [ngSwitch]="currentState">
     <div *ngSwitchCase="AuthStateEnum.Fail">
         Failed to Authorise. <br>
-        Please make sure you are part of the official <a class="text-sky-400" href="https://discord.gg/FANGS">Fangs discord Server</a> and have a region Role.
+        Please make sure you have a region Role assigned in the <a class="text-sky-400" href="https://discord.gg/FANGS">
+            Fangs discord Server </a>
     </div>
-    <div *ngSwitchCase="AuthStateEnum.Success">
+    <div *ngSwitchCase="AuthStateEnum.Success" class="text-green-600">
         Success
     </div>
     <div *ngSwitchDefault>

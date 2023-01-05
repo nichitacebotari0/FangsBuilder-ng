@@ -2,8 +2,8 @@
     <img [src]="element?.imagePath ? element!.imagePath : 'assets/Empty.png'"
         [ngClass]="colorClass + ' m-auto w-4/5 border-2'" />
     <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80">
-        <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
-            <div class="text-center border-b-2 px-1">{{element?.name}}</div>
+        <div class="flex-col augment-tooltip p-1 border-2 border-stone-700 bg-gray-800">
+            <div class="text-center border-b-2 border-gray-700 ">{{element?.name}}</div>
             <div>{{element?.description}}</div>
         </div>
     </div>

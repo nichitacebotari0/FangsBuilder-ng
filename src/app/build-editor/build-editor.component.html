@@ -46,7 +46,9 @@
             </div>
         </div>
         <div class="relative">
-            <div class="block absolute bg-stone-700 p-1 mb-1 bottom-full" [class.hidden]="!hasCopied"> Copied! </div>
+            <div class="block absolute bg-stone-700 p-1 mb-1 rounded-md border border-stone-600 bottom-full"
+                [class.hidden]="!hasCopied"> Link Copied!
+            </div>
             <button *ngIf="true" (click)="shareBuild()"
                 class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2">
                 Quick Share
@@ -113,7 +115,8 @@
                     </div>
                     <div class="flex flex-row basis-3/4">
                         <div class="basis-1/4" *ngFor="let element of group.value">
-                            <app-augment-clickable [element]="element" [augmentCategory]="selectedCategory | async"
+                            <app-augment-clickable class="hover:cursor-pointer" [element]="element"
+                                [augmentCategory]="selectedCategory | async"
                                 (pointerup)="selectAugment($event, element, AugmentSlotCategoryEnum.POSITIONAL)"></app-augment-clickable>
                         </div>
                     </div>
@@ -138,7 +141,8 @@
                     </div>
                     <div class="flex flex-row basis-3/4">
                         <div class="basis-1/4" *ngFor="let element of group.value">
-                            <app-augment-clickable [element]="element" [augmentCategory]="selectedCategory | async"
+                            <app-augment-clickable class="hover:cursor-pointer" [element]="element"
+                                [augmentCategory]="selectedCategory | async"
                                 (pointerup)="selectAugment($event, element,  selectedCategory.value)"></app-augment-clickable>
                         </div>
                     </div>
@@ -163,7 +167,8 @@
         <div *ngIf="selectedCategory.value == AugmentSlotCategoryEnum.ACTIVE">
             <div class="flex flex-row flex-wrap w-full  m-1">
                 <div class="basis-3/12 md:basis-1/5 lg:basis-2/12 my-1" *ngFor="let element of boons$ | async">
-                    <app-augment-clickable [element]="element" [augmentCategory]="selectedCategory | async"
+                    <app-augment-clickable class="hover:cursor-pointer" [element]="element"
+                        [augmentCategory]="selectedCategory | async"
                         (pointerup)="selectAugment($event, element,  AugmentSlotCategoryEnum.ACTIVE)"></app-augment-clickable>
                 </div>
             </div>
