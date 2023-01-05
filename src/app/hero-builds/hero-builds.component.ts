@@ -72,7 +72,8 @@ export class HeroBuildsComponent implements OnInit {
           return of([])
         return this.buildService.getHeroBuilds(hero?.id, this.lastVoteTotal, this.lastBuildId);
       }),
-      shareReplay(1)
+      shareReplay(1),
+      take(1)
     );
 
     const myVotes$ = builds$.pipe(
@@ -90,6 +91,7 @@ export class HeroBuildsComponent implements OnInit {
         return builds;
       })
     );
+
     buildsPage
       .pipe(take(1))
       .subscribe(x => {
@@ -119,5 +121,9 @@ export class HeroBuildsComponent implements OnInit {
       this.heroId?.value,
       'build'
     ])
+  }
+
+  trackByFn(index: number, build: DetailedBuild) {
+    return build.id;
   }
 }

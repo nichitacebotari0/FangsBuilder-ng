@@ -9,7 +9,7 @@
         </button>
     </div>
     <div class="flex flex-col p-2">
-        <div *ngFor="let detailedBuild of detailedBuilds;"
+        <div *ngFor="let detailedBuild of detailedBuilds; trackBy: trackByFn"
             class="flex flex-row bg-gray-800 border-gray-700 border my-2 p-1">
             <app-build-vote [build]="detailedBuild.build" [existingVote]="detailedBuild.myVote"></app-build-vote>
             <app-hero-build-detail [details]="detailedBuild"> </app-hero-build-detail>
