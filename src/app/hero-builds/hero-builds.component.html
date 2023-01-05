@@ -4,12 +4,11 @@
     <h2>{{(heroDetails$ | async)?.name }}</h2>
     <div class="flex items-center border-b-2 border-gray-700 px-2 py-1 w-full">
         <h4>Top Rated Builds</h4>
-        <button (click)="create()"
-            class="inline-block bg-black hover:bg-stone-800 hover:text-white active:bg-stone-600 px-2 py-1 rounded-md ml-auto">
+        <button (click)="create()" class="inline-block bg-gray-800 hover:bg-gray-700 px-2 py-1 rounded-md ml-auto">
             Create your own Build
         </button>
     </div>
-    <div class="flex flex-col">
+    <div class="flex flex-col p-2">
         <div *ngFor="let detailedBuild of detailedBuilds;"
             class="flex flex-row bg-gray-800 border-gray-700 border my-2 p-1">
             <app-build-vote [build]="detailedBuild.build" [existingVote]="detailedBuild.myVote"></app-build-vote>
@@ -20,6 +19,9 @@
                 class="inline-block bg-stone-300 hover:bg-stone-700 hover:text-white text-black active:bg-black px-2 py-1 ml-auto">
                 Load More
             </button>
+        </div>
+        <div *ngIf="detailedBuilds.length == 0"> None at the moment, perhaps youd like to <button (click)="create()"
+                class="inline-block bg-gray-800 hover:bg-gray-700 px-2 py-1 rounded-md ml-auto"> create </button>
         </div>
     </div>
 </div>

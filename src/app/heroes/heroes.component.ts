@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, debounceTime, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
 import { Hero } from '../Models/Hero';
 import { HeroService } from '../Services/hero.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-heroes',
@@ -11,16 +11,29 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class HeroesComponent implements OnInit {
 
-  constructor(private heroService: HeroService,
-    private router: Router) { }
-
-  ngOnInit(): void {
-    this.heroes$ = this.heroService.get();
+  constructor(private heroService: HeroService) {
+    this.filteredHeroes$ = this.searchTerm.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      combineLatestWith(this.heroService.get()),
+      map(([term, heroes]) =>
+        term?.length > 0
+          ? heroes.filter(hero => hero.name.toUpperCase().startsWith(term.toUpperCase()))
+          : heroes
+      ));
   }
 
-  heroes$: Observable<Hero[]> | undefined;
+  ngOnInit(): void {
+  }
+  filteredHeroes$: Observable<Hero[]> | undefined;
+  heroId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
+  private searchTerm = new BehaviorSubject<string>("");
+
+  lookup(term: string) {
+    this.searchTerm.next(term);
+  }
 
   goToHero(id: number) {
-    this.router.navigate(["/hero", id])
+    this.heroId.next(id);
   }
 }

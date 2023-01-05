@@ -1,11 +1,14 @@
-<div class="flex flex-row flex-wrap h-full">
-    <div *ngFor="let hero of heroes$ | async" class="w-24 xs:w-1/3 sm:w-1/4 lg:w-1/6">
-        <div class="m-2">
-            <button (click)="goToHero(hero.id)">
-                <img src="{{hero.imagePath}}" title="{{hero.name}}" />
-            </button>
+<div class="p-2 px-4">
+    <input #searchText (input)="lookup(searchText.value)" placeholder="Hero Name..." class="bg-gray-600" />
+    <div class="flex flex-row flex-wrap h-full">
+        <div *ngFor="let hero of filteredHeroes$ | async" class="w-16 sm:w-24 md:w-32">
+            <div class="m-2">
+                <button (click)="goToHero(hero.id)">
+                    <img src="{{hero.imagePath}}" title="{{hero.name}}" />
+                </button>
+            </div>
         </div>
+
     </div>
-
-
+    <app-hero-builds *ngIf="(heroId | async)" [heroId]="heroId"></app-hero-builds>
 </div>

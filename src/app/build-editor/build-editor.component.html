@@ -45,18 +45,21 @@
                 </div>
             </div>
         </div>
-        <div class="relative">
-            <div class="block absolute bg-stone-700 p-1 mb-1 rounded-md border border-stone-600 bottom-full"
-                [class.hidden]="!hasCopied"> Link Copied!
+        <div class="flex">
+            <div class="relative">
+                <div class="absolute bg-stone-700 p-1 mb-1 rounded-md border border-stone-600 bottom-full"
+                    [class.hidden]="!hasCopied"> Link Copied!
+                </div>
+                <button *ngIf="true" (click)="shareBuild()"
+                    class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2">
+                    Quick Share
+                </button>
             </div>
-            <button *ngIf="true" (click)="shareBuild()"
-                class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2">
-                Quick Share
-            </button>
+
             <button *ngIf="true && isLoggedIn" (click)="openForm()"
-                class="inline-block bg-black hover:bg-stone-800 hover:text-white active:bg-stone-600 p-2 ml-auto"
+                class="flex items-center bg-gray-800 hover:bg-gray-700 active:bg-stone-600 p-2 ml-auto"
                 [ngClass]="{'text-sky-600 hover:text-sky-400': editId > 0 , 'text-green-800 hover:text-green-500 ':editId <= 0}">
-                {{ editId > 0 ? "Edit" : "Save" }}
+                {{ editId > 0 ? " Show Edit " : " Show Save " }} <div class="ml-1 downArrow"> </div>
             </button>
         </div>
     </div>

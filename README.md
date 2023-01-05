@@ -20,6 +20,7 @@ Need a place to share builds through(why previous iteration existed). And having
 9) ~~Add guides.~~ Builds have description  :heavy_check_mark:  
 10) if perf allows it: when in build editor and making a build, dynamically search for, and surface builds/guides already made with those augments and show voting stats. Now youll know if someone already thought of the build, and whats the popularity.  
 11) Solve the patch problem. If augment is removed/changed in game.Do we mark builds as being for particular patch, do we never delete augments only mark them as obsolete. Do we allow editing augments already in builds?(Probably yes, too troublesome to manage)  
+12) Add hero details: Description, skills, etc. Would be ideal to embed videos showcasing the skills in action augments list under each skill(optionally with videos showcasing the modification) 
 
 
 ## Features:

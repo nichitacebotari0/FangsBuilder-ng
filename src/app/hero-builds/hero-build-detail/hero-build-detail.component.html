@@ -21,10 +21,8 @@
 
     </div>
 </div>
-<p class="md:space-x-1 space-y-1 md:space-y-0 mb-4">
-<div class=" m-2 p-1 w-full ">
-    <button *ngIf="details?.build?.description"
-        class="inline-block hover:cursor-pointer bg-stone-800 hover:bg-stone-900 p-3 w-full text-left text-white"
+<div *ngIf="details?.build?.description" class=" p-1 w-full ">
+    <button class="inline-block hover:cursor-pointer bg-stone-800 hover:bg-stone-900 p-3 w-full text-left text-white"
         [class.bg-stone-900]="showDescription" [class.bg-stone-800]="!showDescription"
         (click)="toggleDescription($event)">
         Description

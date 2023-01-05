@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, combineLatestWith, forkJoin, map, mergeMap, Observable, of, shareReplay, take } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, combineLatestWith, distinctUntilChanged, forkJoin, map, mergeMap, Observable, of, shareReplay, take } from 'rxjs';
 import { Build } from '../Models/Build';
 import { BuildVote } from '../Models/BuildVote';
 import { Hero } from '../Models/Hero';
@@ -25,31 +25,35 @@ export interface DetailedBuild extends Build {
   styleUrls: ['./hero-builds.component.less']
 })
 export class HeroBuildsComponent implements OnInit {
-  constructor(activatedRoute: ActivatedRoute,
-    heroesService: HeroService,
+  constructor(private heroesService: HeroService,
     private router: Router,
     private buildService: BuildService,
-    private buildSerializer: BuildSerializerService) {
-    this.heroDetails$ = combineLatest([
-      activatedRoute.paramMap.pipe(take(1)),
-      heroesService.get()])
-      .pipe(
-        map(([paramMap, heroes]) => {
-          let id: string | null = paramMap.get("id");
-          if (!id)
-            return undefined;
-          this.heroId = Number(id);
-          return heroes?.find(hero => hero.id == Number(id));
-        }));
-
-    this.loadChunkDetailedBuilds()
-  }
+    private buildSerializer: BuildSerializerService) { }
 
   ngOnInit(): void {
+
+    this.heroDetails$ = combineLatest([
+      this.heroId,
+      this.heroesService.get()])
+      .pipe(
+        map(([id, heroes]) => {
+          if (!id)
+            return undefined;
+          return heroes?.find(hero => hero.id == Number(id));
+        }),
+        distinctUntilChanged((previous, current) => previous?.id == current?.id),
+        shareReplay(1),
+      );
+
+    this.heroDetails$.subscribe(() => {
+      this.detailedBuilds = [];
+      this.loadChunkDetailedBuilds();
+    });
+
   }
-  heroDetails$: Observable<Hero | undefined>;
+  @Input() heroId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
+  heroDetails$: Observable<Hero | undefined> = of(undefined);
   detailedBuilds: DetailedBuild[] = [];
-  heroId: number | undefined;
 
   private _lastVoteTotal: number | undefined;
   public get lastVoteTotal(): number | undefined {
@@ -72,7 +76,9 @@ export class HeroBuildsComponent implements OnInit {
     );
 
     const myVotes$ = builds$.pipe(
-      mergeMap(builds => this.buildService.getMyVotes(builds.map(build => build.id))),
+      mergeMap(builds => builds.length > 0
+        ? this.buildService.getMyVotes(builds.map(build => build.id))
+        : of([])),
     );
 
     const buildsPage = builds$.pipe(
@@ -110,12 +116,8 @@ export class HeroBuildsComponent implements OnInit {
       return;
     this.router.navigate([
       'hero',
-      this.heroId,
+      this.heroId?.value,
       'build'
     ])
-  }
-
-  trackByFn(index: number, build: DetailedBuild): number {
-    return build.id;
   }
 }
