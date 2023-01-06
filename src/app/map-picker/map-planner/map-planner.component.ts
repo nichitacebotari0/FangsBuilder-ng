@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-map-planner',
@@ -19,7 +19,10 @@ export class MapPlannerComponent implements OnInit {
     if (!this.ctx)
       return;
     this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.strokeStyle = "red";
   }
+  @Input()
+  imgPath: string = "\\assets\\maps\\Embersong_screenshot.png";
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement> | undefined;
   @ViewChild('eraserBrush', { static: true })
@@ -71,7 +74,7 @@ export class MapPlannerComponent implements OnInit {
     this.isEraserToggled = !this.isEraserToggled;
   }
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener('document:keyup', ['$event'])
   keyPressed(event: KeyboardEvent) {
     if (event.key == 'e') {
       this.toggleEraser(event);

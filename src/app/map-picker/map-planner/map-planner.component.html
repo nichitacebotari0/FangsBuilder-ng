@@ -7,10 +7,10 @@
 
     </div>
     <div class="flex flex-col">
-        <div class="relative h-auto w-full xs:w-96" (pointermove)="pointerMove($event)">
-            <img class="w-full absolute top-0 left-0 z-0" draggable="false"
-                src="\assets\maps\Embersong_screenshot.png" />
-            <canvas #canvas class="relative border border-gray-700 w-full z-10" [class.cursor-none]="isEraserToggled">
+        <div class="relative h-fit w-full" (pointermove)="pointerMove($event)">
+            <img #backgroundImg class="w-full top-0 left-0 z-0" draggable="false" [src]="imgPath" />
+            <canvas #canvas class="absolute border border-gray-700 w-full h-full z-10 top-0 left-0"
+                [class.cursor-none]="isEraserToggled">
                 This is a canvas for drawing.
             </canvas>
             <div #eraserBrush class="absolute top-0 bg-white border border-black z-10 cursor-none"

@@ -1,0 +1,14 @@
+<div>
+    <div class="flex bg-gray-700 justify-center">
+        <button class="hover:bg-gray-600 p-4" [class.bg-gray-600]="selectedIndex == 0" (click)="selectedIndex = 0">
+            Embersong </button>
+        <button class="hover:bg-gray-600 p-4" [class.bg-gray-600]="selectedIndex == 1" (click)="selectedIndex = 1">
+            Stormheart </button>
+        <button class="hover:bg-gray-600 p-4" [class.bg-gray-600]="selectedIndex == 2" (click)="selectedIndex = 2">
+            Crownwatch </button>
+    </div>
+    <app-map-planner [imgPath]="images[selectedIndex]" [class.hidden]="selectedIndex != 0"></app-map-planner>
+    <app-map-planner [imgPath]="images[selectedIndex]" [class.hidden]="selectedIndex != 1"></app-map-planner>
+    <app-map-planner [imgPath]="images[selectedIndex]" [class.hidden]="selectedIndex != 2"></app-map-planner>
+
+</div>
