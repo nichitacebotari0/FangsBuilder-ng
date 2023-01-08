@@ -35,6 +35,9 @@
                 <div class="flex-col">
                     <a routerLink="/" (click)="burgerToggled = false" class="flex items-center p-2 hover:bg-gray-700">
                         Home</a>
+                    <a routerLink="/mapplanner" (click)="burgerToggled = false"
+                        class="flex items-center p-2 hover:bg-gray-700 m-0">
+                        Map </a>
                     <a routerLink="/mybuilds" *ngIf="isLoggedIn" (click)="burgerToggled = false"
                         class="flex items-center p-2 hover:bg-gray-700">
                         My Builds
@@ -53,7 +56,7 @@
 
     </nav>
 
-    <div class="mt-11 md:max-w-4xl xl:max-w-6xl min-h-screen mx-auto bg-gray-900 ">
+    <div class="mt-11 md:max-w-4xl xl:max-w-6xl min-h-screen mx-auto bg-gray-900">
         <router-outlet></router-outlet>
     </div>
 </div>

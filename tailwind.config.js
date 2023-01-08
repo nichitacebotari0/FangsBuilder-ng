@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,ts}', './projects/**/*.{html,ts}'],
+  content: [
+    './src/**/*.{html,ts}',
+     './projects/**/*.{html,ts}',
+    //  './**/*.{html,ts}' // wtf javascript; why do i need this locally, but only sometimes
+    ],
   safelist: [
     'border-sky-600',
     'border-red-600',

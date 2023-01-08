@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { /*FormsModule,*/ ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BuildEditorComponent } from './build-editor/build-editor.component';
@@ -24,9 +23,11 @@ import { BuildFormComponent } from './build-editor/build-form/build-form.compone
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { HeroBuildsComponent } from './hero-builds/hero-builds.component';
 import { HeroBuildDetailComponent } from './hero-builds/hero-build-detail/hero-build-detail.component';
-import { BuildVoteComponent } from './hero-builds/build-vote/build-vote.component';
+import { BuildVoteComponent } from './build/build-vote/build-vote.component';
 import { MapPlannerComponent } from './map-picker/map-planner/map-planner.component';
 import { MapPickerComponent } from './map-picker/map-picker.component';
+import { BuildComponent } from './build/build.component';
+import { BuildPageComponent } from './build-page/build-page.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,8 @@ import { MapPickerComponent } from './map-picker/map-picker.component';
     BuildVoteComponent,
     MapPlannerComponent,
     MapPickerComponent,
+    BuildComponent,
+    BuildPageComponent,
   ],
   imports: [
     BrowserModule,

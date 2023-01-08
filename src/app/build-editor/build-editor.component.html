@@ -1,5 +1,5 @@
 <div class="w-full text-center border-b-2 text-xl "
-    [ngClass]="{' text-sky-600 border-b-sky-600': editId > 0 , ' border-b-green-700 text-green-800  ':editId <= 0}">
+    [ngClass]="{' text-sky-100 border-b-sky-200': editId > 0 , ' border-b-green-100 text-green-200  ':editId <= 0}">
     <h4> {{ editId > 0 ? "Editing Build" : "Create Build" }} </h4>
 </div>
 <div class="flex flex-col xl:flex-row xl:justify-start xs:p-2 min-h-screen ">
@@ -50,15 +50,15 @@
                 <div class="absolute bg-stone-700 p-1 mb-1 rounded-md border border-stone-600 bottom-full"
                     [class.hidden]="!hasCopied"> Link Copied!
                 </div>
-                <button *ngIf="true" (click)="shareBuild()"
-                    class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2">
+                <button (click)="shareBuild()"
+                    class="inline-block bg-stone-300 hover:bg-stone-900 hover:text-white text-black active:bg-black p-2 rounded-md mx-1">
                     Quick Share
                 </button>
             </div>
 
-            <button *ngIf="true && isLoggedIn" (click)="openForm()"
-                class="flex items-center bg-gray-800 hover:bg-gray-700 active:bg-stone-600 p-2 ml-auto"
-                [ngClass]="{'text-sky-600 hover:text-sky-400': editId > 0 , 'text-green-800 hover:text-green-500 ':editId <= 0}">
+            <button *ngIf="isLoggedIn" (click)="openForm()"
+                class="flex items-center bg-gray-800 hover:bg-gray-700 active:bg-stone-600 p-2 rounded-md ml-auto"
+                [ngClass]="{'text-sky-100 hover:text-sky-200': editId > 0 , 'text-green-100 hover:text-green-200 ':editId <= 0}">
                 {{ editId > 0 ? " Show Edit " : " Show Save " }} <div class="ml-1 downArrow"> </div>
             </button>
         </div>

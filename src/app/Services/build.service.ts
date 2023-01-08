@@ -25,8 +25,13 @@ export class BuildService {
     withCredentials: true
   };
 
+  getBuild(id: number): Observable<Build> {
+    const url = `${this.buildPath}/${id}`;
+    return this.http.get<Build>(url, this.httpOptions);
+  }
+
   getHeroBuilds(heroId: number, previousVote: number | undefined, previousId: number | undefined): Observable<Build[]> {
-    const url = `${this.buildPath}/${heroId}`;
+    const url = `${this.buildPath}/hero/${heroId}`;
     const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: {} };
     if (previousVote !== undefined && previousId !== undefined) {
       options.params = {

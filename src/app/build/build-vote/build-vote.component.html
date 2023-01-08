@@ -1,8 +1,8 @@
 <div class="flex flex-col flex-nowrap p-1">
-    <button (click)="vote(true)" class="upArrow w-1 h-1" [class.upArrow-checked]="existingVote?.isUpvote"></button>
+    <button (click)="vote($event, true)" class="upArrow w-1 h-1" [class.upArrow-checked]="existingVote?.isUpvote"></button>
     <div [ngClass]="{'text-green-600' : isPositiveVote, 'text-red-600' : isNegativeVote }">
         {{ build ? build.upvotes - build.downvotes : 0}}
     </div>
-    <button (click)="vote(false)" class="downArrow w-1 h-1"
+    <button (click)="vote($event, false)" class="downArrow w-1 h-1"
         [class.downArrow-checked]="existingVote && !existingVote.isUpvote"></button>
 </div>

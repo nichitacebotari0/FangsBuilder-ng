@@ -8,12 +8,7 @@ import { BuildService } from '../Services/build.service';
 import { HeroService } from '../Services/hero.service';
 import { BuildSerializerService, CategorisedGenericAugmentData } from '../Services/Utils/build-serializer.service';
 
-export interface BuildWithAugments {
-  build: Build,
-  augments: Observable<CategorisedGenericAugmentData | undefined>[],
-}
-
-export interface DetailedBuild extends Build {
+export interface DetailedBuild {
   build: Build
   augmentsData?: (CategorisedGenericAugmentData | undefined)[]
   myVote?: BuildVote
@@ -124,6 +119,6 @@ export class HeroBuildsComponent implements OnInit {
   }
 
   trackByFn(index: number, build: DetailedBuild) {
-    return build.id;
+    return build.build.id;
   }
 }

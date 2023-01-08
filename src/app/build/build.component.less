@@ -1,0 +1,35 @@
+.augment {
+    position: relative;
+    display: inline-block;
+}
+
+.augmentSlot-imageBorder {
+    clip-path: circle(38% at 50% 50%);
+    -webkit-clip-path: circle(38% at 50% 50%);
+}
+
+.augmentSlot-imageContainer {
+    clip-path: circle(35% at 50% 50%);
+    -webkit-clip-path: circle(35% at 50% 50%);
+}
+
+.augmentSlot-image {
+    transform: scale(.7);
+}
+
+.augment .augment-tooltip-container {
+    visibility: hidden;
+    position: absolute;
+    top: 105%;
+    left: 0px;
+    z-index: 1;
+}
+
+.augment-tooltip-container .augment-tooltip {
+    position: relative;
+    left: 0px;
+}
+
+.augment:hover .augment-tooltip {
+    visibility: visible;
+}

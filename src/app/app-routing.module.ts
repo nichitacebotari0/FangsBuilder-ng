@@ -14,12 +14,15 @@ import { ActiveComponent } from './Editing/active/active.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { BuildEditorComponent } from './build-editor/build-editor.component';
 import { MapPickerComponent } from './map-picker/map-picker.component';
+import { BuildComponent } from './build/build.component';
+import { BuildPageComponent } from './build-page/build-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "/heroes", pathMatch: 'full' },
   { path: 'heroes', component: HeroesComponent },
   { path: 'hero/:id/build', component: BuildEditorComponent },
   { path: 'mybuilds', component: MyBuildsComponent },
+  { path: 'builds/:id', component: BuildPageComponent },
   { path: 'discord-redirect', component: DiscordRedirectComponent },
   { path: "mapplanner", component: MapPickerComponent },
   { path: 'admin', component: AdminComponent },

@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BuildWithAugments, DetailedBuild } from '../hero-builds.component';
-import { BuildVote } from '../../Models/BuildVote';
+import { DetailedBuild } from '../hero-builds.component';
 import { CategorisedGenericAugmentData } from '../../Services/Utils/build-serializer.service';
 import { StyleService } from '../../Services/Utils/style.service';
 
@@ -17,7 +15,6 @@ export class HeroBuildDetailComponent implements OnInit {
   ngOnInit(): void {
   }
   @Input() details: DetailedBuild | undefined;
-  showDescription: boolean = false;
 
   colorClass(aug: CategorisedGenericAugmentData | null | undefined): string {
     return "bg-" + this.styleService.getColorForAugment(aug?.category)
@@ -26,9 +23,5 @@ export class HeroBuildDetailComponent implements OnInit {
   position_tooltip(event: Event, name: string) {
     this.styleService.position_tooltip(event, name);
     event.stopPropagation();
-  }
-
-  toggleDescription(event: Event) {
-    this.showDescription = !this.showDescription;
   }
 }

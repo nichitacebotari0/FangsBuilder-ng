@@ -17,7 +17,8 @@ export class BuildVoteComponent implements OnInit {
   @Input() build: Build | undefined;
   @Input() existingVote: BuildVote | undefined | null;
 
-  vote(up: boolean) {
+  vote(event: Event,up: boolean) {
+    event.stopImmediatePropagation();
     if (!this.build)
       return;
 

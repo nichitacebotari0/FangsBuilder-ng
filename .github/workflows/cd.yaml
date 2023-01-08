@@ -34,7 +34,7 @@ jobs:
       - name: npm run build
         run: |
           {
-          npm i -g @angular/cli
+          npm i --location=global @angular/cli@14.2.10
           npm ci
           ng build --configuration production
           }

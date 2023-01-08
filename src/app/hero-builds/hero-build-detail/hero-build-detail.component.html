@@ -1,7 +1,7 @@
 <div class="m-2 p-1 w-full flex items-center">
-    <div class="inline-block ">
+    <a class="pl-2 inline-block text-sky-100 hover:text-sky-200" [routerLink]="'/builds/'+details?.build?.id">
         {{ details?.build?.title }}
-    </div>
+    </a>
 </div>
 <div class="flex flex-row flex-nowrap">
     <div *ngFor="let aug of details?.augmentsData">
@@ -14,21 +14,9 @@
             <div class="augment-tooltip-container w-28 xs:w-32 md:w-48 lg:w-64 xl:w-80" *ngIf="(aug)?.augment">
                 <div class="flex-col augment-tooltip p-1 border-2 bg-gray-900">
                     <div class="text-center border-b-2 px-1">{{(aug)?.augment?.name}}</div>
-                    <div>{{(aug)?.augment?.description}}</div>
+                    <div> {{(aug)?.augment?.description}} </div>
                 </div>
             </div>
         </div>
-
-    </div>
-</div>
-<div *ngIf="details?.build?.description" class=" p-1 w-full ">
-    <button class="inline-block hover:cursor-pointer bg-stone-800 hover:bg-stone-900 p-3 w-full text-left text-white"
-        [class.bg-stone-900]="showDescription" [class.bg-stone-800]="!showDescription"
-        (click)="toggleDescription($event)">
-        Description
-    </button>
-    <div
-        [ngClass]="(showDescription ?  'max-h-screen opacity-100' : ' max-h-0 opacity-0') + ' transition-all duration-300 p-2'">
-        {{ details?.build?.description }}
     </div>
 </div>
