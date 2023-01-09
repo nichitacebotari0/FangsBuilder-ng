@@ -49,7 +49,7 @@ Made using github actions. .github\workflows\cd.yaml contains the pipeline:
 ### Manual stuff that needed doing:  
 1. Create service principal(used for automated deployment): az ad sp create-for-rbac -n Name --role Contributor, "Storage Blob Data Contributor" --scopes /subscriptions/ff395dc...  
 2. Upload static files(images) folders one by one to storage account using az cli(dont want to track images atm)  
-    A) for single file: az storage blob upload -c '$web' --account-name prodstafangsbuilder2 -f .\Heroes\Hero\filename.json  -n Heroes\Hero\filename.json  --overwrite  
+    A) for single file: az storage blob upload -c '$web' --account-name prodstafangsbuilder2 -f .\assets\file.png  -n assets\file.png  --overwrite  
     B) for bunch: az storage blob upload-batch --source .\assets --account-name prodstafangsbuilder2 --destination '$web' --destination-path \assets  
     C) In case I want to delete a dir:  az storage blob directory delete --account-name prodstafangsbuilder2 --container-name '$web' --directory-path Heroes --recursive  
     Annoying because you need to use a --marker for subsequent calls until it finishes deleting everything  

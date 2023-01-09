@@ -56,7 +56,39 @@
 
     </nav>
 
-    <div class="mt-11 pb-11 md:max-w-4xl xl:max-w-6xl mx-auto bg-gray-900 bg-opacity-90">
+    <div class="mt-11 pb-11 md:max-w-4xl xl:max-w-6xl mx-auto min-h-screen bg-fixed bg-gray-900 bg-opacity-90">
         <router-outlet></router-outlet>
+    </div>
+    <div class="bottom-0 w-full h-11  bg-gray-800 border-t border-opacity-50 border-gray-700  px-4 py-1">
+        <div class="flex items-center justify-between h-full m-0 bottom-0 md:max-w-4xl xl:max-w-6xl mx-auto px-2">
+            <a href="https://playfangs.com"
+                class="flex group justify-between items-center  hover:text-red-500 transition-colors">
+                <div
+                    class="w-6 h-6 mx-1 bg-contain bg-no-repeat bg-[url('https://playfangs.com/favicon.ico')] group-hover:bg-[url('favicon.ico')]">
+                </div>
+                <div class="hidden xs:inline-block">Play Fangs</div>
+            </a>
+            <a href="https://twitter.com/PlayFANGS"
+                class="flex group justify-between items-center hover:text-sky-400 transition-colors">
+                <div
+                    class="w-6 h-6 -mb-1 mx-1 bg-contain bg-no-repeat bg-[url('/assets/twitter_icon_blue.png')] group-hover:bg-[url('/assets/twitter_icon_white.png')]">
+                </div>
+                <div class="hidden xs:inline-block">Follow Twitter</div>
+            </a>
+            <a href="https://www.youtube.com/@PlayFANGS"
+                class="flex group justify-between items-center hover:text-red-600 transition-colors">
+                <div
+                    class="w-6 h-6 -mb-2 mx-1 bg-contain bg-no-repeat bg-[url('/assets/yt_icon_red.png')] group-hover:bg-[url('/assets/yt_icon_white.png')]">
+                </div>
+                <div class="hidden xs:inline-block">Watch Youtube</div>
+            </a>
+            <a href="https://discord.gg/FANGS"
+                class="flex group justify-between items-center hover:text-indigo-500 transition-colors">
+                <div
+                    class="w-6 h-6 -mb-1 mx-1 bg-contain bg-no-repeat bg-[url('/assets/discord_icon_blurple_RGB.png')] group-hover:bg-[url('/assets/discord_icon_clyde_white_RGB.png')]">
+                </div>
+                <div class="hidden xs:inline-block">Join Discord</div>
+            </a>
+        </div>
     </div>
 </div>
