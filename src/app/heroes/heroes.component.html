@@ -11,5 +11,11 @@
             </div>
         </div>
     </div>
-    <app-hero-builds *ngIf="(heroId | async)" [heroId]="heroId"></app-hero-builds>
+    <app-hero-builds *ngIf="(heroId | async); else welcome;" [heroId]="heroId"></app-hero-builds>
+    <ng-template #welcome>
+        <p class="p-2 whitespace-pre-wrap flex justify-center">
+            {{welcomeMessage}}
+        </p>
+
+    </ng-template>
 </div>
