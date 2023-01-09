@@ -28,6 +28,7 @@ import { MapPlannerComponent } from './map-picker/map-planner/map-planner.compon
 import { MapPickerComponent } from './map-picker/map-picker.component';
 import { BuildComponent } from './build/build.component';
 import { BuildPageComponent } from './build-page/build-page.component';
+import { WarningDisclaimerComponent } from './warning-disclaimer/warning-disclaimer.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { BuildPageComponent } from './build-page/build-page.component';
     MapPickerComponent,
     BuildComponent,
     BuildPageComponent,
+    WarningDisclaimerComponent,
   ],
   imports: [
     BrowserModule,

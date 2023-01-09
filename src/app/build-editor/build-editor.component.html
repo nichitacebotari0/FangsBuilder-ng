@@ -1,3 +1,8 @@
+<app-warning-disclaimer *ngIf="!isLoggedIn" class="flex justify-center w-full p-1"
+    disclaimerTitle="You are not logged in">
+    You are free to create a build but you can only share it by direct link.
+    <br /> It will not be possible to vote on/edit the build.
+</app-warning-disclaimer>
 <div class="w-full text-center border-b-2 text-xl "
     [ngClass]="{' text-sky-100 border-b-sky-200': editId > 0 , ' border-b-green-100 text-green-200  ':editId <= 0}">
     <h4> {{ editId > 0 ? "Editing Build" : "Create Build" }} </h4>

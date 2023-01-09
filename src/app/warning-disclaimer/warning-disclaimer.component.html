@@ -1,0 +1,16 @@
+<div class="flex justify-between bg-gray-700 border rounded-md border-yellow-500 " [class.hidden]="wasClosed">
+    <div
+        class="flex flex-wrap items-center justify-center p-2 rounded-l-md bg-gray-800 md:text-md lg:text-3xl text-white">
+        <img src="assets/warning.png" />
+        WARNING
+    </div>
+    <div class="flex flex-col p-2">
+        <div class="text-xl text-yellow-400"> {{ disclaimerTitle }} </div>
+        <ng-content></ng-content>
+    </div>
+    <div [class]="'border border-gray-600 rounded-full m-1 w-5 h-5 text-gray-600'+
+        ' hover:cursor-pointer hover:border-gray-500 hover:text-gray-500 transition-colors'"
+        (click)="wasClosed = true;">
+        <div class="flex h-full justify-center items-center pb-1">x</div>
+    </div>
+</div>
