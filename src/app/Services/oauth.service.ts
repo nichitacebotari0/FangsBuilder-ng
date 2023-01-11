@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ConfigService } from './config.service';
 import { CookieService } from 'ngx-cookie';
+import { ConstantsService } from './Utils/constants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class OauthService {
   constructor(
     private http: HttpClient,
     private config: ConfigService,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private constants: ConstantsService) { }
 
   getAcessToken(auth_code: string) {
     var queryParams = {
@@ -45,10 +47,7 @@ export class OauthService {
     return false;
   }
 
-  // getUserDetails() {
-  //   return this.http.get(environment.baseUrl + '/getUserDetails');
-  // }
-  // logout() {
-  //   return this.http.get(environment.baseUrl + '/logout');
-  // }
+  issuper(): boolean {
+    return this.cookieService.get("discordId") == this.constants.discord.SuperId;
+  }
 }

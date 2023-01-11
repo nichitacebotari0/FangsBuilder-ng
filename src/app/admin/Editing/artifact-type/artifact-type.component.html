@@ -12,7 +12,7 @@
                 <div class="px-1 mx-1">{{artifactType.name}}</div>
                 <button (pointerup)="editArtifact(artifactType)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>
-                <button (pointerup)="deleteArtifactType(artifactType)"
+                <button *ngIf="isSuper" (pointerup)="deleteArtifactType(artifactType)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-1">Delete</button>
             </div>
         </div>

@@ -12,7 +12,7 @@
                 <div class="px-1 mx-1">{{heroClass.name}}</div>
                 <button (pointerup)="edit(heroClass)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>
-                <button (pointerup)="delete(heroClass)"
+                <button *ngIf="isSuper" (pointerup)="delete(heroClass)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-1">Delete</button>
             </div>
         </div>

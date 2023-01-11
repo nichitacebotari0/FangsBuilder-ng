@@ -12,7 +12,7 @@
                 <div class="px-1 mx-1">{{abilityType.name}}</div>
                 <button (pointerup)="editAbility(abilityType)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-auto">Edit</button>
-                <button (pointerup)="deleteAbilityType(abilityType)"
+                <button *ngIf="isSuper" (pointerup)="deleteAbilityType(abilityType)"
                     class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 mr-0 ml-1">Delete</button>
             </div>
         </div>

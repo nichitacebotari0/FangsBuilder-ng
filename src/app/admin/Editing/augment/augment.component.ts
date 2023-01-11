@@ -8,6 +8,7 @@ import { AbilityTypeService } from 'src/app/Services/ability-type.service';
 import { AugmentCategoryService } from 'src/app/Services/augment-category.service';
 import { AugmentService } from 'src/app/Services/augment.service';
 import { HeroService } from 'src/app/Services/hero.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 import { StyleService } from 'src/app/Services/Utils/style.service';
 
@@ -23,7 +24,8 @@ export class AugmentComponent implements OnInit {
     private augmentCategoryService: AugmentCategoryService,
     private abilityTypeService: AbilityTypeService,
     private staticAssetService: StaticAssetsService,
-    private styleService: StyleService) { }
+    private styleService: StyleService,
+    private oauthService: OauthService) { }
 
   ngOnInit(): void {
     this.heroes$ = this.heroService.get();
@@ -158,5 +160,9 @@ export class AugmentComponent implements OnInit {
 
   getColorClass(augmentCategory: number): string {
     return "text-" + this.styleService.getColorForAugment(augmentCategory)
+  }
+
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

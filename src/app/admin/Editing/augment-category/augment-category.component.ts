@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
 import { AugmentCategoryService } from 'src/app/Services/augment-category.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 
 @Component({
   selector: 'app-augment-category',
@@ -11,7 +12,8 @@ import { AugmentCategoryService } from 'src/app/Services/augment-category.servic
 })
 export class AugmentCategoryComponent implements OnInit {
 
-  constructor(private augmentCategoryService: AugmentCategoryService) { }
+  constructor(private augmentCategoryService: AugmentCategoryService,
+    private oauthService: OauthService) { }
 
   ngOnInit(): void {
     this.augmentCategories$ = this.augmentCategoryService.get();
@@ -64,5 +66,9 @@ export class AugmentCategoryComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.heroClassForm.reset();
+  }
+
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

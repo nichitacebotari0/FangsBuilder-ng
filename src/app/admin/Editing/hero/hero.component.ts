@@ -6,6 +6,7 @@ import { Hero } from 'src/app/Models/Hero';
 import { HeroImages } from 'src/app/Models/Static';
 import { HeroTypeService } from 'src/app/Services/hero-type.service';
 import { HeroService } from 'src/app/Services/hero.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 
 @Component({
@@ -16,7 +17,8 @@ import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 export class HeroComponent implements OnInit {
   constructor(private heroService: HeroService,
     private heroTypeService: HeroTypeService,
-    private staticAssetService: StaticAssetsService) {
+    private staticAssetService: StaticAssetsService,
+    private oauthService: OauthService) {
   }
 
   ngOnInit(): void {
@@ -91,5 +93,9 @@ export class HeroComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.heroForm.reset();
+  }
+
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

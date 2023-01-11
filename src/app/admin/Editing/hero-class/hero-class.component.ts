@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
 import { HeroTypeService } from 'src/app/Services/hero-type.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 
 @Component({
   selector: 'app-hero-class',
@@ -11,7 +12,8 @@ import { HeroTypeService } from 'src/app/Services/hero-type.service';
 })
 export class HeroClassComponent implements OnInit {
 
-  constructor(private abilityTypeService: HeroTypeService) { }
+  constructor(private abilityTypeService: HeroTypeService,
+    private oauthService: OauthService) { }
 
   ngOnInit(): void {
     this.heroClasses$ = this.abilityTypeService.get();
@@ -64,5 +66,9 @@ export class HeroClassComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.heroClassForm.reset();
+  }
+
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

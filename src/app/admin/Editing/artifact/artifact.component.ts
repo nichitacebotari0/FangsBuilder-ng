@@ -5,6 +5,7 @@ import { Artifact } from 'src/app/Models/Artifact';
 import { Category } from 'src/app/Models/Category';
 import { ArtifactTypeService } from 'src/app/Services/artifact-type.service';
 import { ArtifactService } from 'src/app/Services/artifact.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 
 @Component({
@@ -15,7 +16,8 @@ import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 export class ArtifactComponent implements OnInit {
   constructor(private artifactService: ArtifactService,
     private artifactTypeService: ArtifactTypeService,
-    private staticAssetService: StaticAssetsService) {
+    private staticAssetService: StaticAssetsService,
+    private oauthService: OauthService) {
   }
 
   ngOnInit(): void {
@@ -98,5 +100,9 @@ export class ArtifactComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.form.reset();
+  }
+  
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

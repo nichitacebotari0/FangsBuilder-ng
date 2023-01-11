@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
 import { ArtifactTypeService } from 'src/app/Services/artifact-type.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 
 @Component({
   selector: 'app-artifact-type',
@@ -11,7 +12,8 @@ import { ArtifactTypeService } from 'src/app/Services/artifact-type.service';
 })
 export class ArtifactTypeComponent implements OnInit {
 
-  constructor(private artifactTypeService: ArtifactTypeService) { }
+  constructor(private artifactTypeService: ArtifactTypeService,
+    private oauthService: OauthService) { }
 
   ngOnInit(): void {
     this.artifactTypes$ = this.artifactTypeService.get();
@@ -66,5 +68,9 @@ export class ArtifactTypeComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.artifactTypeForm.reset();
+  }
+    
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

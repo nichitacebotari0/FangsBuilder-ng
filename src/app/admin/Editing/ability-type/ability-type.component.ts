@@ -3,6 +3,7 @@ import { FormGroup, FormControl, RequiredValidator, Validators } from '@angular/
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/Models/Category';
 import { AbilityTypeService } from 'src/app/Services/ability-type.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 
 @Component({
   selector: 'app-ability-type',
@@ -11,7 +12,8 @@ import { AbilityTypeService } from 'src/app/Services/ability-type.service';
 })
 export class AbilityTypeComponent implements OnInit {
 
-  constructor(private abilityTypeService: AbilityTypeService) { }
+  constructor(private abilityTypeService: AbilityTypeService,
+    private oauthService: OauthService) { }
 
   ngOnInit(): void {
     this.abilityTypes$ = this.abilityTypeService.get();
@@ -66,5 +68,9 @@ export class AbilityTypeComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.abilityTypeForm.reset();
+  }
+
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Active } from 'src/app/Models/Active';
 import { ActiveService } from 'src/app/Services/active.service';
+import { OauthService } from 'src/app/Services/oauth.service';
 import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 
 @Component({
@@ -12,7 +13,8 @@ import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 })
 export class ActiveComponent implements OnInit {
   constructor(private artifactService: ActiveService,
-    private staticAssetService: StaticAssetsService) {
+    private staticAssetService: StaticAssetsService,
+    private oauthService: OauthService) {
   }
 
   ngOnInit(): void {
@@ -88,5 +90,9 @@ export class ActiveComponent implements OnInit {
   stopEditing() {
     this.editId = -1;
     this.form.reset();
+  }
+  
+  public get isSuper(): boolean {
+    return this.oauthService.issuper();
   }
 }

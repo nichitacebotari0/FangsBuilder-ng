@@ -7,7 +7,7 @@ export class ConstantsService {
 
   constructor() { }
 
-  public get discord(): any {
+  public get discord() {
     return {
       SuperId: "224586010271547393"
     }
