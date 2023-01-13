@@ -1,0 +1,23 @@
+<button (click)="loadPage(-1)" class="p-1 m-1 bg-gray-700 rounded">Previous </button>
+<button (click)="loadPage(1)" class="p-1 m-1 bg-gray-700 rounded">Next </button>
+<div class="grid grid-cols-[1fr_repeat(3,minmax(0,3fr))_repeat(2,minmax(0,6fr))_3fr] gap-1 p-1 rounded-sm  bg-gray-800">
+    <div class="text-gray-400 break-words">Id</div>
+    <div class="text-gray-400 break-words">Model</div>
+    <div class="text-gray-400 break-words">Discord Id </div>
+    <div class="text-gray-400 break-words">Discord Nick </div>
+    <div class="text-gray-400 break-words">Summary Previous </div>
+    <div class="text-gray-400 break-words">Summary Next </div>
+    <div class="text-gray-400 break-words">Created Utc </div>
+    <ng-container *ngFor="let change of page">
+        <div class="border border-opacity-5 border-gray-50 break-words p-0 m-0 flex items-center justify-center">
+            {{change.id}} </div>
+        <div class="border border-opacity-5 border-gray-50 break-words">{{change.discordId}} </div>
+        <div class="border border-opacity-5 border-gray-50 break-words">{{change.discordNick}} </div>
+        <div class="border border-opacity-5 border-gray-50 break-words">{{change.model}} </div>
+        <div class="border border-opacity-5 border-gray-50 break-words">{{change.summaryPrevious}} </div>
+        <div class="border border-opacity-5 border-gray-50 break-words">{{change.summaryNext}} </div>
+        <div class="border border-opacity-5 border-gray-50 break-words">{{change.createdAtUtc | date:'short'}} </div>
+    </ng-container>
+</div>
+<button (click)="loadPage(-1)" class="p-1 m-1 bg-gray-700 rounded">Previous </button>
+<button (click)="loadPage(1)" class="p-1 m-1 bg-gray-700 rounded">Next </button>

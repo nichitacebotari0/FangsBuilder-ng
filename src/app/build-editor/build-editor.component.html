@@ -73,36 +73,36 @@
         <div [class.hidden]="(slotCategory$ | async) != AugmentSlotCategoryEnum.FLEX">
             <div class="flex flex-row flex-nowrap justify-center text-gray-900">
                 <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.COMBAT)"
-                    class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-red-600 active:bg-slate-800"
+                    class="flex-grow h-8 py-1 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-red-600 active:bg-slate-800"
                     [class.bg-red-600]="selectedCategory.value == AugmentSlotCategoryEnum.COMBAT">
                     COMBAT </button>
                 <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.UTILITY)"
-                    class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-yellow-500 active:bg-slate-800"
+                    class="flex-grow h-8 py-1 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-yellow-500 active:bg-slate-800"
                     [class.bg-yellow-500]="selectedCategory.value == AugmentSlotCategoryEnum.UTILITY">
                     UTILITY </button>
                 <button (pointerup)="setCategory($event, AugmentSlotCategoryEnum.POSITIONAL)"
-                    class="flex-grow h-8 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-sky-600 active:bg-slate-800"
+                    class="flex-grow h-8 py-1 text-center border-x-2 bg-gradient-to-t from-slate-600 hover:bg-sky-600 active:bg-slate-800"
                     [class.bg-sky-600]="selectedCategory.value == AugmentSlotCategoryEnum.POSITIONAL">
                     ARTIFACT </button>
             </div>
         </div>
-        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-sky-600 mb-2"
+        <div class="h-8 py-1 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-sky-600 mb-2"
             [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.POSITIONAL">
             ARTIFACT
         </div>
-        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-red-600 mb-2"
+        <div class="h-8 py-1 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-red-600 mb-2"
             [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.COMBAT">
             COMBAT
         </div>
-        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-yellow-500 mb-2"
+        <div class="h-8 py-1 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-yellow-500 mb-2"
             [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.UTILITY">
             UTILITY
         </div>
-        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-purple-600 mb-2"
+        <div class="h-8 py-1 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-purple-600 mb-2"
             [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.ULTIMATE">
             ULTIMATE
         </div>
-        <div class="h-8 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-yellow-800 mb-2"
+        <div class="h-8 py-1 text-center text-gray-900 align-middle border-x-2 bg-gradient-to-t from-slate-600 bg-yellow-800 mb-2"
             [class.hidden]="slotCategory$.value != AugmentSlotCategoryEnum.ACTIVE">
             BOONS
         </div>

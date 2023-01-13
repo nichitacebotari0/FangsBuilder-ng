@@ -2,22 +2,23 @@
     <nav class="w-full h-11 fixed top-0 bg-gray-800 z-10 border-b border-gray-700">
         <div class="hidden xs:flex items-center h-full md:max-w-4xl xl:max-w-6xl mx-auto">
             <img src="favicon.ico" class="w-6 h-6" />
-            <a routerLink="/" class="flex items-center p-2 hover:bg-gray-700 m-0">
+            <a routerLink="/" class="flex items-center p-2 hover:bg-gray-700 m-0 h-full">
                 Home</a>
-            <a routerLink="/mapplanner" class="flex items-center p-2 hover:bg-gray-700 m-0">
+            <a routerLink="/mapplanner" class="flex items-center p-2 hover:bg-gray-700 m-0 h-full">
                 Map </a>
             <div class="flex flex-nowrap ml-auto my-0 py-0">
-                <a routerLink="/mybuilds" *ngIf="isLoggedIn" class="flex items-center p-2 hover:bg-gray-700">
+                <a routerLink="/mybuilds" *ngIf="isLoggedIn" class="flex items-center p-2 hover:bg-gray-700 h-full">
                     My Builds
                 </a>
                 <a routerLink="/admin" *ngIf="isLoggedIn && isAdmin"
-                    class="flex items-center p-2 hover:bg-gray-700 mr-2">
+                    class="flex items-center p-2 hover:bg-gray-700 mr-2 h-full">
                     Admin
                 </a>
                 <div *ngIf="isLoggedIn; else loggedOut" class="flex items-center p-2 text-blue-400"> Hello, {{username}}
                 </div>
-                <ng-template #loggedOut>
-                    <a [href]="AuthUrl" class="flex items-center p-2 hover:bg-gray-700 hover:cursor-pointer mr-0">
+                <ng-template #loggedOut class="p-0 border-0 m-0 h-full">
+                    <a [href]="AuthUrl"
+                        class="flex items-center p-2 hover:bg-gray-700 hover:cursor-pointer mr-0 h-full">
                         Login With Discord </a>
                 </ng-template>
             </div>
@@ -66,7 +67,7 @@
         <div
             class="flex flex-nowrap items-center justify-center md:max-w-4xl xl:max-w-6xl text-gray-600 bg-gray-900 w-full h-full">
             <p>
-                If you want to contact me to give feedback/report bugs, Im Nak in the official Fangs discord.
+            If you want to contact me to give feedback/report bugs, Im Nak in the official Fangs discord.
                 <br />Website isnt official and I'm not part of HLG. Don't ask me to buff Brutus<span
                     class="text-gray-900"> (ask the devs). </span>
             </p>
@@ -80,28 +81,28 @@
                 <div
                     class="w-6 h-6 mx-1 bg-contain bg-no-repeat bg-[url('https://playfangs.com/favicon.ico')] group-hover:bg-[url('favicon.ico')]">
                 </div>
-                <div class="hidden xs:inline-block">Play Fangs</div>
+                <div class="hidden sm:inline-block">Play Fangs</div>
             </a>
             <a href="https://twitter.com/PlayFANGS"
                 class="flex group justify-between items-center hover:text-sky-400 transition-colors">
                 <div
                     class="w-6 h-6 -mb-1 mx-1 bg-contain bg-no-repeat bg-[url('/assets/twitter_icon_blue.png')] group-hover:bg-[url('/assets/twitter_icon_white.png')]">
                 </div>
-                <div class="hidden xs:inline-block">Follow Twitter</div>
+                <div class="hidden sm:inline-block">Follow Twitter</div>
             </a>
             <a href="https://www.youtube.com/@PlayFANGS"
                 class="flex group justify-between items-center hover:text-red-600 transition-colors">
                 <div
                     class="w-6 h-6 -mb-2 mx-1 bg-contain bg-no-repeat bg-[url('/assets/yt_icon_red.png')] group-hover:bg-[url('/assets/yt_icon_white.png')]">
                 </div>
-                <div class="hidden xs:inline-block">Watch Youtube</div>
+                <div class="hidden sm:inline-block">Watch Youtube</div>
             </a>
             <a href="https://discord.gg/FANGS"
                 class="flex group justify-between items-center hover:text-indigo-500 transition-colors">
                 <div
                     class="w-6 h-6 -mb-1 mx-1 bg-contain bg-no-repeat bg-[url('/assets/discord_icon_blurple_RGB.png')] group-hover:bg-[url('/assets/discord_icon_clyde_white_RGB.png')]">
                 </div>
-                <div class="hidden xs:inline-block">Join Discord</div>
+                <div class="hidden sm:inline-block">Join Discord</div>
             </a>
         </div>
     </div>

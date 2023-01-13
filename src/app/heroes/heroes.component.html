@@ -13,7 +13,7 @@
     </div>
     <app-hero-builds *ngIf="(heroId | async); else welcome;" [heroId]="heroId"></app-hero-builds>
     <ng-template #welcome>
-        <p class="p-2 whitespace-pre-wrap flex justify-center">
+        <p class="flex items-center justify-center p-2 whitespace-pre-wrap text-center">
             {{welcomeMessage}}
         </p>
 

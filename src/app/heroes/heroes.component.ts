@@ -37,9 +37,8 @@ export class HeroesComponent implements OnInit {
     this.heroId.next(id);
   }
 
-  welcomeMessage: string = ` Welcome to Fangs Builder!
-  To get started select a hero.
+  welcomeMessage: string =`Welcome to Fangs Builder!
+ To get started select a hero.
 
-  Fangs Builder is a tool that allows Fangs players to share their builds with
-  others.`;
+ Fangs Builder is a tool that allows Fangs players to share their builds with others.`;
 }

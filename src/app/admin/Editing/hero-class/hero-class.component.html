@@ -27,7 +27,7 @@
         </div>
         <div class="flex flex-col ">
             <label for="id">Id</label>
-            <input id="id" type="number" formControlName="id" class="w-fit border-2" />
+            <input id="id" type="number" formControlName="id" class="w-fit border-2 text-black" />
             <div [class.hidden]="!heroClassForm.controls['id'].errors?.['required']" class="text-red-600">Id is
                 required</div>
             <div [class.hidden]="!heroClassForm.controls['id'].errors?.['min']" class="text-red-600">Minimum id is 1
@@ -35,7 +35,7 @@
         </div>
         <div class="flex flex-col">
             <label for="name">Name</label>
-            <input id="name" type="text" formControlName="name" class="w-fit border-2" />
+            <input id="name" type="text" formControlName="name" class="w-fit border-2  text-black" />
             <div [class.hidden]="!heroClassForm.controls['name'].errors?.['required']" class="text-red-600">Name is
                 required
             </div>
