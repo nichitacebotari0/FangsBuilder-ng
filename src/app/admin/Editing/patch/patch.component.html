@@ -1,0 +1,72 @@
+Patch
+<div class="flex flex-col md:flex-row gap-1 p-2">
+    <div class="grid grid-cols-[minmax(min-content,1fr)_repeat(4,minmax(min-content,3fr))_repeat(2,minmax(min-content,1fr))]  gap-1 bg-gray-800 h-fit">
+        <div class="text-gray-400 break-words">Id</div>
+        <div class="text-gray-400 break-words">Version</div>
+        <div class="text-gray-400 break-words">Title</div>
+        <div class="text-gray-400 break-words">Game Date</div>
+        <div class="text-gray-400 break-words">Website Activated Date</div>
+        <div></div>
+        <div></div>
+        <ng-container *ngFor="let patch of patches$ | async" [class.border-blue-400]="editId == patch.id">
+            <div class="border border-opacity-5 border-gray-50 break-words">{{patch.id}}</div>
+            <div class="border border-opacity-5 border-gray-50 break-words">{{patch.version}}</div>
+            <div class="border border-opacity-5 border-gray-50 break-words">{{patch.title}}</div>
+            <div class="border border-opacity-5 border-gray-50 break-words">{{patch.gameDate}}</div>
+            <div class="border border-opacity-5 border-gray-50 break-words">{{patch.websiteTimeUtc}}</div>
+            <button (pointerup)="edit(patch)"
+                class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 h-fit">Edit</button>
+            <button *ngIf="isSuper" (pointerup)="delete(patch)"
+                class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 h-fit">Delete</button>
+        </ng-container>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col items-center my-2">
+        <div *ngIf="editId > -1 " class="flex flex-row items-center">
+            <button type="button" (pointerup)="stopEditing()"
+                class="backArrow enabled:hover:border-stone-900 enabled:active:border-stone-800 w-2">
+            </button>
+            {{ 'Currently editing:'+editId }}
+        </div>
+        <div class="flex flex-col ">
+            <div class="flex flex-col">
+                <label for="version">Version</label>
+                <input id="version" type="text" formControlName="version" class="w-fit border-2 text-gray-900" />
+                <div [class.hidden]="!form.controls['version'].errors?.['required']" class="text-red-600">
+                    Version is required
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="title">Title</label>
+                <input id="title" type="text" formControlName="title" class="w-fit border-2 text-gray-900" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="gameDate">Game Date</label>
+                <input id="gameDate" type="datetime-local" required pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}"
+                    value="2077-08-20T20:23:00" formControlName="gameDate" class="w-fit border-2 text-gray-900" />
+                <div [class.hidden]="!form.controls['gameDate'].errors?.['required']" class="text-red-600">
+                    Game Date is required
+                </div>
+            </div>
+
+            <div class="flex">
+                <label for="activate">Activate?</label>
+                <input id="activate" type="checkbox" (change)="toggleWebsiteDate($event)" [checked]="activate"/>
+            </div>
+            <div class="flex flex-col" *ngIf="form.contains('websiteTimeUtc')">
+                <label for="websiteTimeUtc">Website Activation Time</label>
+                <input id="websiteTimeUtc" type="datetime-local" required
+                    pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}" value="" formControlName="websiteTimeUtc"
+                    class="w-fit border-2 text-gray-900" />
+                <div [class.hidden]="!form.controls['websiteTimeUtc']?.errors?.['required']" class="text-red-600">
+                    Website Date is required
+                </div>
+            </div>
+            <button type="submit" [disabled]="!form.valid"
+                class="bg-black disabled:bg-stone-800 disabled:text-stone-600 enabled:hover:bg-stone-900 enabled:active:bg-stone-800  w-fit p-2 mx-auto my-2">
+                {{editId > -1 ? 'Edit' : 'Create'}}</button>
+        </div>
+    </form>
+</div>

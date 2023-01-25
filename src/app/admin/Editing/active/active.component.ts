@@ -12,13 +12,13 @@ import { StaticAssetsService } from 'src/app/Services/static-assets.service';
   styleUrls: ['./active.component.less']
 })
 export class ActiveComponent implements OnInit {
-  constructor(private artifactService: ActiveService,
+  constructor(private activeService: ActiveService,
     private staticAssetService: StaticAssetsService,
     private oauthService: OauthService) {
   }
 
   ngOnInit(): void {
-    this.boons$ = this.artifactService.get();
+    this.boons$ = this.activeService.get();
     this.boonAssets$ = this.staticAssetService.getBoons();
 
     this.form.get("imagePath")?.valueChanges.subscribe(data => {
@@ -52,20 +52,20 @@ export class ActiveComponent implements OnInit {
   });
 
   delete(input: Active) {
-    this.artifactService.delete(input.id)
-      .subscribe(_ => this.artifactService.refetch()); // this http request can be avoided
+    this.activeService.delete(input.id)
+      .subscribe(_ => this.activeService.refetch()); // this http request can be avoided
   }
 
   submit() {
     let model = this.getModelFromForm();
     if (this.editId > -1) {
-      this.artifactService.update(this.editId, model)
-        .subscribe(_ => this.artifactService.refetch()); // this http request can be avoided
+      this.activeService.update(this.editId, model)
+        .subscribe(_ => this.activeService.refetch()); // this http request can be avoided
       this.editId = model.id;
       return;
     }
-    this.artifactService.add(model)
-      .subscribe(_ => this.artifactService.refetch()); // this http request can be avoided
+    this.activeService.add(model)
+      .subscribe(_ => this.activeService.refetch()); // this http request can be avoided
   }
 
   getModelFromForm(): Active {

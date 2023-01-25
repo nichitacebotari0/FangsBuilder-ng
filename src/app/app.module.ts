@@ -30,6 +30,8 @@ import { BuildComponent } from './build/build.component';
 import { BuildPageComponent } from './build-page/build-page.component';
 import { WarningDisclaimerComponent } from './warning-disclaimer/warning-disclaimer.component';
 import { ChangelogComponent } from './admin/changelog/changelog.component';
+import { PatchComponent } from './admin/Editing/patch/patch.component';
+import { AugmentArrangementComponent } from './admin/Editing/augment-arrangement/augment-arrangement.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { ChangelogComponent } from './admin/changelog/changelog.component';
     BuildPageComponent,
     WarningDisclaimerComponent,
     ChangelogComponent,
+    PatchComponent,
+    AugmentArrangementComponent,
   ],
   imports: [
     BrowserModule,

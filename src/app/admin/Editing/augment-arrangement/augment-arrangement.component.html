@@ -1,0 +1,68 @@
+Patch
+<div class="flex flex-col gap-1 p-2">
+    <div
+        class="grid grid-cols-[minmax(min-content,1fr)_minmax(min-content,1fr)_minmax(min-content,5fr)_minmax(min-content,1fr)_minmax(min-content,1fr)] gap-1 bg-gray-800 h-fit">
+        <div class="text-gray-400 break-words">Id</div>
+        <div class="text-gray-400 break-words">Patch</div>
+        <div class="text-gray-400 break-words">Slots</div>
+        <div></div>
+        <div></div>
+        <ng-container *ngFor="let arrangement of arrangements$ | async"
+            [class.border-blue-400]="editId == arrangement.id">
+            <div class="border border-opacity-5 border-gray-50 break-words">{{arrangement.id}}</div>
+            <div class="border border-opacity-5 border-gray-50 break-words">{{arrangement.patchId}}</div>
+            <div class="border border-opacity-5 border-gray-50 break-words flex">
+                <div *ngFor="let slot of arrangement.augmentSlots" class="p-1">
+                    {{getCategoryName(slot.augmentCategoryId)}}</div>
+            </div>
+            <button (pointerup)="edit(arrangement)"
+                class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 h-fit">Edit</button>
+            <button *ngIf="isSuper" (pointerup)="delete(arrangement)"
+                class="bg-black hover:bg-stone-900 active:bg-stone-800 w-fit p-1 h-fit">Delete</button>
+        </ng-container>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col items-center my-2">
+        <div *ngIf="editId > -1 " class="flex flex-row items-center">
+            <button type="button" (pointerup)="stopEditing()"
+                class="backArrow enabled:hover:border-stone-900 enabled:active:border-stone-800 w-2">
+            </button>
+            {{ 'Currently editing:'+editId }}
+        </div>
+        <div class="flex flex-col ">
+            <div class="flex flex-col">
+                <label for="class">Patch</label>
+                <select id="class" formControlName="patchId" class="w-full border-2 text-gray-900">
+                    <option *ngFor="let patch of patches$ | async" [value]="patch.id">
+                        {{ patch.version }}</option>
+                </select>
+                <div [class.hidden]="!form.controls['patchId'].errors?.['required']" class="text-red-600">
+                    Choose a Patch
+                </div>
+            </div>
+
+            <div class="flex">
+                <div *ngFor="let slot of arrangementSlots; index as i;" class="border p-1">
+                    <select class="w-full border-2 text-gray-900" #t (change)="editSlot(i,t.value)">
+                        <option *ngFor="let category of categories" [value]="category.id">
+                            {{ category.name }}</option>
+                    </select>
+
+                </div>
+                <div [class]="'border border-v-600 rounded-full m-1 w-5 h-5 text-red-600'+
+                ' hover:cursor-pointer hover:border-red-500 hover:text-red-500'" (click)="removeLastSlot()">
+                    <div class="flex h-full justify-center items-center pb-1">x</div>
+                </div>
+                <div [class]="'border border-v-600 rounded-full m-1 w-5 h-5 text-green-600'+
+                ' hover:cursor-pointer hover:border-green-500 hover:text-green-500'" (click)="addSlot()">
+                    <div class="flex h-full justify-center items-center pb-1">+</div>
+                </div>
+            </div>
+
+
+            <button type="submit" [disabled]="!form.valid"
+                class="bg-black disabled:bg-stone-800 disabled:text-stone-600 enabled:hover:bg-stone-900 enabled:active:bg-stone-800  w-fit p-2 mx-auto my-2">
+                {{editId > -1 ? 'Edit' : 'Create'}}</button>
+        </div>
+    </form>
+</div>

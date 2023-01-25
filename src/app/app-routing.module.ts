@@ -14,8 +14,9 @@ import { ActiveComponent } from './admin/Editing/active/active.component';
 import { MyBuildsComponent } from './my-builds/my-builds.component';
 import { BuildEditorComponent } from './build-editor/build-editor.component';
 import { MapPickerComponent } from './map-picker/map-picker.component';
-import { BuildComponent } from './build/build.component';
 import { BuildPageComponent } from './build-page/build-page.component';
+import { PatchComponent } from './admin/Editing/patch/patch.component';
+import { AugmentArrangementComponent } from './admin/Editing/augment-arrangement/augment-arrangement.component';
 
 const routes: Routes = [
   { path: '', redirectTo: "/heroes", pathMatch: 'full' },
@@ -34,6 +35,8 @@ const routes: Routes = [
   { path: 'admin/artifactType', component: ArtifactTypeComponent },
   { path: 'admin/artifact', component: ArtifactComponent },
   { path: 'admin/boon', component: ActiveComponent },
+  { path: 'admin/patch', component: PatchComponent },
+  { path: 'admin/augmentArrangement', component: AugmentArrangementComponent },
   { path: '**', redirectTo: "/heroes", pathMatch: 'full' },
 ];
 
