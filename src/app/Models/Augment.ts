@@ -6,4 +6,5 @@ export interface Augment {
     heroId: number;
     augmentCategoryId: number;
     abilityTypeId: number;
+    patchId : number;
 }

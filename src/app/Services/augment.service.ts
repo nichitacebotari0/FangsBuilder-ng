@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, filter, Observable, of, shareReplay, Subject, switchMap, take } from 'rxjs';
 import { Augment } from '../Models/Augment';
 import { ConfigService } from './config.service';
+import { PatchService } from './patch.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,35 +18,37 @@ export class AugmentService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
   };
+  private cache: Map<string, Observable<Augment[]> | undefined> = new Map<string, Observable<Augment[]> | undefined>();
+  private trigger = new Subject<{ heroId: number, patchId: number }>();
 
-  private cache: Map<number, Observable<Augment[]> | undefined> = new Map<number, Observable<Augment[]> | undefined>();
-  private trigger = new Subject<number>();
 
-  private fetch(heroId: number): Observable<Augment[]> {
+  private fetch(heroId: number, patchId: number): Observable<Augment[]> {
     return this.http.get<Augment[]>(this.apiPath, {
       observe: "body" as const,
       responseType: "json" as const,
-      params: { heroId: heroId }
+      params: { heroId: heroId, patchId: patchId }
     });
   }
 
-  refetch(heroId: number) {
-    this.trigger.next(heroId);
+  refetch(heroId: number, patchId: number) {
+    // note that we do not refetch patches after this one at the moment, low value
+    this.trigger.next({ heroId, patchId });
   }
 
-  get(heroId: number): Observable<Augment[]> {
-    let heroCache = this.cache.get(heroId)
-    if (!heroCache) {
-      heroCache = this.trigger.pipe(
-        filter(x => x == heroId),
-        switchMap(x => this.fetch(x)),
+  get(heroId: number, patchId: number): Observable<Augment[]> {
+    let key = heroId + "_" + patchId;
+    let cacheValue = this.cache.get(key)
+    if (!cacheValue) {
+      cacheValue = this.trigger.pipe(
+        filter(x => x.heroId == heroId && x.patchId == patchId), 
+        switchMap(x => this.fetch(x.heroId, x.patchId)),
         shareReplay(1)
       );
-      heroCache.pipe(take(1)).subscribe(); // initial subscribtion to populate cache
-      this.refetch(heroId);
-      this.cache.set(heroId,heroCache);
+      cacheValue.pipe(take(1)).subscribe(); // initial subscribtion to populate cache
+      this.refetch(heroId, patchId);
+      this.cache.set(key, cacheValue);
     }
-    return heroCache;
+    return cacheValue;
   }
 
   add(abilityType: Augment): Observable<Augment> {
@@ -54,17 +57,20 @@ export class AugmentService {
     );
   }
 
-  update(id: number, abilityType: Augment): Observable<Augment> {
-    const url = `${this.apiPath}/${id}`;
-    return this.http.put<Augment>(url, abilityType, this.httpOptions)
-      .pipe(
-        catchError(this.handleError<Augment>('updateAugment'))
+  update(abilityType: Augment): Observable<void> {
+    return this.http.put<void>(this.apiPath, abilityType, this.httpOptions)
+      .pipe<void>(
+        catchError(this.handleError<void>('updateAugment'))
       );
   }
 
-  delete(id: number): Observable<Augment> {
+  delete(id: number, heroId: number, patchId: number): Observable<Augment> {
     const url = `${this.apiPath}/${id}`;
-    return this.http.delete<Augment>(url, this.httpOptions).pipe(
+    return this.http.delete<Augment>(url, {
+      observe: "body" as const,
+      responseType: "json" as const,
+      params: { heroId: heroId, patchId: patchId }
+    }).pipe(
       catchError(this.handleError<Augment>('deleteAugment'))
     );
   }

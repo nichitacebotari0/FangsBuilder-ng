@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, shareReplay, Subject, switchMap } from 'rxjs';
+import { catchError, filter, Observable, of, shareReplay, Subject, switchMap, take } from 'rxjs';
 import { Active } from '../Models/Active';
 import { ConfigService } from './config.service';
 
@@ -8,7 +8,7 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class ActiveService {
-  constructor(private config: ConfigService, private http: HttpClient) {
+  constructor(config: ConfigService, private http: HttpClient) {
     this.apiPath = config.apiBaseUrl + "Actives";
   }
 
@@ -18,47 +18,57 @@ export class ActiveService {
     withCredentials: true
   };
 
-  private cache$: Observable<Active[]> | undefined;
-  private trigger = new Subject<void>();
+  private cache: Map<number, Observable<Active[]> | undefined> = new Map<number, Observable<Active[]> | undefined>;
+  private trigger = new Subject<number>();
 
-  private fetch(): Observable<Active[]> {
+  private fetch(patchId: number): Observable<Active[]> {
     return this.http.get<Active[]>(this.apiPath, {
       observe: "body" as const,
-      responseType: "json" as const
+      responseType: "json" as const,
+      params: { patchId: patchId }
     });
   }
 
-  refetch() {
-    this.trigger.next();
+  refetch(patchId: number) {
+    // note that we do not refetch patches after this one at the moment, low value
+    this.trigger.next(patchId);
   }
 
-  get(): Observable<Active[]> {
-    if (!this.cache$) {
-      this.cache$ = this.trigger.pipe(
-        switchMap(x => this.fetch()),
+  get(patchId: number): Observable<Active[]> {
+    let cacheValue = this.cache.get(patchId);
+    if (!cacheValue) {
+      cacheValue = this.trigger.pipe(
+        filter(x => x == patchId),
+        switchMap(x => this.fetch(patchId)),
         shareReplay(1)
       );
+      cacheValue.pipe(take(1)).subscribe(); // initial subscribtion to populate cache
+      this.refetch(patchId);
+      this.cache.set(patchId, cacheValue);
     }
-    return this.cache$;
+    return cacheValue;
   }
 
-  add(abilityType: Active): Observable<Active> {
-    return this.http.post<Active>(this.apiPath, abilityType, this.httpOptions).pipe(
+  add(active: Active): Observable<Active> {
+    return this.http.post<Active>(this.apiPath, active, this.httpOptions).pipe(
       catchError(this.handleError<Active>('addActive'))
     );
   }
 
-  update(id: number, abilityType: Active): Observable<Active> {
-    const url = `${this.apiPath}/${id}`;
-    return this.http.put<Active>(url, abilityType, this.httpOptions)
+  update(active: Active): Observable<void> {
+    return this.http.put<void>(this.apiPath, active, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Active>('updateActive'))
+        catchError(this.handleError<void>('updateActive'))
       );
   }
 
-  delete(id: number): Observable<Active> {
+  delete(id: number, patchId: number): Observable<Active> {
     const url = `${this.apiPath}/${id}`;
-    return this.http.delete<Active>(url, this.httpOptions).pipe(
+    return this.http.delete<Active>(url, {
+      observe: "body" as const,
+      responseType: "json" as const,
+      params: { patchId: patchId }
+    }).pipe(
       catchError(this.handleError<Active>('deleteActive'))
     );
   }

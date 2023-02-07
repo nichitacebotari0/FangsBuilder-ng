@@ -76,13 +76,14 @@ export class BuildFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    var build: Build = {
+    let build: Build = {
       id: 0,
       heroId: this.heroId,
       title: this.form.value.title!,
       description: this.form.value.description,
       augments: encoded,
       // stuff we do not fill
+      patchId: 0,
       createdAt: new Date(),
       modifiedAt: new Date(),
       userId: '',

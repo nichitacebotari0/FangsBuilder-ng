@@ -26,23 +26,23 @@ export class BuildSerializerService {
       .join(',');
   }
 
-  Deserialize(heroId: number, build: string): Observable<CategorisedGenericAugmentData | undefined>[] {
+  Deserialize(heroId: number, patchId: number, build: string): Observable<CategorisedGenericAugmentData | undefined>[] {
     return build.split(',')
       .map(x => {
         const aug = x.split(':');
-        return this.getAugment(heroId, aug[0], aug[1])
+        return this.getAugment(heroId, patchId, aug[0], aug[1])
           .pipe(
             map(x => {
               return ({
                 augment: x,
                 category: Number(aug[0]) as AugmentSlotCategory
-              } as CategorisedGenericAugmentData)
+              } as CategorisedGenericAugmentData);
             })
           );
       });
   }
 
-  private getAugment(heroId: number, category: string, idString: string): Observable<GenericAugmentData | undefined> {
+  private getAugment(heroId: number, patchId: number, category: string, idString: string): Observable<GenericAugmentData | undefined> {
     const id = Number(idString);
     if (!id || id < 0)
       return of(undefined);
@@ -52,17 +52,17 @@ export class BuildSerializerService {
 
     switch (categoryId) {
       case AugmentSlotCategory.ACTIVE:
-        return this.boonService.get()
+        return this.boonService.get(patchId)
           .pipe(
             map(x => x.find(aug => aug.id == id)))
       case AugmentSlotCategory.COMBAT:
       case AugmentSlotCategory.UTILITY:
       case AugmentSlotCategory.ULTIMATE:
-        return this.augmentService.get(heroId)
+        return this.augmentService.get(heroId, patchId)
           .pipe(
             map(x => x.find(aug => aug.id == id && aug.augmentCategoryId == categoryId)))
       case AugmentSlotCategory.POSITIONAL:
-        return this.artifactService.get()
+        return this.artifactService.get(patchId)
           .pipe(
             map(x => x.find(aug => aug.id == id)))
       default:

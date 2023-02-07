@@ -1,7 +1,7 @@
-<div class="flex flex-col items-center my-2">
+<div class="flex justify-between items-center my-2">
     <div class="">
         Hero
-        <div class="flex flex-col">
+        <div class="flex flex-col max-h-screen overflow-scroll">
             <div class="flex flex-row">
                 <div class="px-1 m-1 w-7">Id</div>
                 <div class="px-1 m-1">Name</div>
@@ -27,6 +27,13 @@
             {{ 'Currently editing:'+editId }}
         </div>
         <div class="flex flex-col">
+            <label for="patchId">Patch</label>
+            <select id="patchId" formControlName="patchId" class="w-full border-2 text-gray-900">
+                <option *ngFor="let patch of patches$ | async" [value]="patch.id">{{ patch.version }}</option>
+            </select>
+            <div [class.hidden]="!form.controls['patchId'].errors?.['required']" class="text-red-600">
+                Choose a Patch
+            </div>
             <label for="imagePath">Image Path</label>
             <div class="flex flex-row">
                 <img src="{{form.value.imagePath}}" class="w-24" />
@@ -58,7 +65,8 @@
             <div [class.hidden]="!form.controls['id'].errors?.['required']" class="text-red-600">
                 Id is required
             </div>
-            <div [class.hidden]="!form.controls['id'].errors?.['min']" class="text-red-600">Minimum id is 1
+            <div [class.hidden]="!form.controls['id'].errors?.['min']" class="text-red-600">
+                Minimum id is 1
             </div>
         </div>
         <div class="flex flex-col">

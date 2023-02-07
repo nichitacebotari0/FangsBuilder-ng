@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, combineLatestWith, forkJoin, map, mergeAll, Observable, of, shareReplay, take, tap, } from 'rxjs';
+import { BehaviorSubject, combineLatest, combineLatestWith, forkJoin, map, mergeAll, mergeMap, Observable, of, shareReplay, take, tap, } from 'rxjs';
 import { Active } from '../Models/Active';
 import { Artifact } from '../Models/Artifact';
 import { Augment } from '../Models/Augment';
@@ -8,6 +8,7 @@ import { AugmentSlot, GenericAugmentData } from '../Models/AugmentSlot';
 import { Category } from '../Models/Category';
 import { AugmentSlotCategory } from '../Models/Enum/AugmentSlotCategory';
 import { Hero } from '../Models/Hero';
+import { Patch } from '../Models/Patch';
 import { AbilityTypeService } from '../Services/ability-type.service';
 import { ActiveService } from '../Services/active.service';
 import { ArtifactTypeService } from '../Services/artifact-type.service';
@@ -15,6 +16,7 @@ import { ArtifactService } from '../Services/artifact.service';
 import { AugmentService } from '../Services/augment.service';
 import { HeroService } from '../Services/hero.service';
 import { OauthService } from '../Services/oauth.service';
+import { PatchService } from '../Services/patch.service';
 import { BuildSerializerService } from '../Services/Utils/build-serializer.service';
 
 @Component({
@@ -42,6 +44,7 @@ export class BuildEditorComponent implements OnInit {
   skillAugments$: Observable<Augment[]> | undefined;
   groupedAugments$: Observable<Map<number, Augment[]>> | undefined;
   boons$: Observable<Active[]>;
+  latestActivePatch$: Observable<Patch>;
   groupedArtifacts$: Observable<Map<number, Artifact[]>>;
   showForm: Boolean = false;
   hasCopied: Boolean = false;
@@ -53,11 +56,15 @@ export class BuildEditorComponent implements OnInit {
     private artifactTypeService: ArtifactTypeService,
     private heroesService: HeroService,
     boonService: ActiveService,
+    patchService: PatchService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private buildSerializerService: BuildSerializerService,
     private oauthService: OauthService) {
-    this.boons$ = boonService.get();
+    this.latestActivePatch$ = patchService.getLatestActive();
+    this.boons$ = this.latestActivePatch$.pipe(
+      mergeMap(x => boonService.get(x.id))
+    );
 
     this.hero$ =
       combineLatest([
@@ -71,7 +78,8 @@ export class BuildEditorComponent implements OnInit {
             return heroes?.find(hero => hero.id == Number(id));
           }));
 
-    this.groupedArtifacts$ = this.artifactService.get().pipe(
+    this.groupedArtifacts$ = this.latestActivePatch$.pipe(
+      mergeMap(x => this.artifactService.get(x.id)),
       map(artifacts =>
         artifacts.reduce<Map<number, Artifact[]>>((aggregate: Map<number, Artifact[]>, artifact: Artifact) => {
           aggregate = aggregate || new Map<number, Artifact[]>();
@@ -91,11 +99,14 @@ export class BuildEditorComponent implements OnInit {
 
     this.decodeBuild();
 
-    this.heroAugments$ = this.hero$.pipe(
-      map(hero => {
+    this.heroAugments$ = combineLatest([
+      this.hero$,
+      this.latestActivePatch$
+    ]).pipe(
+      map(([hero, patch]) => {
         if (hero?.id === null)
           return [];
-        return this.augmentService.get(hero!.id);
+        return this.augmentService.get(hero!.id, patch.id);
       }),
       mergeAll(),
       shareReplay(1),
@@ -188,17 +199,19 @@ export class BuildEditorComponent implements OnInit {
     const params: URLSearchParams = url.searchParams;
     const build = params.get('build');
     if (build) {
-      const decoded =
-        this.hero$.pipe(
-          tap(() => {
-          }),
-          map(hero => {
-            if (hero?.id === null)
-              return [];
-            return forkJoin(this.buildSerializerService.Deserialize(hero!.id, build).map(x => x.pipe(take(1))))
-          }),
-          mergeAll(),
-        );
+      const decoded = combineLatest([
+        this.hero$,
+        this.latestActivePatch$
+      ]).pipe(
+        tap(() => {
+        }),
+        map(([hero, patch]) => {
+          if (hero?.id === null)
+            return [];
+          return forkJoin(this.buildSerializerService.Deserialize(hero!.id, patch.id, build).map(x => x.pipe(take(1))))
+        }),
+        mergeAll(),
+      );
       decoded.subscribe(
         augments => augments.forEach((aug, i) => {
           if (!aug)

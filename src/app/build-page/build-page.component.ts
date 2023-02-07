@@ -35,7 +35,7 @@ export class BuildPageComponent implements OnInit {
     this.augments$ = this.build$.pipe(
       filter(build => build != undefined),
       map(build => {
-        const augments = buildSerializer.Deserialize(build!.heroId, build!.augments)
+        const augments = buildSerializer.Deserialize(build!.heroId, build.patchId, build!.augments)
           .map(x => x.pipe(take(1)));
         return forkJoin(augments);
       }),

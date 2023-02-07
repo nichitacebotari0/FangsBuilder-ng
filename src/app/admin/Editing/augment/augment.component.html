@@ -23,10 +23,10 @@
             {{ 'Currently editing:'+editId }}
         </div>
         <div class="flex flex-col">
-            <label for="class">Hero</label>
+            <label for="heroId">Hero</label>
             <div class="flex flex-row">
                 <img src="{{currentHeroImage}}" class="w-24" />
-                <select id="class" formControlName="heroId" class="w-full border-2 text-gray-900">
+                <select id="heroId" formControlName="heroId" class="w-full border-2 text-gray-900">
                     <option *ngFor="let hero of heroes$ | async" [value]="hero.id">{{ hero.name }}</option>
                 </select>
             </div>
@@ -34,6 +34,36 @@
                 Choose a hero
             </div>
         </div>
+        <div class="flex flex-col">
+            <label for="patchId">Patch</label>
+            <select id="patchId" formControlName="patchId" class="w-full border-2 text-gray-900">
+                <option *ngFor="let patch of patches$ | async" [value]="patch.id">{{ patch.version }}</option>
+            </select>
+            <div [class.hidden]="!form.controls['patchId'].errors?.['required']" class="text-red-600">
+                Choose a Patch
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <label for="class">Ability Type</label>
+            <select id="class" formControlName="abilityTypeId" class="w-full border-2 text-gray-900">
+                <option *ngFor="let abilityType of abilityTypes$ | async" [value]="abilityType.id">
+                    {{ abilityType.name }}</option>
+            </select>
+            <div [class.hidden]="!form.controls['abilityTypeId'].errors?.['required']" class="text-red-600">
+                Choose an Ability Type
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <label for="class">Augment Category</label>
+            <select id="class" formControlName="augmentCategoryId" class="w-full border-2 text-gray-900">
+                <option *ngFor="let augmentCategory of augmentCategories$ | async" [value]="augmentCategory.id">
+                    {{ augmentCategory.name }}</option>
+            </select>
+            <div [class.hidden]="!form.controls['augmentCategoryId'].errors?.['required']" class="text-red-600">
+                Choose an Augment Category
+            </div>
+        </div>
+
         <div class="flex flex-col">
             <label for="imagePath">Image Path</label>
             <div class="flex flex-row">
@@ -48,27 +78,6 @@
                 Image Path is required
             </div>
         </div>
-        <div class="flex flex-col">
-            <label for="class">Augment Category</label>
-            <select id="class" formControlName="augmentCategoryId" class="w-full border-2 text-gray-900">
-                <option *ngFor="let augmentCategory of augmentCategories$ | async" [value]="augmentCategory.id">
-                    {{ augmentCategory.name }}</option>
-            </select>
-            <div [class.hidden]="!form.controls['augmentCategoryId'].errors?.['required']" class="text-red-600">
-                Choose an Augment Category
-            </div>
-        </div>
-        <div class="flex flex-col">
-            <label for="class">Ability Type</label>
-            <select id="class" formControlName="abilityTypeId" class="w-full border-2 text-gray-900">
-                <option *ngFor="let abilityType of abilityTypes$ | async" [value]="abilityType.id">
-                    {{ abilityType.name }}</option>
-            </select>
-            <div [class.hidden]="!form.controls['abilityTypeId'].errors?.['required']" class="text-red-600">
-                Choose an Ability Type
-            </div>
-        </div>
-
         <div class="flex flex-col ">
             <label for="id">Id</label>
             <input id="id" type="number" formControlName="id" class="w-fit border-2 text-gray-900" />

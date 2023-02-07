@@ -26,6 +26,13 @@
             </button>
             {{ 'Currently editing:'+editId }}
         </div>
+        <label for="patchId">Patch</label>
+        <select id="patchId" formControlName="patchId" class="w-full border-2 text-gray-900">
+            <option *ngFor="let patch of patches$ | async" [value]="patch.id">{{ patch.version }}</option>
+        </select>
+        <div [class.hidden]="!form.controls['patchId'].errors?.['required']" class="text-red-600">
+            Choose a Patch
+        </div>
         <div class="flex flex-col">
             <label for="imagePath">Image Path</label>
             <div class="flex flex-row">

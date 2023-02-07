@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Patch } from '../Models/Patch';
 import { ConfigService } from './config.service';
 
@@ -8,9 +8,9 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class PatchService {
-    constructor(private config: ConfigService, private http: HttpClient) {
-      this.apiPath = config.apiBaseUrl + "Patch";
-    }
+  constructor(config: ConfigService, private http: HttpClient) {
+    this.apiPath = config.apiBaseUrl + "Patch";
+  }
 
   apiPath: string;
   httpOptions = {
@@ -20,6 +20,17 @@ export class PatchService {
 
   get(): Observable<Patch[]> {
     return this.http.get<Patch[]>(this.apiPath);
+  }
+
+  getLatestActive(): Observable<Patch> {
+    return this.http.get<Patch[]>(this.apiPath).pipe(
+      map(x => x.sort((a, b) => {
+        if (a.websiteTimeUtc && b.websiteTimeUtc)
+          return a.websiteTimeUtc < b.websiteTimeUtc ? -1 : 1;
+        return a.gameDate < b.gameDate ? -1 : 1;
+      })),
+      map(x => x[x.length - 1])
+    );
   }
 
   add(patch: Patch): Observable<Patch> {

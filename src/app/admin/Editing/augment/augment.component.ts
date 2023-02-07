@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { combineLatest, map, mergeAll, Observable, take } from 'rxjs';
+import { combineLatest, map, mergeAll, Observable, take, tap } from 'rxjs';
 import { Augment } from 'src/app/Models/Augment';
 import { Category } from 'src/app/Models/Category';
 import { Hero } from 'src/app/Models/Hero';
+import { Patch } from 'src/app/Models/Patch';
 import { AbilityTypeService } from 'src/app/Services/ability-type.service';
 import { AugmentCategoryService } from 'src/app/Services/augment-category.service';
 import { AugmentService } from 'src/app/Services/augment.service';
 import { HeroService } from 'src/app/Services/hero.service';
 import { OauthService } from 'src/app/Services/oauth.service';
+import { PatchService } from 'src/app/Services/patch.service';
 import { StaticAssetsService } from 'src/app/Services/static-assets.service';
 import { StyleService } from 'src/app/Services/Utils/style.service';
 
@@ -23,14 +25,17 @@ export class AugmentComponent implements OnInit {
     private heroService: HeroService,
     private augmentCategoryService: AugmentCategoryService,
     private abilityTypeService: AbilityTypeService,
+    private patchService: PatchService,
     private staticAssetService: StaticAssetsService,
     private styleService: StyleService,
-    private oauthService: OauthService) { }
+    private oauthService: OauthService) {
+  }
 
   ngOnInit(): void {
     this.heroes$ = this.heroService.get();
     this.augmentCategories$ = this.augmentCategoryService.get();
     this.abilityTypes$ = this.abilityTypeService.get();
+    this.patches$ = this.patchService.get();
 
     this.heroImages$ = combineLatest([
       this.form.get("heroId")!.valueChanges,
@@ -45,13 +50,15 @@ export class AugmentComponent implements OnInit {
       })
     );
 
-    this.augments$ = this.form.get("heroId")!.valueChanges.pipe(
-      map(heroId => {
-        if (heroId === null)
+    this.augments$ = combineLatest([
+      this.form.get("heroId")!.valueChanges,
+      this.form.get("patchId")!.valueChanges
+    ]).pipe(
+      map(([heroId, patchId]) => {
+        if (heroId === null || patchId === null)
           return [];
-        return this.augmentService.get(heroId);
+        return this.augmentService.get(heroId, patchId);
       }),
-      // take(1),
       mergeAll()
     );
 
@@ -68,15 +75,28 @@ export class AugmentComponent implements OnInit {
   heroImages$: Observable<string[] | undefined> | undefined;
   augments$: Observable<Augment[]> | undefined;
   heroes$: Observable<Hero[]> | undefined;
+  patches$: Observable<Patch[]> | undefined;
   augmentCategories$: Observable<Category[]> | undefined;
   abilityTypes$: Observable<Category[]> | undefined;
   currentHeroImage: string | undefined;
   editId: number = -1;
 
   form = new FormGroup({
-    id: new FormControl<number | null>(null, [
+    id: new FormControl<number | null>(0, [
       Validators.required,
       Validators.min(0)
+    ]),
+    heroId: new FormControl<number | null>(null, [
+      Validators.required
+    ]),
+    patchId: new FormControl<number | null>(null, [
+      Validators.required
+    ]),
+    augmentCategoryId: new FormControl<number | null>(null, [
+      Validators.required
+    ]),
+    abilityTypeId: new FormControl<number | null>(null, [
+      Validators.required
     ]),
     name: new FormControl('', [
       Validators.required
@@ -87,32 +107,23 @@ export class AugmentComponent implements OnInit {
     description: new FormControl('', [
       Validators.required
     ]),
-    heroId: new FormControl<number | null>(null, [
-      Validators.required
-    ]),
-    augmentCategoryId: new FormControl<number | null>(null, [
-      Validators.required
-    ]),
-    abilityTypeId: new FormControl<number | null>(null, [
-      Validators.required
-    ]),
   });
 
   delete(input: Augment) {
-    this.augmentService.delete(input.id)
-      .subscribe(_ => this.augmentService.refetch(this.form.get("heroId")!.value!)); // this http request can be avoided
+    this.augmentService.delete(input.id, input.heroId, this.form.value.patchId!)
+      .subscribe(_ => this.augmentService.refetch(this.form.value.heroId!, this.form.value.patchId!));
   }
 
   submit() {
     let model = this.getModelFromForm();
     if (this.editId > -1) {
-      this.augmentService.update(this.editId, model)
-        .subscribe(_ => this.augmentService.refetch(this.form.get("heroId")!.value!)); // this http request can be avoided
+      this.augmentService.update(model)
+        .subscribe(_ => this.augmentService.refetch(this.form.value.heroId!, this.form.value.patchId!));
       this.editId = model.id;
       return;
     }
     this.augmentService.add(model)
-      .subscribe(_ => this.augmentService.refetch(this.form.get("heroId")!.value!)); // this http request can be avoided
+      .subscribe(_ => this.augmentService.refetch(this.form.value.heroId!, this.form.value.patchId!));
   }
 
   getModelFromForm(): Augment {
@@ -124,6 +135,7 @@ export class AugmentComponent implements OnInit {
       heroId: this.form.value.heroId!,
       augmentCategoryId: this.form.value.augmentCategoryId!,
       abilityTypeId: this.form.value.abilityTypeId!,
+      patchId: this.form.value.patchId!
     };
   }
 
@@ -137,6 +149,7 @@ export class AugmentComponent implements OnInit {
       heroId: input.heroId,
       augmentCategoryId: input.augmentCategoryId,
       abilityTypeId: input.abilityTypeId,
+      patchId: this.form.value.patchId ?? input.patchId,
     });
   }
 

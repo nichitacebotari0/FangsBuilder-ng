@@ -50,14 +50,6 @@ export class AppComponent {
     let artifactTypes$ = this.artifactTypeService.get();
     artifactTypes$.pipe(take(1)).subscribe(); // hack
     this.artifactTypeService.refetch();
-
-    let artifacts$ = this.artifactService.get();
-    artifacts$.pipe(take(1)).subscribe(); // hack
-    this.artifactService.refetch();
-
-    let actives$ = this.activeService.get();
-    actives$.pipe(take(1)).subscribe(); // hack
-    this.activeService.refetch();
   }
   AuthUrl: string;
   burgerToggled: boolean = false;
