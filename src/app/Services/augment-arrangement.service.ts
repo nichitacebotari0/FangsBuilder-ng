@@ -23,7 +23,7 @@ export class AugmentArrangementService {
   }
 
   add(augmentarrangement: AugmentArrangement): Observable<AugmentArrangement> {
-    return this.http.post<AugmentArrangement>(this.apiPath, augmentarrangement);
+    return this.http.post<AugmentArrangement>(this.apiPath, augmentarrangement, this.httpOptions);
   }
 
   update(id: number, augmentarrangement: AugmentArrangement): Observable<void> {

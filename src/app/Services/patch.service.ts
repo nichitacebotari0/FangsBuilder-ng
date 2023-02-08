@@ -34,7 +34,7 @@ export class PatchService {
   }
 
   add(patch: Patch): Observable<Patch> {
-    return this.http.post<Patch>(this.apiPath, patch);
+    return this.http.post<Patch>(this.apiPath, patch, this.httpOptions);
   }
 
   update(id: number, patch: Patch): Observable<void> {
